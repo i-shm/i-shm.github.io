@@ -39,9 +39,8 @@
                                                                     <% }); %>
                                                                         <% } %>
 
-                                                                            <%# font preload - critical slices %>
-                                                                                <link rel="preload" href="<%- url_for('/fonts/latin-base.woff2') %>" as="font" type="font/woff2" crossorigin>
-                                                                                <link rel="preload" href="<%- url_for('/fonts/cjk-common.woff2') %>" as="font" type="font/woff2" crossorigin>
+            <%# font preload %>
+                <link rel="preload" href="<%- url_for('/fonts/TensentypeCode.woff2') %>" as="font" type="font/woff2" crossorigin>
 
                                                                     <%# javascript list %>
                                                                         <% if (theme.scripts !==undefined &&
