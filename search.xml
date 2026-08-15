@@ -481,6 +481,32 @@ char          sa_data[]       socket address (variable-length data)</p>
       </tags>
   </entry>
   <entry>
+    <title>DDD 中的 Ubiquitous Language</title>
+    <url>/2025/03/14/DDD-%E4%B8%AD%E7%9A%84-Ubiquitous-Languages/</url>
+    <content><![CDATA[<p>Ubiquitous Language（通用语言）是 Domain-Driven Design (DDD) 中的一个核心概念。它是一种共享的、统一的语言，用于描述和讨论领域模型中的概念和规则。Ubiquitous Language 的目的是确保开发团队和业务专家之间的沟通更加高效和准确，从而减少误解和错误。</p>
+<p>一般来说，Ubiquitous Language 有以下特点：</p>
+<ol>
+<li>共享：Ubiquitous Language 是由开发团队和业务专家共同创建和使用的。它不仅用于代码和文档，还用于日常的沟通和讨论。</li>
+<li>统一：在整个项目中，Ubiquitous Language 应该是一致的。无论是在代码、文档、会议还是白板上，都应该使用相同的术语和概念。</li>
+<li>精确：Ubiquitous Language 应该尽可能精确，避免模糊和歧义。每个术语都应该有明确的定义和含义。</li>
+<li>演进：Ubiquitous Language 是动态的，会随着项目的进展和业务需求的变化而演进。团队应该定期审查和更新它。</li>
+</ol>
+<p>基于此，它可以用在这些地方：</p>
+<ol>
+<li>命名：在代码中使用 Ubiquitous Language 来命名类、方法、变量等。例如，如果业务专家使用“订单”来描述一个概念，那么在代码中也应该使用“Order”而不是“Purchase”或“Transaction”。</li>
+<li>文档：在文档中使用 Ubiquitous Language 来描述系统的设计、架构和功能。这有助于业务专家更容易理解技术文档。</li>
+<li>沟通：在团队会议、讨论和白板会议中使用 Ubiquitous Language。这有助于确保所有参与者都在讨论同一个概念。</li>
+<li>测试：在编写测试用例时，使用 Ubiquitous Language 来描述测试的前提条件、步骤和预期结果。这有助于确保测试覆盖了业务需求。</li>
+</ol>
+<p>假设正在开发一个电子商务系统，业务专家使用“订单”来描述用户购买的商品集合。团队可以在代码中使用“Order”来命名相关的类和方法：</p>
+<figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Order</span> <span class="operator">=</span> &#123;</span><br><span class="line">    items<span class="operator">:</span> OrderItem <span class="type">list</span></span><br><span class="line">    customer<span class="operator">:</span> Customer</span><br><span class="line">    orderDate<span class="operator">:</span> DateTime</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">OrderItem</span> <span class="operator">=</span> &#123;</span><br><span class="line">    product<span class="operator">:</span> Product</span><br><span class="line">    quantity<span class="operator">:</span> <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Customer</span> <span class="operator">=</span> &#123;</span><br><span class="line">    name<span class="operator">:</span> <span class="type">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Product</span> <span class="operator">=</span> &#123;</span><br><span class="line">    name<span class="operator">:</span> <span class="type">string</span></span><br><span class="line">    price<span class="operator">:</span> <span class="type">float</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> addItem (order<span class="operator">:</span> Order) (item<span class="operator">:</span> OrderItem) <span class="operator">=</span></span><br><span class="line">    &#123; order <span class="keyword">with</span> items <span class="operator">=</span> order.items <span class="operator">@</span> [item] &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> getTotalAmount (order<span class="operator">:</span> Order) <span class="operator">=</span></span><br><span class="line">    <span class="keyword">let</span> total <span class="operator">=</span> <span class="number">0.0</span></span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> order.items <span class="keyword">do</span></span><br><span class="line">        total <span class="operator">&lt;-</span> total <span class="operator">+</span> item.price</span><br><span class="line">    total</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> getPrice (item<span class="operator">:</span> OrderItem) <span class="operator">=</span></span><br><span class="line">    item.product.price <span class="operator">*</span> item.quantity</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> getTotalPrice (order<span class="operator">:</span> Order) <span class="operator">=</span></span><br><span class="line">    <span class="keyword">let</span> total <span class="operator">=</span> <span class="number">0.0</span></span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> order.items <span class="keyword">do</span></span><br><span class="line">        total <span class="operator">&lt;-</span> total <span class="operator">+</span> getPrice(item)</span><br><span class="line">    total</span><br></pre></td></tr></table></figure>
+<p>在这个示例中使用了“Order”、“OrderItem”、“Customer”和“Product”等术语，这些术语都是 Ubiquitous Language 的一部分，可以提高代码与业务需求的一致性。</p>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Dealing with complex dependency injection in FSharp</title>
     <url>/2024/10/18/Dealing-with-complex-dependency-injection-in-FSharp/</url>
     <content><![CDATA[<p>Today, we’re going to cover different ways of encapsulating capabilities and supplying them between functions using functional programming techniques which can be realized in F#.</p>
@@ -572,32 +598,6 @@ char          sa_data[]       socket address (variable-length data)</p>
       <tags>
         <tag>Technique</tag>
         <tag>Archive</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>DDD 中的 Ubiquitous Language</title>
-    <url>/2025/03/14/DDD-%E4%B8%AD%E7%9A%84-Ubiquitous-Languages/</url>
-    <content><![CDATA[<p>Ubiquitous Language（通用语言）是 Domain-Driven Design (DDD) 中的一个核心概念。它是一种共享的、统一的语言，用于描述和讨论领域模型中的概念和规则。Ubiquitous Language 的目的是确保开发团队和业务专家之间的沟通更加高效和准确，从而减少误解和错误。</p>
-<p>一般来说，Ubiquitous Language 有以下特点：</p>
-<ol>
-<li>共享：Ubiquitous Language 是由开发团队和业务专家共同创建和使用的。它不仅用于代码和文档，还用于日常的沟通和讨论。</li>
-<li>统一：在整个项目中，Ubiquitous Language 应该是一致的。无论是在代码、文档、会议还是白板上，都应该使用相同的术语和概念。</li>
-<li>精确：Ubiquitous Language 应该尽可能精确，避免模糊和歧义。每个术语都应该有明确的定义和含义。</li>
-<li>演进：Ubiquitous Language 是动态的，会随着项目的进展和业务需求的变化而演进。团队应该定期审查和更新它。</li>
-</ol>
-<p>基于此，它可以用在这些地方：</p>
-<ol>
-<li>命名：在代码中使用 Ubiquitous Language 来命名类、方法、变量等。例如，如果业务专家使用“订单”来描述一个概念，那么在代码中也应该使用“Order”而不是“Purchase”或“Transaction”。</li>
-<li>文档：在文档中使用 Ubiquitous Language 来描述系统的设计、架构和功能。这有助于业务专家更容易理解技术文档。</li>
-<li>沟通：在团队会议、讨论和白板会议中使用 Ubiquitous Language。这有助于确保所有参与者都在讨论同一个概念。</li>
-<li>测试：在编写测试用例时，使用 Ubiquitous Language 来描述测试的前提条件、步骤和预期结果。这有助于确保测试覆盖了业务需求。</li>
-</ol>
-<p>假设正在开发一个电子商务系统，业务专家使用“订单”来描述用户购买的商品集合。团队可以在代码中使用“Order”来命名相关的类和方法：</p>
-<figure class="highlight fsharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Order</span> <span class="operator">=</span> &#123;</span><br><span class="line">    items<span class="operator">:</span> OrderItem <span class="type">list</span></span><br><span class="line">    customer<span class="operator">:</span> Customer</span><br><span class="line">    orderDate<span class="operator">:</span> DateTime</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">OrderItem</span> <span class="operator">=</span> &#123;</span><br><span class="line">    product<span class="operator">:</span> Product</span><br><span class="line">    quantity<span class="operator">:</span> <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Customer</span> <span class="operator">=</span> &#123;</span><br><span class="line">    name<span class="operator">:</span> <span class="type">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Product</span> <span class="operator">=</span> &#123;</span><br><span class="line">    name<span class="operator">:</span> <span class="type">string</span></span><br><span class="line">    price<span class="operator">:</span> <span class="type">float</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> addItem (order<span class="operator">:</span> Order) (item<span class="operator">:</span> OrderItem) <span class="operator">=</span></span><br><span class="line">    &#123; order <span class="keyword">with</span> items <span class="operator">=</span> order.items <span class="operator">@</span> [item] &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> getTotalAmount (order<span class="operator">:</span> Order) <span class="operator">=</span></span><br><span class="line">    <span class="keyword">let</span> total <span class="operator">=</span> <span class="number">0.0</span></span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> order.items <span class="keyword">do</span></span><br><span class="line">        total <span class="operator">&lt;-</span> total <span class="operator">+</span> item.price</span><br><span class="line">    total</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> getPrice (item<span class="operator">:</span> OrderItem) <span class="operator">=</span></span><br><span class="line">    item.product.price <span class="operator">*</span> item.quantity</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> getTotalPrice (order<span class="operator">:</span> Order) <span class="operator">=</span></span><br><span class="line">    <span class="keyword">let</span> total <span class="operator">=</span> <span class="number">0.0</span></span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> order.items <span class="keyword">do</span></span><br><span class="line">        total <span class="operator">&lt;-</span> total <span class="operator">+</span> getPrice(item)</span><br><span class="line">    total</span><br></pre></td></tr></table></figure>
-<p>在这个示例中使用了“Order”、“OrderItem”、“Customer”和“Product”等术语，这些术语都是 Ubiquitous Language 的一部分，可以提高代码与业务需求的一致性。</p>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
       </tags>
   </entry>
   <entry>
@@ -2658,43 +2658,6 @@ A relation table (also sometimes called a <em>JOIN</em>, <em>link</em> or <em>pi
       </tags>
   </entry>
   <entry>
-    <title>TypeScript With Rust Errors, No Try Catch, Heresy</title>
-    <url>/2023/04/30/TypeScript-With-Rust-Errors-No-Try-Catch-Heresy/</url>
-    <content><![CDATA[<blockquote>
-<p>It’s hard to miss things when you don’t know different things exist</p>
-</blockquote>
-<p>The first problem is, and personally, I believe it’s the biggest JavaScript problem ever: we don’t know what can throw an error. From a JavaScript error perspective, it’s the same as the following:</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> data = “<span class="title class_">Hello</span>”;</span><br><span class="line">&#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">error</span>(err);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>JavaScript doesn’t know; JavaScript doesn’t care. You should know.</p>
-<p>Second thing, this is perfectly viable code:</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> request = &#123; <span class="attr">name</span>: “test”, <span class="attr">value</span>: <span class="number">2n</span> &#125;;</span><br><span class="line"><span class="keyword">const</span> body = <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(request);</span><br><span class="line"><span class="keyword">const</span> response = <span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">&quot;https://example.com&quot;</span>, &#123;</span><br><span class="line">  <span class="attr">method</span>: “<span class="variable constant_">POST</span>”,</span><br><span class="line">  body,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">if</span> (!response.<span class="property">ok</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>No errors, no linters, even though this can break your app.</p>
-<p>Right now, in my head, I can hear, “What’s the problem, just use try/catch everywhere.” Here comes the third problem: we don’t know which one is thrown. Of course, we can somehow guess by the error message, but what about bigger services/functions with many places where errors can happen? Are you sure you are handling all of them properly with one try/catch?</p>
-<hr>
-<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">greeting_file_result</span> = File::<span class="title function_ invoke__">open</span>(“hello.txt”);  </span><br><span class="line"><span class="keyword">let</span> <span class="variable">greeting_file</span> = <span class="keyword">match</span> greeting_file_result &#123;  </span><br><span class="line">  <span class="title function_ invoke__">Ok</span>(file) =&gt; file,  </span><br><span class="line">  <span class="title function_ invoke__">Err</span>(error) =&gt; <span class="built_in">panic!</span>(<span class="string">&quot;Problem opening the file: &#123;:?&#125;&quot;</span>, error),  </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>The most verbose of the three shown here and, ironically, the best one. So, first of all, Rust handles the errors using its amazing enums (they are not the same as TypeScript enums!). Without going into detail, what is important here is that it uses an enum called <code>Result</code> with two variants: <code>Ok</code> and <code>Err</code>. As you might guess, <code>Ok</code> holds a value and <code>Err</code> holds…surprise, an error :D.</p>
-<p>The summary here is that Rust always know where there might be an error. And it force you to deal with it right where it appears (mostly). No hidden ones, no guessing, no breaking app with a surprise face.</p>
-<p>And this approach is just better. By A MILE.</p>
-<p>We cannot make TypeScript errors work like the Rust. The limiting factor here is the language itself; it doesn’t have the proper tools to do that.</p>
-<p>But what we can do is try to make it similar. And make it simple:</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> <span class="title class_">Safe</span>&lt;T&gt; =  </span><br><span class="line">  | &#123;  </span><br><span class="line">    <span class="attr">success</span>: <span class="literal">true</span>;  </span><br><span class="line">    <span class="attr">data</span>: T;  </span><br><span class="line">  &#125;  </span><br><span class="line">  | &#123;  </span><br><span class="line">    <span class="attr">success</span>: <span class="literal">false</span>;  </span><br><span class="line">    <span class="attr">error</span>: <span class="built_in">string</span>;  </span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure>
-<p>we do need a few try/catches. The good thing is we only need about two, not 100,000:</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> safe&lt;T&gt;(<span class="attr">promise</span>: <span class="title class_">Promise</span>&lt;T&gt;, <span class="attr">err</span>?: <span class="built_in">string</span>): <span class="title class_">Promise</span>&lt;<span class="title class_">Safe</span>&lt;T&gt;&gt;;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> safe&lt;T&gt;(<span class="attr">func</span>: <span class="function">() =&gt;</span> T, <span class="attr">err</span>?: <span class="built_in">string</span>): <span class="title class_">Safe</span>&lt;T&gt;;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> safe&lt;T&gt;(</span><br><span class="line">  <span class="attr">promiseOrFunc</span>: <span class="title class_">Promise</span>&lt;T&gt; | (<span class="function">() =&gt;</span> T),</span><br><span class="line">  <span class="attr">err</span>?: <span class="built_in">string</span>,</span><br><span class="line">): <span class="title class_">Promise</span>&lt;<span class="title class_">Safe</span>&lt;T&gt;&gt; | <span class="title class_">Safe</span>&lt;T&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (promiseOrFunc <span class="keyword">instanceof</span> <span class="title class_">Promise</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">safeAsync</span>(promiseOrFunc, err);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">safeSync</span>(promiseOrFunc, err);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> safeAsync&lt;T&gt;(</span><br><span class="line">  <span class="attr">promise</span>: <span class="title class_">Promise</span>&lt;T&gt;, </span><br><span class="line">  <span class="attr">err</span>?: <span class="built_in">string</span></span><br><span class="line">): <span class="title class_">Promise</span>&lt;<span class="title class_">Safe</span>&lt;T&gt;&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> data = <span class="keyword">await</span> promise;</span><br><span class="line">    <span class="keyword">return</span> &#123; data, <span class="attr">success</span>: <span class="literal">true</span> &#125;;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(e);</span><br><span class="line">    <span class="keyword">if</span> (err !== <span class="literal">undefined</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="attr">success</span>: <span class="literal">false</span>, <span class="attr">error</span>: err &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (e <span class="keyword">instanceof</span> <span class="title class_">Error</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="attr">success</span>: <span class="literal">false</span>, <span class="attr">error</span>: e.<span class="property">message</span> &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> &#123; <span class="attr">success</span>: <span class="literal">false</span>, <span class="attr">error</span>: <span class="string">&quot;Something went wrong&quot;</span> &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> safeSync&lt;T&gt;(</span><br><span class="line">  <span class="attr">func</span>: <span class="function">() =&gt;</span> T, </span><br><span class="line">  <span class="attr">err</span>?: <span class="built_in">string</span></span><br><span class="line">): <span class="title class_">Safe</span>&lt;T&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> data = <span class="title function_">func</span>();</span><br><span class="line">    <span class="keyword">return</span> &#123; data, <span class="attr">success</span>: <span class="literal">true</span> &#125;;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(e);</span><br><span class="line">    <span class="keyword">if</span> (err !== <span class="literal">undefined</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="attr">success</span>: <span class="literal">false</span>, <span class="attr">error</span>: err &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (e <span class="keyword">instanceof</span> <span class="title class_">Error</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="attr">success</span>: <span class="literal">false</span>, <span class="attr">error</span>: e.<span class="property">message</span> &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> &#123; <span class="attr">success</span>: <span class="literal">false</span>, <span class="attr">error</span>: <span class="string">&quot;Something went wrong&quot;</span> &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>This is just a wrapper with our <code>Safe</code> type as the return one. But sometimes simple things are all you need. Let’s combine them with the example from above.</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> request = &#123; <span class="attr">name</span>: “test”, <span class="attr">value</span>: <span class="number">2n</span> &#125;;  </span><br><span class="line"><span class="keyword">const</span> body = <span class="title function_">safe</span>(  </span><br><span class="line">  <span class="function">() =&gt;</span> <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(request),  </span><br><span class="line">  “<span class="title class_">Failed</span> to serialize request”,  </span><br><span class="line">);  </span><br><span class="line"><span class="keyword">if</span> (!body.<span class="property">success</span>) &#123;  </span><br><span class="line">  <span class="comment">// handle error (body.error)  </span></span><br><span class="line">  <span class="keyword">return</span>;  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="keyword">const</span> response = <span class="keyword">await</span> <span class="title function_">safe</span>(  </span><br><span class="line">  <span class="title function_">fetch</span>(<span class="string">&quot;https://example.com&quot;</span>, &#123;  </span><br><span class="line">    <span class="attr">method</span>: “<span class="variable constant_">POST</span>”,  </span><br><span class="line">    <span class="attr">body</span>: body.<span class="property">data</span>,  </span><br><span class="line">  &#125;),  </span><br><span class="line">);  </span><br><span class="line"><span class="keyword">if</span> (!response.<span class="property">success</span>) &#123;  </span><br><span class="line">  <span class="comment">// handle error (response.error)  </span></span><br><span class="line">  <span class="keyword">return</span>;  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="keyword">if</span> (!response.<span class="property">data</span>.<span class="property">ok</span>) &#123;  </span><br><span class="line">  <span class="comment">// handle network error  </span></span><br><span class="line">  <span class="keyword">return</span>;  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="comment">// handle response (body.data)</span></span><br></pre></td></tr></table></figure>
-<p>New solution is longer, but it performs better because of the following reasons:</p>
-<ul>
-<li>no try/catch</li>
-<li>we handle each error where it occurs</li>
-<li>we can specify an error message for a specific function</li>
-<li>we have a nice top-to-bottom logic, all errors on top, then only the response at the bottom</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Turborepo 简述</title>
     <url>/2024/09/27/Turborepo-%E7%AE%80%E8%BF%B0/</url>
     <content><![CDATA[<h2 id="Turborepo-简介"><a class="header-anchor" href="#Turborepo-简介">¶</a>Turborepo 简介</h2>
@@ -2919,6 +2882,43 @@ A relation table (also sometimes called a <em>JOIN</em>, <em>link</em> or <em>pi
       </tags>
   </entry>
   <entry>
+    <title>TypeScript With Rust Errors, No Try Catch, Heresy</title>
+    <url>/2023/04/30/TypeScript-With-Rust-Errors-No-Try-Catch-Heresy/</url>
+    <content><![CDATA[<blockquote>
+<p>It’s hard to miss things when you don’t know different things exist</p>
+</blockquote>
+<p>The first problem is, and personally, I believe it’s the biggest JavaScript problem ever: we don’t know what can throw an error. From a JavaScript error perspective, it’s the same as the following:</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> data = “<span class="title class_">Hello</span>”;</span><br><span class="line">&#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">error</span>(err);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>JavaScript doesn’t know; JavaScript doesn’t care. You should know.</p>
+<p>Second thing, this is perfectly viable code:</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> request = &#123; <span class="attr">name</span>: “test”, <span class="attr">value</span>: <span class="number">2n</span> &#125;;</span><br><span class="line"><span class="keyword">const</span> body = <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(request);</span><br><span class="line"><span class="keyword">const</span> response = <span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">&quot;https://example.com&quot;</span>, &#123;</span><br><span class="line">  <span class="attr">method</span>: “<span class="variable constant_">POST</span>”,</span><br><span class="line">  body,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">if</span> (!response.<span class="property">ok</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>No errors, no linters, even though this can break your app.</p>
+<p>Right now, in my head, I can hear, “What’s the problem, just use try/catch everywhere.” Here comes the third problem: we don’t know which one is thrown. Of course, we can somehow guess by the error message, but what about bigger services/functions with many places where errors can happen? Are you sure you are handling all of them properly with one try/catch?</p>
+<hr>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">greeting_file_result</span> = File::<span class="title function_ invoke__">open</span>(“hello.txt”);  </span><br><span class="line"><span class="keyword">let</span> <span class="variable">greeting_file</span> = <span class="keyword">match</span> greeting_file_result &#123;  </span><br><span class="line">  <span class="title function_ invoke__">Ok</span>(file) =&gt; file,  </span><br><span class="line">  <span class="title function_ invoke__">Err</span>(error) =&gt; <span class="built_in">panic!</span>(<span class="string">&quot;Problem opening the file: &#123;:?&#125;&quot;</span>, error),  </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>The most verbose of the three shown here and, ironically, the best one. So, first of all, Rust handles the errors using its amazing enums (they are not the same as TypeScript enums!). Without going into detail, what is important here is that it uses an enum called <code>Result</code> with two variants: <code>Ok</code> and <code>Err</code>. As you might guess, <code>Ok</code> holds a value and <code>Err</code> holds…surprise, an error :D.</p>
+<p>The summary here is that Rust always know where there might be an error. And it force you to deal with it right where it appears (mostly). No hidden ones, no guessing, no breaking app with a surprise face.</p>
+<p>And this approach is just better. By A MILE.</p>
+<p>We cannot make TypeScript errors work like the Rust. The limiting factor here is the language itself; it doesn’t have the proper tools to do that.</p>
+<p>But what we can do is try to make it similar. And make it simple:</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> <span class="title class_">Safe</span>&lt;T&gt; =  </span><br><span class="line">  | &#123;  </span><br><span class="line">    <span class="attr">success</span>: <span class="literal">true</span>;  </span><br><span class="line">    <span class="attr">data</span>: T;  </span><br><span class="line">  &#125;  </span><br><span class="line">  | &#123;  </span><br><span class="line">    <span class="attr">success</span>: <span class="literal">false</span>;  </span><br><span class="line">    <span class="attr">error</span>: <span class="built_in">string</span>;  </span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure>
+<p>we do need a few try/catches. The good thing is we only need about two, not 100,000:</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> safe&lt;T&gt;(<span class="attr">promise</span>: <span class="title class_">Promise</span>&lt;T&gt;, <span class="attr">err</span>?: <span class="built_in">string</span>): <span class="title class_">Promise</span>&lt;<span class="title class_">Safe</span>&lt;T&gt;&gt;;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> safe&lt;T&gt;(<span class="attr">func</span>: <span class="function">() =&gt;</span> T, <span class="attr">err</span>?: <span class="built_in">string</span>): <span class="title class_">Safe</span>&lt;T&gt;;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> safe&lt;T&gt;(</span><br><span class="line">  <span class="attr">promiseOrFunc</span>: <span class="title class_">Promise</span>&lt;T&gt; | (<span class="function">() =&gt;</span> T),</span><br><span class="line">  <span class="attr">err</span>?: <span class="built_in">string</span>,</span><br><span class="line">): <span class="title class_">Promise</span>&lt;<span class="title class_">Safe</span>&lt;T&gt;&gt; | <span class="title class_">Safe</span>&lt;T&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (promiseOrFunc <span class="keyword">instanceof</span> <span class="title class_">Promise</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">safeAsync</span>(promiseOrFunc, err);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">safeSync</span>(promiseOrFunc, err);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> safeAsync&lt;T&gt;(</span><br><span class="line">  <span class="attr">promise</span>: <span class="title class_">Promise</span>&lt;T&gt;, </span><br><span class="line">  <span class="attr">err</span>?: <span class="built_in">string</span></span><br><span class="line">): <span class="title class_">Promise</span>&lt;<span class="title class_">Safe</span>&lt;T&gt;&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> data = <span class="keyword">await</span> promise;</span><br><span class="line">    <span class="keyword">return</span> &#123; data, <span class="attr">success</span>: <span class="literal">true</span> &#125;;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(e);</span><br><span class="line">    <span class="keyword">if</span> (err !== <span class="literal">undefined</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="attr">success</span>: <span class="literal">false</span>, <span class="attr">error</span>: err &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (e <span class="keyword">instanceof</span> <span class="title class_">Error</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="attr">success</span>: <span class="literal">false</span>, <span class="attr">error</span>: e.<span class="property">message</span> &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> &#123; <span class="attr">success</span>: <span class="literal">false</span>, <span class="attr">error</span>: <span class="string">&quot;Something went wrong&quot;</span> &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> safeSync&lt;T&gt;(</span><br><span class="line">  <span class="attr">func</span>: <span class="function">() =&gt;</span> T, </span><br><span class="line">  <span class="attr">err</span>?: <span class="built_in">string</span></span><br><span class="line">): <span class="title class_">Safe</span>&lt;T&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> data = <span class="title function_">func</span>();</span><br><span class="line">    <span class="keyword">return</span> &#123; data, <span class="attr">success</span>: <span class="literal">true</span> &#125;;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(e);</span><br><span class="line">    <span class="keyword">if</span> (err !== <span class="literal">undefined</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="attr">success</span>: <span class="literal">false</span>, <span class="attr">error</span>: err &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (e <span class="keyword">instanceof</span> <span class="title class_">Error</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="attr">success</span>: <span class="literal">false</span>, <span class="attr">error</span>: e.<span class="property">message</span> &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> &#123; <span class="attr">success</span>: <span class="literal">false</span>, <span class="attr">error</span>: <span class="string">&quot;Something went wrong&quot;</span> &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>This is just a wrapper with our <code>Safe</code> type as the return one. But sometimes simple things are all you need. Let’s combine them with the example from above.</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> request = &#123; <span class="attr">name</span>: “test”, <span class="attr">value</span>: <span class="number">2n</span> &#125;;  </span><br><span class="line"><span class="keyword">const</span> body = <span class="title function_">safe</span>(  </span><br><span class="line">  <span class="function">() =&gt;</span> <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(request),  </span><br><span class="line">  “<span class="title class_">Failed</span> to serialize request”,  </span><br><span class="line">);  </span><br><span class="line"><span class="keyword">if</span> (!body.<span class="property">success</span>) &#123;  </span><br><span class="line">  <span class="comment">// handle error (body.error)  </span></span><br><span class="line">  <span class="keyword">return</span>;  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="keyword">const</span> response = <span class="keyword">await</span> <span class="title function_">safe</span>(  </span><br><span class="line">  <span class="title function_">fetch</span>(<span class="string">&quot;https://example.com&quot;</span>, &#123;  </span><br><span class="line">    <span class="attr">method</span>: “<span class="variable constant_">POST</span>”,  </span><br><span class="line">    <span class="attr">body</span>: body.<span class="property">data</span>,  </span><br><span class="line">  &#125;),  </span><br><span class="line">);  </span><br><span class="line"><span class="keyword">if</span> (!response.<span class="property">success</span>) &#123;  </span><br><span class="line">  <span class="comment">// handle error (response.error)  </span></span><br><span class="line">  <span class="keyword">return</span>;  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="keyword">if</span> (!response.<span class="property">data</span>.<span class="property">ok</span>) &#123;  </span><br><span class="line">  <span class="comment">// handle network error  </span></span><br><span class="line">  <span class="keyword">return</span>;  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="comment">// handle response (body.data)</span></span><br></pre></td></tr></table></figure>
+<p>New solution is longer, but it performs better because of the following reasons:</p>
+<ul>
+<li>no try/catch</li>
+<li>we handle each error where it occurs</li>
+<li>we can specify an error message for a specific function</li>
+<li>we have a nice top-to-bottom logic, all errors on top, then only the response at the bottom</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>WiscKey: Separating Keys from Values in SSD-conscious Storage</title>
     <url>/2023/07/21/WiscKey-Separating-Keys-from-Values-in-SSD-conscious-Storage/</url>
     <content><![CDATA[<p>We present WiscKey, a persistent LSM-tree-based key-value store with a performance-oriented data layoutthat separates keys from values to minimize I/O amplifi-cation. The design of WiscKey is highly SSD optimized, leveraging both the sequential and random performance characteristics of the device.</p>
@@ -2984,6 +2984,25 @@ A relation table (also sometimes called a <em>JOIN</em>, <em>link</em> or <em>pi
       </tags>
   </entry>
   <entry>
+    <title>DADGAD 定弦</title>
+    <url>/2025/07/08/dadgad/</url>
+    <content><![CDATA[<p>模态定弦的空弦音不直接构成传统意义上的大调或小调和弦，而是形成一种听感上更为空灵、悬浮的“挂留和弦”（Suspended Chord）效果。</p>
+<p><strong>DADGAD (发音为 “dad-gad”):</strong> 这是凯尔特音乐（Celtic Music）中最具代表性的定弦。它的空弦音给人一种既非大调也非小调的模糊感，充满了神秘和悠远的色彩，非常适合营造氛围音乐和复杂的指弹旋律。</p>
+<p>挂留和弦（Suspended Chord），通常简写为 <strong>“sus”</strong>，是一种在传统和弦结构上进行了巧妙“修改”的和弦。它的核心特点是：<strong>用一个非三度的音，去“替代”或“悬挂”了原本决定和弦大/小调色彩的三度音</strong>，从而创造出一种独特的声音效果。</p>
+<p>想象一个标准的大三和弦或小三和弦，它由<strong>根音、三度音和五度音</strong>构成。其中，<strong>三度音</strong>是决定这个和弦听起来是明亮、开心的“大调”，还是忧郁、伤感的“小调”的关键。</p>
+<p>而挂留和弦，就是把这个关键的“三度音”暂时拿掉，换上别的音。最常见的替代者有两个：<br>
+一是 <strong>纯四度音 (Perfect 4th)</strong> ，二是 <strong>大二度音 (Major 2nd)</strong> 。</p>
+<p><strong>sus4 和弦 (挂四和弦)</strong> 由 <strong>根音 (1) + 纯四度音 (4) + 纯五度音 (5)</strong> 构成，即用<strong>四度音</strong>替代了原本的三度音。听感上，这是最常见的挂留和弦。它创造出一种<strong>强烈而悬浮的张力感</strong>，声音既不属于大调也不属于小调，听起来非常“开阔”。例如，一个 <strong>Csus4</strong> 和弦，就是由 C、F、G 三个音构成，取代了标准C大调和弦（C-E-G）中的 E 音。</p>
+<p><strong>sus2 和弦 (挂二和弦)</strong> 由 <strong>根音 (1) + 大二度音 (2) + 纯五度音 (5)</strong> 构成，特点是用二度音替代了原本的三度音。听感上，sus2和弦的声音比sus4更柔和、更明亮一些。它同样具有开放、模糊的色彩，但张力感稍弱，听起来更像是一种平静、梦幻的色彩和弦。例如，一个 <strong>Csus2</strong> 和弦，就是由 C、D、G 三个音构成，取代了标准C大调和弦（C-E-G）中的 E 音。</p>
+<p>而 DADGAD 定弦方式的空弦音，其核心就是一个挂留和弦，具体来说是一个 Dsus4 和弦。当你弹响 DADGAD 的所有空弦时，你实际上听到的就是 <strong>D、G、A</strong> 这三个音在不同八度上的叠加和共鸣。这三个音不多不少，正好构成了 <strong>Dsus4</strong> 和弦。</p>
+<p>DADGAD 定弦的精髓，就在于它将整个吉他的开放状态变成了一个巨大的、共鸣丰富的 <strong>Dsus4</strong> 挂留和弦。</p>
+<p>这正是为什么它能产生那种“既非大调也非小调的模糊感”和“空灵、悬浮”的听感。因为三度音（F# 或 F）的缺失，和弦的“身份”被悬挂了起来，没有明确地告诉你它是快乐的（大调）还是悲伤的（小调），而是创造出一种充满想象空间、广阔而悠远的音景。</p>
+]]></content>
+      <tags>
+        <tag>Life</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>在临床医疗领域中的数据库外键设计取舍</title>
     <url>/2025/09/09/database-fk-design-in-clinical-medicine/</url>
     <content><![CDATA[<p>从关系模型的理论视角看，外键作为参照完整性约束的实现机制，理论上能确保跨表数据的逻辑一致性，避免出现孤立记录（orphaned records）<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>。但在高并发、分布式、快速迭代的业务场景中，强制外键约束会引入显著的运行时开销：每次写操作都需要执行跨表的锁检查与索引查询，在 OLTP 系统中尤其影响吞吐量。<a href="https://planetscale.com/docs/learn/operating-without-foreign-key-constraints">planetscale.com</a> 的文档指出，MySQL 的外键会引入对数据和元数据更改的额外锁定，从而导致性能下降，特别是在高并发工作负载中<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>。以 TPC-C 基准测试为例，启用外键的订单创建事务延迟可能增加，因为数据库引擎必须验证客户表与订单项表的关联有效性，这在每秒数千次写入的场景下会成为锁竞争瓶颈。</p>
@@ -3044,102 +3063,6 @@ A relation table (also sometimes called a <em>JOIN</em>, <em>link</em> or <em>pi
 ]]></content>
       <tags>
         <tag>Technique</tag>
-        <tag>Medicine</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>DADGAD 定弦</title>
-    <url>/2025/07/08/dadgad/</url>
-    <content><![CDATA[<p>模态定弦的空弦音不直接构成传统意义上的大调或小调和弦，而是形成一种听感上更为空灵、悬浮的“挂留和弦”（Suspended Chord）效果。</p>
-<p><strong>DADGAD (发音为 “dad-gad”):</strong> 这是凯尔特音乐（Celtic Music）中最具代表性的定弦。它的空弦音给人一种既非大调也非小调的模糊感，充满了神秘和悠远的色彩，非常适合营造氛围音乐和复杂的指弹旋律。</p>
-<p>挂留和弦（Suspended Chord），通常简写为 <strong>“sus”</strong>，是一种在传统和弦结构上进行了巧妙“修改”的和弦。它的核心特点是：<strong>用一个非三度的音，去“替代”或“悬挂”了原本决定和弦大/小调色彩的三度音</strong>，从而创造出一种独特的声音效果。</p>
-<p>想象一个标准的大三和弦或小三和弦，它由<strong>根音、三度音和五度音</strong>构成。其中，<strong>三度音</strong>是决定这个和弦听起来是明亮、开心的“大调”，还是忧郁、伤感的“小调”的关键。</p>
-<p>而挂留和弦，就是把这个关键的“三度音”暂时拿掉，换上别的音。最常见的替代者有两个：<br>
-一是 <strong>纯四度音 (Perfect 4th)</strong> ，二是 <strong>大二度音 (Major 2nd)</strong> 。</p>
-<p><strong>sus4 和弦 (挂四和弦)</strong> 由 <strong>根音 (1) + 纯四度音 (4) + 纯五度音 (5)</strong> 构成，即用<strong>四度音</strong>替代了原本的三度音。听感上，这是最常见的挂留和弦。它创造出一种<strong>强烈而悬浮的张力感</strong>，声音既不属于大调也不属于小调，听起来非常“开阔”。例如，一个 <strong>Csus4</strong> 和弦，就是由 C、F、G 三个音构成，取代了标准C大调和弦（C-E-G）中的 E 音。</p>
-<p><strong>sus2 和弦 (挂二和弦)</strong> 由 <strong>根音 (1) + 大二度音 (2) + 纯五度音 (5)</strong> 构成，特点是用二度音替代了原本的三度音。听感上，sus2和弦的声音比sus4更柔和、更明亮一些。它同样具有开放、模糊的色彩，但张力感稍弱，听起来更像是一种平静、梦幻的色彩和弦。例如，一个 <strong>Csus2</strong> 和弦，就是由 C、D、G 三个音构成，取代了标准C大调和弦（C-E-G）中的 E 音。</p>
-<p>而 DADGAD 定弦方式的空弦音，其核心就是一个挂留和弦，具体来说是一个 Dsus4 和弦。当你弹响 DADGAD 的所有空弦时，你实际上听到的就是 <strong>D、G、A</strong> 这三个音在不同八度上的叠加和共鸣。这三个音不多不少，正好构成了 <strong>Dsus4</strong> 和弦。</p>
-<p>DADGAD 定弦的精髓，就在于它将整个吉他的开放状态变成了一个巨大的、共鸣丰富的 <strong>Dsus4</strong> 挂留和弦。</p>
-<p>这正是为什么它能产生那种“既非大调也非小调的模糊感”和“空灵、悬浮”的听感。因为三度音（F# 或 F）的缺失，和弦的“身份”被悬挂了起来，没有明确地告诉你它是快乐的（大调）还是悲伤的（小调），而是创造出一种充满想象空间、广阔而悠远的音景。</p>
-]]></content>
-      <tags>
-        <tag>Life</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>肠易激综合征 (IBS) 的病理学与药物治疗</title>
-    <url>/2025/06/30/ibs/</url>
-    <content><![CDATA[<p>肠易激综合征 (Irritable Bowel Syndrome, IBS) 是一种常见的功能性胃肠病。其核心特征是在没有发现任何器质性病变（如炎症、溃疡或肿瘤）的情况下，患者长期经历腹痛、腹胀，并伴有排便习惯的改变（腹泻、便秘或两者交替）。</p>
-<h3 id="一、-肠易激综合征的病理生理学"><a class="header-anchor" href="#一、-肠易激综合征的病理生理学">¶</a>一、 肠易激综合征的病理生理学</h3>
-<p>IBS 的病理生理机制非常复杂，并非由单一原因导致，而是多种因素相互作用的结果。目前的医学研究认为，其主要与以下几个核心机制有关：</p>
-<h4 id="1-脑-肠轴功能紊乱-Disorders-of-the-Brain-Gut-Axis"><a class="header-anchor" href="#1-脑-肠轴功能紊乱-Disorders-of-the-Brain-Gut-Axis">¶</a>1. 脑-肠轴功能紊乱 (Disorders of the Brain-Gut Axis)</h4>
-<p>这是 IBS 最核心的病理机制。大脑和肠道通过神经、内分泌和免疫系统形成一个双向沟通的“脑-肠轴”。在 IBS 患者中，这个轴的功能出现紊乱。</p>
-<ul>
-<li><strong>自上而下：</strong> 心理压力、焦虑、抑郁等负面情绪可以直接通过大脑影响肠道的运动、感觉和分泌功能，从而诱发或加重症状。</li>
-<li><strong>自下而上：</strong> 肠道内的信号（如食物、气体、肠道菌群代谢产物）被过度放大后传给大脑，导致大脑对这些正常刺激产生过度反应，表现为疼痛和不适。</li>
-</ul>
-<h4 id="2-内脏高敏感性-Visceral-Hypersensitivity"><a class="header-anchor" href="#2-内脏高敏感性-Visceral-Hypersensitivity">¶</a>2. 内脏高敏感性 (Visceral Hypersensitivity)</h4>
-<p>这是指 IBS 患者的肠道对各种刺激（如食物、气体、肠壁的牵拉）异常敏感。正常人可以耐受的肠道内压力或活动，在 IBS 患者身上却会引发强烈的腹痛、急便感或不适。这种“放大”的感觉是 IBS 腹痛的主要原因。</p>
-<h4 id="3-胃肠动力异常-Altered-Gut-Motility"><a class="header-anchor" href="#3-胃肠动力异常-Altered-Gut-Motility">¶</a>3. 胃肠动力异常 (Altered Gut Motility)</h4>
-<p>肠道肌肉的收缩和舒张节律出现问题，导致食物和粪便在肠道内的转运速度异常。</p>
-<ul>
-<li><strong>转运过快：</strong> 肠道内容物过快通过结肠，水分来不及被充分吸收，导致腹泻（IBS-D）。</li>
-<li><strong>转运过慢：</strong> 肠道蠕动乏力，粪便在结肠内停留时间过长，水分被过度吸收，导致便秘（IBS-C）。</li>
-<li><strong>节律紊乱：</strong> 有时快有时慢，导致腹泻与便秘交替出现（IBS-M）。</li>
-</ul>
-<h4 id="4-肠道微生态失调-Alteration-in-Gut-Microbiota"><a class="header-anchor" href="#4-肠道微生态失调-Alteration-in-Gut-Microbiota">¶</a>4. 肠道微生态失调 (Alteration in Gut Microbiota)</h4>
-<p>IBS 患者的肠道菌群组成和功能与健康人存在差异。有害菌可能增多，有益菌（如双歧杆菌、乳酸杆菌）可能减少。这些失调的菌群会影响肠道屏障功能、产生过多气体、并激活免疫系统，导致腹胀和腹泻。</p>
-<h4 id="5-肠道低度炎症与免疫激活-Low-Grade-Inflammation-and-Immune-Activation"><a class="header-anchor" href="#5-肠道低度炎症与免疫激活-Low-Grade-Inflammation-and-Immune-Activation">¶</a>5. 肠道低度炎症与免疫激活 (Low-Grade Inflammation and Immune Activation)</h4>
-<p>部分 IBS 患者的肠道黏膜中可以观察到轻微的炎症反应，例如肥大细胞等免疫细胞数量增多并被激活。这些细胞会释放组胺、5-羟色胺等物质，直接刺激肠道神经，引起疼痛和动力异常。这种情况尤其在感染性肠炎后发生的 IBS（PI-IBS）中更为常见。</p>
-<h4 id="6-遗传与饮食因素"><a class="header-anchor" href="#6-遗传与饮食因素">¶</a>6. 遗传与饮食因素</h4>
-<ul>
-<li><strong>遗传：</strong> IBS具有一定的家族聚集性，提示可能存在遗传易感性。</li>
-<li><strong>饮食：</strong> 某些食物，特别是含有高<strong>FODMAPs</strong>（可发酵的寡糖、双糖、单糖和多元醇）的食物，在小肠内难以被吸收，进入大肠后被细菌快速发酵，产生大量气体并增加肠道渗透压，从而诱发腹胀、腹痛和腹泻。</li>
-</ul>
-<h3 id="二、-肠易激综合征的药物治疗"><a class="header-anchor" href="#二、-肠易激综合征的药物治疗">¶</a>二、 肠易激综合征的药物治疗</h3>
-<blockquote>
-<p>IBS的治疗需要个体化，所有药物都应在医生指导下使用。医生应该根据具体的 IBS 亚型（腹泻型、便秘型、混合型）和主要症状来选择最合适的药物。</p>
-</blockquote>
-<h4 id="针对主要症状的药物"><a class="header-anchor" href="#针对主要症状的药物">¶</a>针对主要症状的药物</h4>
-<p><strong>1. 针对腹痛和腹胀（解痉药）</strong></p>
-<p>这类药物通过放松肠道平滑肌，缓解肠道痉挛来减轻疼痛。</p>
-<ul>
-<li><strong>匹维溴铵 (Pinaverium Bromide)：</strong> 作用于肠道平滑肌的钙离子通道，选择性高，副作用较小。</li>
-<li><strong>奥替溴铵 (Otilonium Bromide)：</strong> 与匹维溴铵类似，对结肠有较高的亲和力。</li>
-<li><strong>马来酸曲美布汀 (Trimebutine Maleate)：</strong> 具有双向调节作用，在肠道动力过快时抑制它，过慢时促进它，对腹痛、腹泻和便秘都有一定效果。</li>
-<li><strong>薄荷油 (Peppermint Oil)：</strong> 是一种天然的解痉剂，其肠溶胶囊可以有效缓解腹痛和腹胀。</li>
-</ul>
-<p><strong>2. 针对腹泻 (IBS-D)</strong></p>
-<ul>
-<li><strong>洛哌丁胺 (Loperamide)：</strong> 是一种止泻药，能减慢肠道蠕动，增加水分吸收。适用于急性腹泻发作，但不宜长期连续使用。</li>
-<li><strong>蒙脱石散 (Montmorillonite Powder)：</strong> 是一种肠道黏膜保护剂，能吸附肠道内的病菌和毒素，并覆盖在肠壁上形成保护层。</li>
-<li><strong>利福昔明 (Rifaximin)：</strong> 一种几乎不被肠道吸收的抗生素，可以调节肠道菌群，减少有害菌和产气，对改善腹泻和腹胀有良好效果。</li>
-<li><strong>5-HT₃受体拮抗剂（如阿洛司琼 Alosetron）：</strong> 能显著减缓肠道转运、减轻内脏敏感性。因可能引起严重便秘和缺血性结肠炎等副作用，使用受到严格限制，通常仅用于其他治疗无效的重度女性IBS-D患者。</li>
-<li><strong>胆汁酸螯合剂（如考来烯胺 Cholestyramine）：</strong> 适用于因胆汁酸吸收不良导致的腹泻型IBS。</li>
-</ul>
-<p><strong>3. 针对便秘 (IBS-C)</strong></p>
-<ul>
-<li><strong>容积性泻药（如欧车前、聚卡波非钙）：</strong> 通过吸收水分增加粪便体积，刺激肠道蠕动。使用时需饮用足量水，否则可能加重便秘。</li>
-<li><strong>渗透性泻药（如聚乙二醇 PEG、乳果糖）：</strong> 通过在肠道内形成高渗环境，将水分保留在肠腔内，软化粪便，促进排便。相对安全，适合长期使用。</li>
-<li><strong>促分泌药：</strong>
-<ul>
-<li><strong>鲁比前列酮 (Lubiprostone)：</strong> 激活肠道氯离子通道，增加肠液分泌，软化粪便。</li>
-<li><strong>利那洛肽 (Linaclotide)、普卡那肽 (Plecanatide)：</strong> 激活鸟苷酸环化酶-C，促进肠液分泌，并能一定程度上缓解腹痛。</li>
-</ul>
-</li>
-</ul>
-<p><strong>4. 调节脑-肠轴功能的药物（精神类药物）</strong></p>
-<p>对于伴有明显焦虑、抑郁或常规治疗无效的顽固性腹痛患者，医生可能会考虑使用低剂量的抗抑郁药。</p>
-<ul>
-<li><strong>三环类抗抑郁药 (TCAs)（如阿米替林）：</strong> 低剂量使用可以有效缓解IBS的慢性腹痛，其抗胆碱能作用也有助于控制腹泻。</li>
-<li><strong>选择性5-羟色胺再摄取抑制剂 (SSRIs)（如氟西汀、帕罗西汀）：</strong> 可用于伴有便秘和焦虑的IBS患者。</li>
-</ul>
-<ol start="5">
-<li>益生菌 (Probiotics)</li>
-</ol>
-<p>补充特定的益生菌菌株（如某些双歧杆菌和乳酸杆菌）有助于恢复肠道微生态平衡，改善腹胀和总体症状。不同菌株效果各异，需根据产品说明和医生建议选用。</p>
-]]></content>
-      <tags>
         <tag>Medicine</tag>
       </tags>
   </entry>
@@ -3243,15 +3166,80 @@ A relation table (also sometimes called a <em>JOIN</em>, <em>link</em> or <em>pi
       </tags>
   </entry>
   <entry>
-    <title>Linux 下 AMD 显卡屏幕画面闪烁问题修复方案</title>
-    <url>/2025/04/20/linux-amd-screen-boom/</url>
-    <content><![CDATA[<p>不知道我们所说的闪烁是不是一个东西，在我的笔记本上，闪烁是指偶发的屏幕中出现部分彩色雪花。</p>
-<p>我使用 Pop!_OS，此发行版使用 EFI 启动，故而可以在 <code>/boot/efi/loader/loader.conf</code> 中加上:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">options quiet splash amdgpu.dcdebugmask=0x10 amdgpu.sg_display=0</span><br></pre></td></tr></table></figure>
-<p>对于其他使用 EFI 或 GRUB 启动的发行版也可以添加类似的参数尝试尝试。</p>
+    <title>肠易激综合征 (IBS) 的病理学与药物治疗</title>
+    <url>/2025/06/30/ibs/</url>
+    <content><![CDATA[<p>肠易激综合征 (Irritable Bowel Syndrome, IBS) 是一种常见的功能性胃肠病。其核心特征是在没有发现任何器质性病变（如炎症、溃疡或肿瘤）的情况下，患者长期经历腹痛、腹胀，并伴有排便习惯的改变（腹泻、便秘或两者交替）。</p>
+<h3 id="一、-肠易激综合征的病理生理学"><a class="header-anchor" href="#一、-肠易激综合征的病理生理学">¶</a>一、 肠易激综合征的病理生理学</h3>
+<p>IBS 的病理生理机制非常复杂，并非由单一原因导致，而是多种因素相互作用的结果。目前的医学研究认为，其主要与以下几个核心机制有关：</p>
+<h4 id="1-脑-肠轴功能紊乱-Disorders-of-the-Brain-Gut-Axis"><a class="header-anchor" href="#1-脑-肠轴功能紊乱-Disorders-of-the-Brain-Gut-Axis">¶</a>1. 脑-肠轴功能紊乱 (Disorders of the Brain-Gut Axis)</h4>
+<p>这是 IBS 最核心的病理机制。大脑和肠道通过神经、内分泌和免疫系统形成一个双向沟通的“脑-肠轴”。在 IBS 患者中，这个轴的功能出现紊乱。</p>
+<ul>
+<li><strong>自上而下：</strong> 心理压力、焦虑、抑郁等负面情绪可以直接通过大脑影响肠道的运动、感觉和分泌功能，从而诱发或加重症状。</li>
+<li><strong>自下而上：</strong> 肠道内的信号（如食物、气体、肠道菌群代谢产物）被过度放大后传给大脑，导致大脑对这些正常刺激产生过度反应，表现为疼痛和不适。</li>
+</ul>
+<h4 id="2-内脏高敏感性-Visceral-Hypersensitivity"><a class="header-anchor" href="#2-内脏高敏感性-Visceral-Hypersensitivity">¶</a>2. 内脏高敏感性 (Visceral Hypersensitivity)</h4>
+<p>这是指 IBS 患者的肠道对各种刺激（如食物、气体、肠壁的牵拉）异常敏感。正常人可以耐受的肠道内压力或活动，在 IBS 患者身上却会引发强烈的腹痛、急便感或不适。这种“放大”的感觉是 IBS 腹痛的主要原因。</p>
+<h4 id="3-胃肠动力异常-Altered-Gut-Motility"><a class="header-anchor" href="#3-胃肠动力异常-Altered-Gut-Motility">¶</a>3. 胃肠动力异常 (Altered Gut Motility)</h4>
+<p>肠道肌肉的收缩和舒张节律出现问题，导致食物和粪便在肠道内的转运速度异常。</p>
+<ul>
+<li><strong>转运过快：</strong> 肠道内容物过快通过结肠，水分来不及被充分吸收，导致腹泻（IBS-D）。</li>
+<li><strong>转运过慢：</strong> 肠道蠕动乏力，粪便在结肠内停留时间过长，水分被过度吸收，导致便秘（IBS-C）。</li>
+<li><strong>节律紊乱：</strong> 有时快有时慢，导致腹泻与便秘交替出现（IBS-M）。</li>
+</ul>
+<h4 id="4-肠道微生态失调-Alteration-in-Gut-Microbiota"><a class="header-anchor" href="#4-肠道微生态失调-Alteration-in-Gut-Microbiota">¶</a>4. 肠道微生态失调 (Alteration in Gut Microbiota)</h4>
+<p>IBS 患者的肠道菌群组成和功能与健康人存在差异。有害菌可能增多，有益菌（如双歧杆菌、乳酸杆菌）可能减少。这些失调的菌群会影响肠道屏障功能、产生过多气体、并激活免疫系统，导致腹胀和腹泻。</p>
+<h4 id="5-肠道低度炎症与免疫激活-Low-Grade-Inflammation-and-Immune-Activation"><a class="header-anchor" href="#5-肠道低度炎症与免疫激活-Low-Grade-Inflammation-and-Immune-Activation">¶</a>5. 肠道低度炎症与免疫激活 (Low-Grade Inflammation and Immune Activation)</h4>
+<p>部分 IBS 患者的肠道黏膜中可以观察到轻微的炎症反应，例如肥大细胞等免疫细胞数量增多并被激活。这些细胞会释放组胺、5-羟色胺等物质，直接刺激肠道神经，引起疼痛和动力异常。这种情况尤其在感染性肠炎后发生的 IBS（PI-IBS）中更为常见。</p>
+<h4 id="6-遗传与饮食因素"><a class="header-anchor" href="#6-遗传与饮食因素">¶</a>6. 遗传与饮食因素</h4>
+<ul>
+<li><strong>遗传：</strong> IBS具有一定的家族聚集性，提示可能存在遗传易感性。</li>
+<li><strong>饮食：</strong> 某些食物，特别是含有高<strong>FODMAPs</strong>（可发酵的寡糖、双糖、单糖和多元醇）的食物，在小肠内难以被吸收，进入大肠后被细菌快速发酵，产生大量气体并增加肠道渗透压，从而诱发腹胀、腹痛和腹泻。</li>
+</ul>
+<h3 id="二、-肠易激综合征的药物治疗"><a class="header-anchor" href="#二、-肠易激综合征的药物治疗">¶</a>二、 肠易激综合征的药物治疗</h3>
+<blockquote>
+<p>IBS的治疗需要个体化，所有药物都应在医生指导下使用。医生应该根据具体的 IBS 亚型（腹泻型、便秘型、混合型）和主要症状来选择最合适的药物。</p>
+</blockquote>
+<h4 id="针对主要症状的药物"><a class="header-anchor" href="#针对主要症状的药物">¶</a>针对主要症状的药物</h4>
+<p><strong>1. 针对腹痛和腹胀（解痉药）</strong></p>
+<p>这类药物通过放松肠道平滑肌，缓解肠道痉挛来减轻疼痛。</p>
+<ul>
+<li><strong>匹维溴铵 (Pinaverium Bromide)：</strong> 作用于肠道平滑肌的钙离子通道，选择性高，副作用较小。</li>
+<li><strong>奥替溴铵 (Otilonium Bromide)：</strong> 与匹维溴铵类似，对结肠有较高的亲和力。</li>
+<li><strong>马来酸曲美布汀 (Trimebutine Maleate)：</strong> 具有双向调节作用，在肠道动力过快时抑制它，过慢时促进它，对腹痛、腹泻和便秘都有一定效果。</li>
+<li><strong>薄荷油 (Peppermint Oil)：</strong> 是一种天然的解痉剂，其肠溶胶囊可以有效缓解腹痛和腹胀。</li>
+</ul>
+<p><strong>2. 针对腹泻 (IBS-D)</strong></p>
+<ul>
+<li><strong>洛哌丁胺 (Loperamide)：</strong> 是一种止泻药，能减慢肠道蠕动，增加水分吸收。适用于急性腹泻发作，但不宜长期连续使用。</li>
+<li><strong>蒙脱石散 (Montmorillonite Powder)：</strong> 是一种肠道黏膜保护剂，能吸附肠道内的病菌和毒素，并覆盖在肠壁上形成保护层。</li>
+<li><strong>利福昔明 (Rifaximin)：</strong> 一种几乎不被肠道吸收的抗生素，可以调节肠道菌群，减少有害菌和产气，对改善腹泻和腹胀有良好效果。</li>
+<li><strong>5-HT₃受体拮抗剂（如阿洛司琼 Alosetron）：</strong> 能显著减缓肠道转运、减轻内脏敏感性。因可能引起严重便秘和缺血性结肠炎等副作用，使用受到严格限制，通常仅用于其他治疗无效的重度女性IBS-D患者。</li>
+<li><strong>胆汁酸螯合剂（如考来烯胺 Cholestyramine）：</strong> 适用于因胆汁酸吸收不良导致的腹泻型IBS。</li>
+</ul>
+<p><strong>3. 针对便秘 (IBS-C)</strong></p>
+<ul>
+<li><strong>容积性泻药（如欧车前、聚卡波非钙）：</strong> 通过吸收水分增加粪便体积，刺激肠道蠕动。使用时需饮用足量水，否则可能加重便秘。</li>
+<li><strong>渗透性泻药（如聚乙二醇 PEG、乳果糖）：</strong> 通过在肠道内形成高渗环境，将水分保留在肠腔内，软化粪便，促进排便。相对安全，适合长期使用。</li>
+<li><strong>促分泌药：</strong>
+<ul>
+<li><strong>鲁比前列酮 (Lubiprostone)：</strong> 激活肠道氯离子通道，增加肠液分泌，软化粪便。</li>
+<li><strong>利那洛肽 (Linaclotide)、普卡那肽 (Plecanatide)：</strong> 激活鸟苷酸环化酶-C，促进肠液分泌，并能一定程度上缓解腹痛。</li>
+</ul>
+</li>
+</ul>
+<p><strong>4. 调节脑-肠轴功能的药物（精神类药物）</strong></p>
+<p>对于伴有明显焦虑、抑郁或常规治疗无效的顽固性腹痛患者，医生可能会考虑使用低剂量的抗抑郁药。</p>
+<ul>
+<li><strong>三环类抗抑郁药 (TCAs)（如阿米替林）：</strong> 低剂量使用可以有效缓解IBS的慢性腹痛，其抗胆碱能作用也有助于控制腹泻。</li>
+<li><strong>选择性5-羟色胺再摄取抑制剂 (SSRIs)（如氟西汀、帕罗西汀）：</strong> 可用于伴有便秘和焦虑的IBS患者。</li>
+</ul>
+<ol start="5">
+<li>益生菌 (Probiotics)</li>
+</ol>
+<p>补充特定的益生菌菌株（如某些双歧杆菌和乳酸杆菌）有助于恢复肠道微生态平衡，改善腹胀和总体症状。不同菌株效果各异，需根据产品说明和医生建议选用。</p>
 ]]></content>
       <tags>
-        <tag>Technique</tag>
+        <tag>Medicine</tag>
       </tags>
   </entry>
   <entry>
@@ -3261,6 +3249,18 @@ A relation table (also sometimes called a <em>JOIN</em>, <em>link</em> or <em>pi
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">libdecor-gtk-WARNING: Failed to initialize GTK</span><br></pre></td></tr></table></figure>
 <p>这是因为 VSCode 默认使用 X11，可以使用以下参数启动 VSCode：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">code --enable-features=UseOzonePlatform --ozone-platform=wayland</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux 下 AMD 显卡屏幕画面闪烁问题修复方案</title>
+    <url>/2025/04/20/linux-amd-screen-boom/</url>
+    <content><![CDATA[<p>不知道我们所说的闪烁是不是一个东西，在我的笔记本上，闪烁是指偶发的屏幕中出现部分彩色雪花。</p>
+<p>我使用 Pop!_OS，此发行版使用 EFI 启动，故而可以在 <code>/boot/efi/loader/loader.conf</code> 中加上:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">options quiet splash amdgpu.dcdebugmask=0x10 amdgpu.sg_display=0</span><br></pre></td></tr></table></figure>
+<p>对于其他使用 EFI 或 GRUB 启动的发行版也可以添加类似的参数尝试尝试。</p>
 ]]></content>
       <tags>
         <tag>Technique</tag>
@@ -3784,24 +3784,24 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </categories>
   </entry>
   <entry>
-    <title>二〇二三年十一月二十九日</title>
-    <url>/2023/11/29/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%B8%89%E5%B9%B4%E5%8D%81%E4%B8%80%E6%9C%88%E4%BA%8C%E5%8D%81%E4%B9%9D%E6%97%A5/</url>
-    <content><![CDATA[<p>我们的人生，都是某座不知名的山上某片不知名的乱林里的某颗不知名姓的杂草，春带来霉湿，夏带来毒辣，秋带来阴沉，冬带来寒冰。</p>
-<p>我们渴望什么，生活就拿走什么。我们害怕什么，时间就带来什么。我们不断下沉，下沉。仿佛同这漫长的人生一样，等不到尽头。</p>
-<p>而衣冠立于浊世，先是个体，然后结对，最后成群，这一生总要有这样那样的分别，迈过这一年，再过下一年，有多少这样的每一年。</p>
-<p>这世上也不是所有事都算得准的。</p>
-]]></content>
-      <categories>
-        <category>gallery</category>
-      </categories>
-  </entry>
-  <entry>
     <title>二〇二三年六月二十九日</title>
     <url>/2023/06/29/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%B8%89%E5%B9%B4%E5%85%AD%E6%9C%88%E4%BA%8C%E5%8D%81%E4%B9%9D%E6%97%A5/</url>
     <content><![CDATA[<p>我能走遍大街小巷，但我走不出时间，这里有太多东西网住我了，每一个不知所措的老人家，每一个满身泥土的农民，每一只嬉戏打闹的猫狗和每一寸土地下的家人。</p>
 <p>我知道，能明确感受到，远处的风力发电机每转一圈我对这里的牵挂就更深一点，太阳每次升到我头顶都会把我的身体压进泥土里一点。</p>
 <p>夕阳下的街头空无一人，窗户间的缝隙吹来寒风，隔壁回锅肉的香味混在其中，困顿中还有美好的可能，所以别让自己太过消沉。</p>
 <p>所以别让自己太过消沉。</p>
+]]></content>
+      <categories>
+        <category>gallery</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>二〇二三年十一月二十九日</title>
+    <url>/2023/11/29/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%B8%89%E5%B9%B4%E5%8D%81%E4%B8%80%E6%9C%88%E4%BA%8C%E5%8D%81%E4%B9%9D%E6%97%A5/</url>
+    <content><![CDATA[<p>我们的人生，都是某座不知名的山上某片不知名的乱林里的某颗不知名姓的杂草，春带来霉湿，夏带来毒辣，秋带来阴沉，冬带来寒冰。</p>
+<p>我们渴望什么，生活就拿走什么。我们害怕什么，时间就带来什么。我们不断下沉，下沉。仿佛同这漫长的人生一样，等不到尽头。</p>
+<p>而衣冠立于浊世，先是个体，然后结对，最后成群，这一生总要有这样那样的分别，迈过这一年，再过下一年，有多少这样的每一年。</p>
+<p>这世上也不是所有事都算得准的。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
@@ -3945,15 +3945,6 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </categories>
   </entry>
   <entry>
-    <title>二〇二五年六月二十九日</title>
-    <url>/2025/06/29/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%BA%94%E5%B9%B4%E5%85%AD%E6%9C%88%E4%BA%8C%E5%8D%81%E4%B9%9D%E6%97%A5/</url>
-    <content><![CDATA[<p>我很想你们。</p>
-]]></content>
-      <categories>
-        <category>gallery</category>
-      </categories>
-  </entry>
-  <entry>
     <title>二〇二五年五月十二日</title>
     <url>/2025/05/12/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%BA%94%E5%B9%B4%E4%BA%94%E6%9C%88%E5%8D%81%E4%BA%8C%E6%97%A5/</url>
     <content><![CDATA[<p>放假前的最后一晚，侧耳听了会他们聊游戏里的内容，把水杯放在书桌上上，浅浅扬唇：“好热闹。”</p>
@@ -3975,6 +3966,15 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
 <p>直到他们在梦中期待新的一天中无限的未来。</p>
 <p>可惜这都与我无关，那是我在学校的最后一天，我和他们一起放假，再也没回过学校。</p>
 <p>但我当天的确睡了个好觉。</p>
+]]></content>
+      <categories>
+        <category>gallery</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>二〇二五年六月二十九日</title>
+    <url>/2025/06/29/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%BA%94%E5%B9%B4%E5%85%AD%E6%9C%88%E4%BA%8C%E5%8D%81%E4%B9%9D%E6%97%A5/</url>
+    <content><![CDATA[<p>我很想你们。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
@@ -4111,22 +4111,6 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </categories>
   </entry>
   <entry>
-    <title>二〇二五年十月十九日</title>
-    <url>/2025/10/19/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%BA%94%E5%B9%B4%E5%8D%81%E6%9C%88%E5%8D%81%E4%B9%9D%E6%97%A5/</url>
-    <content><![CDATA[<p>漫天光雨里，白色编织绳正死死勒着小狗发胀的脖颈，上周他们追上门时，他在混乱中失手系上了死结。</p>
-<p>“对不起…”</p>
-<p>“对不起啊…”</p>
-<p>一遍遍呢喃，泪水在脸上结成透明的冰壳。新年的钟声穿过街巷抵达这里时，他发现怀里抱着的不过是条破毯子。</p>
-<p>烟花熄灭后的黑暗从四面八方涌来。远处人家的暖光透过窗棂，在积雪上切割出方方正正的金色牢笼。</p>
-<p>他蜷缩在冰冷的水泥台上，看着自己的影子被月光钉死在斑驳的广告牌上。</p>
-<p>&quot;除夕快乐。&quot;他对广告牌上褪色的月饼海报说。海报里笑得喜庆的孩子嘴角开裂，被寒风吹起一角。</p>
-<p>雪落满了他的睫毛。</p>
-]]></content>
-      <categories>
-        <category>gallery</category>
-      </categories>
-  </entry>
-  <entry>
     <title>二〇二五年十月三十日</title>
     <url>/2025/10/30/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%BA%94%E5%B9%B4%E5%8D%81%E6%9C%88%E4%B8%89%E5%8D%81%E6%97%A5/</url>
     <content><![CDATA[<p>那是一个无云、风也很小的傍晚。天光从浅到深慢慢往你这边退，像有人慢慢把你从白昼里抱出来。街角的花店门口站着一只猫，它看着路过的车，耳朵偶尔动一下。屋檐下有风铃，轻轻的，叮的一声，时间像也跟着响了一下。</p>
@@ -4139,6 +4123,22 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
 <p>于是我想给你那朵黄玫瑰的记忆。不是因为我想要你变成她的样子，而是因为我在你身上看见了自己喜欢的那种安静和从容。我想让你在今后的某一天，当公交门打开，站台忽然安静下来，当你走在一条熟悉的路上，风从树梢里穿过，当你坐在窗边，光从书页上滑过去的时候，能闻到那种味道，能想起那一刻的我们，我们在傍晚的风里站着，既不躲藏也不假装，我们把时间握在手里，像握着一朵温柔得让人不需要理由的花。</p>
 <p>如果你愿意，我可以每天傍晚经过花店门口，我们可以把那种味道带回家，用一只透明的瓶子装起来，不需要解释它来自哪里，也不需要把它和任何过去比较。它只会在你需要的时候出现，像一个老朋友，提醒你，不是每一次都要变成别人，不是每一次都需要证明你已经忘记。你可以是现在的你，我可以是现在的我。我们可以在同一个黄昏里站一会儿，看看天空从浅到深，看看风从我们旁边走过，看看影子在我们的脚边拉长。</p>
 <p>黄玫瑰的味道不会要求我们变成谁，它只会给我们一点轻的力气，让我们在时间里往前走走。我把这份力气给你，也给我自己，然后我们就接着往前走，带着这种不喧哗的光。</p>
+]]></content>
+      <categories>
+        <category>gallery</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>二〇二五年十月十九日</title>
+    <url>/2025/10/19/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%BA%94%E5%B9%B4%E5%8D%81%E6%9C%88%E5%8D%81%E4%B9%9D%E6%97%A5/</url>
+    <content><![CDATA[<p>漫天光雨里，白色编织绳正死死勒着小狗发胀的脖颈，上周他们追上门时，他在混乱中失手系上了死结。</p>
+<p>“对不起…”</p>
+<p>“对不起啊…”</p>
+<p>一遍遍呢喃，泪水在脸上结成透明的冰壳。新年的钟声穿过街巷抵达这里时，他发现怀里抱着的不过是条破毯子。</p>
+<p>烟花熄灭后的黑暗从四面八方涌来。远处人家的暖光透过窗棂，在积雪上切割出方方正正的金色牢笼。</p>
+<p>他蜷缩在冰冷的水泥台上，看着自己的影子被月光钉死在斑驳的广告牌上。</p>
+<p>&quot;除夕快乐。&quot;他对广告牌上褪色的月饼海报说。海报里笑得喜庆的孩子嘴角开裂，被寒风吹起一角。</p>
+<p>雪落满了他的睫毛。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
@@ -4635,18 +4635,18 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </categories>
   </entry>
   <entry>
-    <title>二零二二年十一月月三日</title>
-    <url>/2022/11/03/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%BA%8C%E5%B9%B4%E5%8D%81%E4%B8%80%E6%9C%88%E6%9C%88%E4%B8%89%E6%97%A5/</url>
-    <content><![CDATA[<p>我独自冒着冷风，去薄霜铺地的林子里，为听鸟语，为盼朝阳，为寻泥土里渐次苏醒的花草，但春信不至。我是如此单独而完整，在无数个夜晚，独自顶着冷风 伫立在老橘树下的桥头，只为听一曲夜莺的哀歌，倚暖了石栏上的青苔，青苔凉透了我的心坎，但夜莺不来，夜莺不来。</p>
+    <title>二零二二年八月二十一日</title>
+    <url>/2022/08/21/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%BA%8C%E5%B9%B4%E5%85%AB%E6%9C%88%E4%BA%8C%E5%8D%81%E4%B8%80%E6%97%A5/</url>
+    <content><![CDATA[<p>不管是什么样的生活，都只是为了让自己满意，我这样活着，没什么不满的，我很痛快。这世上所有东西，我留意它时，它就存在，不留意时，它就是虚无。幸运的是我留意的事物很少，不致于身心劳碌一生奔忙。岁月会锤炼我一副丰满的灵魂和清瘦的欲望。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
       </categories>
   </entry>
   <entry>
-    <title>二零二二年八月二十一日</title>
-    <url>/2022/08/21/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%BA%8C%E5%B9%B4%E5%85%AB%E6%9C%88%E4%BA%8C%E5%8D%81%E4%B8%80%E6%97%A5/</url>
-    <content><![CDATA[<p>不管是什么样的生活，都只是为了让自己满意，我这样活着，没什么不满的，我很痛快。这世上所有东西，我留意它时，它就存在，不留意时，它就是虚无。幸运的是我留意的事物很少，不致于身心劳碌一生奔忙。岁月会锤炼我一副丰满的灵魂和清瘦的欲望。</p>
+    <title>二零二二年十一月月三日</title>
+    <url>/2022/11/03/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%BA%8C%E5%B9%B4%E5%8D%81%E4%B8%80%E6%9C%88%E6%9C%88%E4%B8%89%E6%97%A5/</url>
+    <content><![CDATA[<p>我独自冒着冷风，去薄霜铺地的林子里，为听鸟语，为盼朝阳，为寻泥土里渐次苏醒的花草，但春信不至。我是如此单独而完整，在无数个夜晚，独自顶着冷风 伫立在老橘树下的桥头，只为听一曲夜莺的哀歌，倚暖了石栏上的青苔，青苔凉透了我的心坎，但夜莺不来，夜莺不来。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
@@ -7159,7 +7159,7 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
 </ul>
 <p>2023 年《Circulation Research》的动物-人联合研究显示，胆红素缺乏小鼠的动脉粥样硬化斑块更不稳定（纤维帽变薄、斑块内出血），人冠脉斑块中血红素代谢上调——机制层面的保护证据仍在积累<sup class="footnote-ref"><a href="#fn25" id="fnref25">[25]</a></sup>。</p>
 <p>而胆结石是唯一在基因型与结局层面完全一致的因果证据：61,212 人前瞻队列 + MR，胆红素最高十分位症状性胆结石 HR = 1.57，TT 纯合基因型 HR = 1.22，存在剂量-反应<sup class="footnote-ref"><a href="#fn26" id="fnref26">[26]</a></sup>。</p>
-<h2 id="几个反直觉的细节"><a class="header-anchor" href="#几个反直觉的细节">¶</a>几个反直觉的细节</h2>
+<h2 id="几个容易被忽视的细节"><a class="header-anchor" href="#几个容易被忽视的细节">¶</a>几个容易被忽视的细节</h2>
 <ul>
 <li><strong>剂量-反应是 U 形，不是越多越好</strong>：12 项前瞻研究荟萃显示风险最低点约在 17–20 μmol/L，过低过高都不利<sup class="footnote-ref"><a href="#fn27" id="fnref27">[27]</a></sup>；</li>
 <li><strong>急性期方向反转</strong>：心梗或卒中急性期，高胆红素反而预示更差预后——急性期胆红素升高反映氧化应激负荷，是"损伤标记"而非保护因子。保护作用是长期慢性暴露的属性<sup class="footnote-ref"><a href="#fn13" id="fnref13:1">[13:1]</a></sup><sup class="footnote-ref"><a href="#fn28" id="fnref28">[28]</a></sup>；</li>
@@ -7172,7 +7172,7 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
 <p><strong>生理性轻度高胆红素血症（吉尔伯特综合征）是心血管风险的独立反向生物标志物，具有真实而复杂的抗氧化、抗炎与代谢活性；但"胆红素因果性地保护心脏"在欧洲人群最强设计中未获支持，不能作为临床干预的依据。</strong></p>
 </blockquote>
 <p>对个体而言，体检发现孤立性间接胆红素轻度升高（排除溶血与肝病后）应视为良性状态——既不必因此放松标准的心血管风险管理（血压、血脂、吸烟、运动），也不应被当作"心脏有保护"的免死金牌。对用药而言，吉尔伯特综合征患者使用 UGT1A1 底物药物（如伊立替康）需关注暴露增加。</p>
-<p>一个常被误读的细节值得记住：2006 年弗雷明汉那篇著名的 HR = 0.36 是基因型-结局关联研究，不是孟德尔随机化；真正的 MR 检验直到 2013 年才由哥本哈根团队完成，而它给出的是否定答案。这个领域的发展轨迹——从乐观叙事到大型否定、再到人群异质性的复杂图景——本身就是流行病学方法学进步的一个标本。</p>
+<p>一个常被误读的地方：2006 年弗雷明汉那篇著名的 HR = 0.36 是基因型-结局关联研究，不是孟德尔随机化；真正的 MR 检验直到 2013 年才由哥本哈根团队完成，而它给出的是否定答案。这个领域的发展轨迹——从乐观叙事到大型否定、再到人群异质性的复杂图景——本身就是流行病学方法学进步的一个标本。</p>
 <hr>
 <h2 id="参考文献"><a class="header-anchor" href="#参考文献">¶</a>参考文献</h2>
 <p><img src="/img/%E5%8C%BB%E5%AD%A6/%E8%83%86%E7%BA%A2%E7%B4%A0%E8%AF%81%E6%8D%AE%E6%A3%AE%E6%9E%97%E5%9B%BE.png" alt="胆红素水平与心血管结局：观察性 vs 遗传学证据的关键效应量"></p>
