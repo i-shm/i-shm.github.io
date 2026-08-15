@@ -298,6 +298,126 @@ char          sa_data[]       socket address (variable-length data)</p>
       </tags>
   </entry>
   <entry>
+    <title>BMI、年龄与血脂异常：一条会衰减的关联</title>
+    <url>/2026/08/15/BMI%E5%B9%B4%E9%BE%84%E4%B8%8E%E8%A1%80%E8%84%82%E5%BC%82%E5%B8%B8/</url>
+    <content><![CDATA[<p>"胖的人血脂容易高"大概是体检报告时代最深入人心的常识之一。这句话在人群层面确实成立:BMI 与血脂异常之间存在明确的剂量-反应关系,且因果性获得了孟德尔随机化研究的支持<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>。但常识往往在加上"年龄"这个维度后变得复杂起来——同样的 BMI,在不同年龄段对血脂的影响并不相同,甚至可能反转。</p>
+<h2 id="患病率-一条倒-U-形的年龄轨迹"><a class="header-anchor" href="#患病率-一条倒-U-形的年龄轨迹">¶</a>患病率:一条倒 U 形的年龄轨迹</h2>
+<p>先看年龄本身。中国成人血脂异常患病率随年龄递增,但进入老年期后趋势反转:</p>
+<ul>
+<li>四川三县横断面(11 561 人):18–44 岁 20.6% → 45–59 岁 29.8% → ≥60 岁 32.9%<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>;</li>
+<li>中国老年人 Meta 分析(19 项横断面、101 831 人):60–69 岁 39.9% 达峰,70–79 岁降至 31.8%,≥80 岁 31.4%<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>。</li>
+</ul>
+<p>两条独立数据链拼出同一形态:成年期线性攀升、60 岁前后达峰、高龄回落。</p>
+<p><img src="/img/%E5%8C%BB%E5%AD%A6/%E8%A1%80%E8%84%82%E6%82%A3%E7%97%85%E7%8E%87%E5%B9%B4%E9%BE%84%E8%BD%A8%E8%BF%B9.png" alt="中国成人血脂异常患病率的年龄轨迹"></p>
+<p>两个口径的老年组数值差异(32.9% vs 39.9%)源于地区差异与纳入研究年代,方向一致。全国 2018 年高胆固醇血症年龄标化患病率较 2015 年近乎翻倍(4.9% → 8.2%),"高 TC"型是近期增长最快的亚型,且集中于中老年<sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup>。</p>
+<h2 id="关键反转-BMI-对血脂的因果效应随龄衰减"><a class="header-anchor" href="#关键反转-BMI-对血脂的因果效应随龄衰减">¶</a>关键反转:BMI 对血脂的因果效应随龄衰减</h2>
+<p>Fall 2015 的孟德尔随机化研究用 32 个 BMI 相关遗传位点做工具变量,按 &lt;55 岁与 ≥55 岁分层,给出了一个反直觉的结果<sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup>:</p>
+<table>
+<thead>
+<tr>
+<th>血脂组分</th>
+<th>&lt;55 岁因果效应</th>
+<th>≥55 岁因果效应</th>
+<th>P diff</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LDL-C</td>
+<td>+0.15 SD</td>
+<td>−0.10 SD</td>
+<td>0.040</td>
+</tr>
+<tr>
+<td>总胆固醇</td>
+<td>+0.10 SD</td>
+<td>−0.19 SD</td>
+<td>0.015</td>
+</tr>
+<tr>
+<td>ln 甘油三酯</td>
+<td>+0.28 SD</td>
+<td>+0.12 SD</td>
+<td>0.090</td>
+</tr>
+<tr>
+<td>HDL-C</td>
+<td>−0.36 SD</td>
+<td>−0.28 SD</td>
+<td>0.360</td>
+</tr>
+</tbody>
+</table>
+<p>效应量单位:每 1 SD BMI(约 4.8 kg/m²)对应的血脂 SD 变化。</p>
+<p><img src="/img/%E5%8C%BB%E5%AD%A6/BMI%E8%A1%80%E8%84%82%E5%9B%A0%E6%9E%9C%E6%95%88%E5%BA%94%E5%B9%B4%E9%BE%84%E5%88%86%E5%B1%82.png" alt="BMI→血脂组分的孟德尔随机化因果效应：<55 岁 vs ≥55 岁"></p>
+<p>解读要点:</p>
+<ol>
+<li><strong>胆固醇组分(LDL-C、总胆固醇)的 BMI 因果效应在 ≥55 岁后消失甚至反转</strong>——年龄越大,同样程度的体重增加带来的胆固醇恶化越弱;</li>
+<li><strong>TG 与 HDL-C 的效应保留但减弱</strong>——"肥胖驱动的高 TG + 低 HDL"表型不随龄消失,这是老年期体重管理仍然重要的依据;</li>
+<li>≥55 岁总胆固醇因果效应为负(−0.19)不代表"老年肥胖保护胆固醇",更可能是他汀使用、选择偏倚与反向因果的残留混杂<sup class="footnote-ref"><a href="#fn5" id="fnref5:1">[5:1]</a></sup>。</li>
+</ol>
+<p>观察性分析与之一致:&lt;55 岁 LDL-C 每 SD BMI +0.16、TC +0.12,≥55 岁分别降至 +0.02 与 0.00(均不显著)<sup class="footnote-ref"><a href="#fn5" id="fnref5:2">[5:2]</a></sup>。</p>
+<h2 id="筛检效能-老年期腰围胜过-BMI"><a class="header-anchor" href="#筛检效能-老年期腰围胜过-BMI">¶</a>筛检效能:老年期腰围胜过 BMI</h2>
+<p>BMI 判别血脂异常的效能也随龄衰减。NHANES 1999–2020 共 58 712 人:BMI 与腰高比对高血压、血脂异常、糖尿病的判别性能随年龄递增而下降,老年人中关联呈 J 形并在较高肥胖水平进入平台<sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup>。韩国 2022–2023 国民健康调查 8 900 人比较 7 个肥胖指标,所有指标判别力在 50 岁后下降,腰高比与身体圆度指数在年轻与中年成人中最优<sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup>。</p>
+<p>英国生物库 368 274 人另显示方向性差异:LDL-C 与冠心病的关联随龄递减(HR 从 &lt;50 岁的 1.35 降至 ≥65 岁的 1.08),而 <strong>BMI 与冠心病的关联不随龄衰减</strong>(各年龄组 HR 1.11–1.15)<sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup>——老年期"BMI 影响健康结局"的通道部分绕过血脂,但不能因此认为老年肥胖无害。</p>
+<h2 id="性别×年龄-绝经是隐藏的转折点"><a class="header-anchor" href="#性别×年龄-绝经是隐藏的转折点">¶</a>性别×年龄:绝经是隐藏的转折点</h2>
+<p>山西农村 26 378 人(45–69 岁)显示:女性 TC、TG、LDL-C 患病率随年龄上升,男性则平稳甚至下降;女性各类血脂异常患病率均高于男性,仅低 HDL-C 为男性更高<sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup>。老年人 Meta 分析同向:女性血脂异常总患病率 48.8% 高于男性 39.5%,高 TC 24.0% vs 12.9%<sup class="footnote-ref"><a href="#fn3" id="fnref3:1">[3:1]</a></sup>。</p>
+<p>机制上绝经是关键节点——雌激素下降导致 LDL 清除减慢、内脏脂肪增加,女性血脂在围绝经期陡升,形成"老年女性患病率反超男性"的交叉<sup class="footnote-ref"><a href="#fn10" id="fnref10">[10]</a></sup>。</p>
+<h2 id="为什么老年期关联会衰减"><a class="header-anchor" href="#为什么老年期关联会衰减">¶</a>为什么老年期关联会衰减</h2>
+<ul>
+<li><strong>体成分重组</strong>:中老年期肌肉量下降、内脏脂肪随龄增加,BMI 可以不变而代谢风险上升;中国 45–90 岁体检人群肌少性肥胖患病率 8.4%,系统性炎症指数每升高 1 SD,肌少性肥胖 OR 在中年 1.69、老年 2.52<sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup>;</li>
+<li><strong>健康选择效应</strong>:血脂异常与心血管病高风险者更早死亡或已接受降脂治疗,存活到高龄的人群"未被治疗的血脂异常"比例自然下降<sup class="footnote-ref"><a href="#fn5" id="fnref5:3">[5:3]</a></sup>;</li>
+<li><strong>治疗混杂</strong>:他汀等降脂药在老年人群使用率更高,压低实测血脂水平<sup class="footnote-ref"><a href="#fn12" id="fnref12">[12]</a></sup>;</li>
+<li><strong>遗传异质性的年龄表达</strong>:BMI–血脂的局部遗传相关位点存在保护性变异,年龄越大,非 BMI 因素(基因、年龄本身)在血脂水平中的占比越高<sup class="footnote-ref"><a href="#fn13" id="fnref13">[13]</a></sup>。</li>
+</ul>
+<h2 id="对筛查和临床的落地含义"><a class="header-anchor" href="#对筛查和临床的落地含义">¶</a>对筛查和临床的落地含义</h2>
+<ol>
+<li><strong>45–59 岁是 BMI 筛选血脂异常效率最高的窗口</strong>——中青年肥胖者应优先筛查;</li>
+<li><strong>60 岁以上别拿"BMI 正常"排除血脂异常</strong>——联合腰围/腰高比,必要时直接测血脂;</li>
+<li><strong>绝经后女性无论 BMI 都是高概率人群</strong>——老年女性高 TC/TG 型比例高,老年男性低 HDL-C 型比例高;</li>
+<li><strong>老年 BMI 对血脂效应弱 ≠ 减重无益</strong>——TG/HDL 通道保留,且 BMI–冠心病关联不随龄衰减<sup class="footnote-ref"><a href="#fn8" id="fnref8:1">[8:1]</a></sup>;</li>
+<li>以降脂为终点的临床试验应预设年龄分层分析:中青年入组者预期 TG 变化幅度大于老年入组者,≥55 岁受试者的 LDL-C 终点对 BMI 干预不敏感,应以 TG/HDL-C 或非 HDL-C 为主<sup class="footnote-ref"><a href="#fn5" id="fnref5:4">[5:4]</a></sup>。</li>
+</ol>
+<p>一个值得记住的总结:<strong>BMI 与血脂的关联是真实的、因果的,但它是一条会随年龄衰减的关联——患病率在 60 岁前后达峰后回落,BMI 对胆固醇的因果效应在 55 岁后消失甚至反转,而 TG/HDL 通道和心血管保护效应保留。年龄不是简单的混杂,而是这条关联的修饰者。</strong></p>
+<hr>
+<h2 id="参考文献"><a class="header-anchor" href="#参考文献">¶</a>参考文献</h2>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>Fall T, et al. <em>Age- and sex-specific causal effects of adiposity on cardiovascular risk factors.</em> Diabetes. 2015;64(5):1841-1852. <a href="https://pubmed.ncbi.nlm.nih.gov/25712996/">PMID: 25712996</a> <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>四川省三县(市)成年居民肥胖与血脂异常关联研究. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12980003/">PMC12980003</a> (PMID 41834968). 横断面 11 561 人;年龄别患病率由原文表 1/表 3 计算。 <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p>陈曾丽, 等. 中国老年人血脂异常患病率的 Meta 分析. 中国全科医学 2022. 19 项横断面、101 831 人。 <a href="#fnref3" class="footnote-backref">↩︎</a> <a href="#fnref3:1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p>中国血脂管理指南(2023 年)联合专家委员会. 中国血脂管理指南(2023年). 中华心血管病杂志 2023;51(3):221-255. <a href="https://pubmed.ncbi.nlm.nih.gov/36925135/">DOI: 10.3760/cma.j.cn112148-20230119-00038</a> (PMID 36925135) <a href="#fnref4" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn5" class="footnote-item"><p>Fall T, et al. 同上。年龄分层 IV 效应量直接读取原文 Table 3(PMC4407863)。 <a href="#fnref5" class="footnote-backref">↩︎</a> <a href="#fnref5:1" class="footnote-backref">↩︎</a> <a href="#fnref5:2" class="footnote-backref">↩︎</a> <a href="#fnref5:3" class="footnote-backref">↩︎</a> <a href="#fnref5:4" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn6" class="footnote-item"><p><em>Age-dependent performance of obesity measures in screening for cardiometabolic risk over the lifespan.</em> Public Health. 2026. <a href="https://pubmed.ncbi.nlm.nih.gov/42364371/">PMID: 42364371</a>. NHANES 1999–2020 横断面 58 712 人。 <a href="#fnref6" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn7" class="footnote-item"><p><em>Comparison of obesity indices for discriminating hypertension, diabetes, dyslipidemia, and metabolic syndrome according to sex and age groups.</em> Obes Res Clin Pract. 2026. <a href="https://pubmed.ncbi.nlm.nih.gov/42270557/">PMID: 42270557</a>. 韩国国民健康调查 8 900 人。 <a href="#fnref7" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn8" class="footnote-item"><p><em>Differential age-specific associations of LDL cholesterol and body mass index with coronary heart disease.</em> Atherosclerosis. 2024. <a href="https://pubmed.ncbi.nlm.nih.gov/38652975/">PMID: 38652975</a>. UK Biobank 368 274 人前瞻队列。 <a href="#fnref8" class="footnote-backref">↩︎</a> <a href="#fnref8:1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn9" class="footnote-item"><p><em>Gender heterogeneity in dyslipidemia prevalence, trends with age and associated factors in middle age rural Chinese.</em> 2020. <a href="https://pubmed.ncbi.nlm.nih.gov/32532299/">PMID: 32532299</a>. 26 378 人(45–69 岁)。 <a href="#fnref9" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn10" class="footnote-item"><p><em>The Potential Role of Dietary (Poly)phenols in Cardiometabolic Risk During Menopause: A Narrative Review.</em> 2026. <a href="https://pubmed.ncbi.nlm.nih.gov/41978180/">PMID: 41978180</a> <a href="#fnref10" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn11" class="footnote-item"><p><em>Association between systemic immune-inflammation index and sarcopenic obesity in middle-aged and elderly Chinese adults.</em> 2024. <a href="https://pubmed.ncbi.nlm.nih.gov/39080664/">PMID: 39080664</a>. 中国 45–90 岁 2719 人。 <a href="#fnref11" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn12" class="footnote-item"><p>中国心血管病报告 2018. 中华高血压杂志 2019;27(8):417-418. 2013–2014 年 163 641 人监测。 <a href="#fnref12" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn13" class="footnote-item"><p><em>Genetic underpinnings of the heterogeneous impact of obesity on lipid levels and cardiovascular disease.</em> Genome Med. 2025;17:98. <a href="https://pubmed.ncbi.nlm.nih.gov/41053791/">PMID: 41053791</a> <a href="#fnref13" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+]]></content>
+      <tags>
+        <tag>Medicine</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Building custom fibers library in FSharp</title>
     <url>/2024/10/18/Building-custom-fibers-library-in-FSharp/</url>
     <content><![CDATA[<p>Over the course of last few months on this blog post, I’ve been sharing about internals and how-to of different concurrency patters. We discussed how to <a href="https://www.bartoszsypytkowski.com/build-your-own-actor-model/">implement our own actors</a> and specific <a href="https://www.bartoszsypytkowski.com/thread-safety-with-affine-thread-pools/">affinity-based thread pool</a>. Today we’ll focus of the most dominant pattern present in modern programming nowadays: fibers, also known as coroutines, futures, tasks, green threads or user-space threads.</p>
@@ -3431,6 +3551,20 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </tags>
   </entry>
   <entry>
+    <title>使用 [@poll error] 实现线程安全的数据结构</title>
+    <url>/2023/08/15/poll-error-attribute-in-OCaml/</url>
+    <content><![CDATA[<p>OCaml的标准库提供了许多mutable的数据结构，比如Hashtbl, Queue, Stack之类的，但是这些数据结构都不是线程安全的。在 OCaml 4 和 OCaml 5 中，单个Domain中一次只能运行一个线程。换句话说，单个Domain中的线程仍然不会并行运行，除非在不同所的Domain中。</p>
+<p>而在单个Domain中 OCaml 的 runtime 是通过在safe point期间半抢占式的切换线程。也就是说，线程切换只会发生在safe point期间。例如内存分配就是是safe point。这意味着在没有safe point的代码块内，可以在Domain内原子性地进行多次读写或访问操作，因为线程没被切换。</p>
+<p>OCaml 编译器提供了一个名为 <a href="https://github.com/ocaml/ocaml/pull/10462"><code>[@poll error]</code></a> 的annotation，可以在函数中使用它来确保该函数不包含safe point。</p>
+<p>所以通过使用 <code>[@poll error]</code> 就可以创建在Domain内原子性执行的函数，也就是说，基于此特性可以实现单个Domain内线程安全的数据结构，例如 thread-table 便是使用这个特性实现的 Hash Table。可以看看它的 add 函数的实现:</p>
+<figure class="highlight ocaml"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span>[@poll error] add_atomically t buckets n i before after =</span><br><span class="line">  t.rehash = <span class="number">0</span> &amp;&amp; buckets == t.buckets</span><br><span class="line">  &amp;&amp; before == <span class="type">Array</span>.unsafe_get buckets i</span><br><span class="line">  &amp;&amp; <span class="keyword">begin</span></span><br><span class="line">       <span class="type">Array</span>.unsafe_set buckets i after;</span><br><span class="line">       <span class="keyword">let</span> length = t.length + <span class="number">1</span> <span class="keyword">in</span></span><br><span class="line">       t.length &lt;- length;</span><br><span class="line">       <span class="keyword">if</span> n &lt; length &amp;&amp; n &lt; max_buckets_div_2 <span class="keyword">then</span> t.rehash &lt;- n * <span class="number">2</span>;</span><br><span class="line">       <span class="literal">true</span></span><br><span class="line">     <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">rec</span> add t k&#x27; v&#x27; =</span><br><span class="line">  <span class="keyword">let</span> h = <span class="type">Mix</span>.<span class="built_in">int</span> k&#x27; <span class="keyword">in</span></span><br><span class="line">  maybe_rehash t;</span><br><span class="line">  <span class="keyword">let</span> buckets = t.buckets <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> n = <span class="type">Array</span>.length buckets <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> i = h <span class="keyword">land</span> (n - <span class="number">1</span>) <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> before = <span class="type">Array</span>.unsafe_get buckets i <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> after = <span class="type">Cons</span> (k&#x27;, v&#x27;, before) <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">if</span> not (add_atomically t buckets n i before after) <span class="keyword">then</span> add t k&#x27; v&#x27;</span><br></pre></td></tr></table></figure>
+<p>相比使用 Stdlib.Mutex，这种无锁实现会有更好的性能（特别是对于只读操作），并且还允许例如信号处理之类的上下文操作。</p>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>除权除息日，股价调整与分红</title>
     <url>/2025/07/11/rep-date/</url>
     <content><![CDATA[<p>例如：</p>
@@ -3475,20 +3609,6 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
 ]]></content>
       <tags>
         <tag>Life</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用 [@poll error] 实现线程安全的数据结构</title>
-    <url>/2023/08/15/poll-error-attribute-in-OCaml/</url>
-    <content><![CDATA[<p>OCaml的标准库提供了许多mutable的数据结构，比如Hashtbl, Queue, Stack之类的，但是这些数据结构都不是线程安全的。在 OCaml 4 和 OCaml 5 中，单个Domain中一次只能运行一个线程。换句话说，单个Domain中的线程仍然不会并行运行，除非在不同所的Domain中。</p>
-<p>而在单个Domain中 OCaml 的 runtime 是通过在safe point期间半抢占式的切换线程。也就是说，线程切换只会发生在safe point期间。例如内存分配就是是safe point。这意味着在没有safe point的代码块内，可以在Domain内原子性地进行多次读写或访问操作，因为线程没被切换。</p>
-<p>OCaml 编译器提供了一个名为 <a href="https://github.com/ocaml/ocaml/pull/10462"><code>[@poll error]</code></a> 的annotation，可以在函数中使用它来确保该函数不包含safe point。</p>
-<p>所以通过使用 <code>[@poll error]</code> 就可以创建在Domain内原子性执行的函数，也就是说，基于此特性可以实现单个Domain内线程安全的数据结构，例如 thread-table 便是使用这个特性实现的 Hash Table。可以看看它的 add 函数的实现:</p>
-<figure class="highlight ocaml"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span>[@poll error] add_atomically t buckets n i before after =</span><br><span class="line">  t.rehash = <span class="number">0</span> &amp;&amp; buckets == t.buckets</span><br><span class="line">  &amp;&amp; before == <span class="type">Array</span>.unsafe_get buckets i</span><br><span class="line">  &amp;&amp; <span class="keyword">begin</span></span><br><span class="line">       <span class="type">Array</span>.unsafe_set buckets i after;</span><br><span class="line">       <span class="keyword">let</span> length = t.length + <span class="number">1</span> <span class="keyword">in</span></span><br><span class="line">       t.length &lt;- length;</span><br><span class="line">       <span class="keyword">if</span> n &lt; length &amp;&amp; n &lt; max_buckets_div_2 <span class="keyword">then</span> t.rehash &lt;- n * <span class="number">2</span>;</span><br><span class="line">       <span class="literal">true</span></span><br><span class="line">     <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">rec</span> add t k&#x27; v&#x27; =</span><br><span class="line">  <span class="keyword">let</span> h = <span class="type">Mix</span>.<span class="built_in">int</span> k&#x27; <span class="keyword">in</span></span><br><span class="line">  maybe_rehash t;</span><br><span class="line">  <span class="keyword">let</span> buckets = t.buckets <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> n = <span class="type">Array</span>.length buckets <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> i = h <span class="keyword">land</span> (n - <span class="number">1</span>) <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> before = <span class="type">Array</span>.unsafe_get buckets i <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> after = <span class="type">Cons</span> (k&#x27;, v&#x27;, before) <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">if</span> not (add_atomically t buckets n i before after) <span class="keyword">then</span> add t k&#x27; v&#x27;</span><br></pre></td></tr></table></figure>
-<p>相比使用 Stdlib.Mutex，这种无锁实现会有更好的性能（特别是对于只读操作），并且还允许例如信号处理之类的上下文操作。</p>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
       </tags>
   </entry>
   <entry>
@@ -4289,29 +4409,6 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </categories>
   </entry>
   <entry>
-    <title>二〇二四年二月七日</title>
-    <url>/2024/02/07/%E4%BA%8C%E3%80%87%E4%BA%8C%E5%9B%9B%E5%B9%B4%E4%BA%8C%E6%9C%88%E4%B8%83%E6%97%A5/</url>
-    <content><![CDATA[<p>瀑布的水逆流而上，<br>
-蒲公英种子从远处飘回，聚成伞的模样，<br>
-太阳从西边升起，落向东方。</p>
-<p>子弹退回枪膛，<br>
-运动员回到起跑线上，<br>
-我交回录取通知书，忘了十年寒窗。</p>
-<p>厨房里飘来饭菜的香，<br>
-你把我的卷子签好名字，<br>
-关掉电视，帮我把书包背上。</p>
-<p>你还在我身旁。</p>
-<hr>
-<p>功利性主义总会引导我们思考结局，可生活本质上就是一场旅途。</p>
-<p>别再去胡思乱想了，好好欣赏生活中的一切，去感受一朵鲜花的盛开，一束阳光的倾泻，一湖清水的静谧。</p>
-<p>奶奶说，炉膛的柴火若是爆裂，那是有贵客要登门了。我总是不信。直到有一次，舅公伴着柴火的爆裂声，出现在家门口，我才将信将疑。</p>
-<p>所以，让我们在下雨天烧柴火灶，在跳跃的火苗里，等待一种不确定的相逢。</p>
-]]></content>
-      <categories>
-        <category>gallery</category>
-      </categories>
-  </entry>
-  <entry>
     <title>二〇二四年五月七日</title>
     <url>/2024/05/07/%E4%BA%8C%E3%80%87%E4%BA%8C%E5%9B%9B%E5%B9%B4%E4%BA%94%E6%9C%88%E4%B8%83%E6%97%A5/</url>
     <content><![CDATA[<p>我在写信<br>
@@ -4331,6 +4428,29 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
 然后我说人类好无聊啊<br>
 这个地球完蛋了<br>
 你点点头</p>
+]]></content>
+      <categories>
+        <category>gallery</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>二〇二四年二月七日</title>
+    <url>/2024/02/07/%E4%BA%8C%E3%80%87%E4%BA%8C%E5%9B%9B%E5%B9%B4%E4%BA%8C%E6%9C%88%E4%B8%83%E6%97%A5/</url>
+    <content><![CDATA[<p>瀑布的水逆流而上，<br>
+蒲公英种子从远处飘回，聚成伞的模样，<br>
+太阳从西边升起，落向东方。</p>
+<p>子弹退回枪膛，<br>
+运动员回到起跑线上，<br>
+我交回录取通知书，忘了十年寒窗。</p>
+<p>厨房里飘来饭菜的香，<br>
+你把我的卷子签好名字，<br>
+关掉电视，帮我把书包背上。</p>
+<p>你还在我身旁。</p>
+<hr>
+<p>功利性主义总会引导我们思考结局，可生活本质上就是一场旅途。</p>
+<p>别再去胡思乱想了，好好欣赏生活中的一切，去感受一朵鲜花的盛开，一束阳光的倾泻，一湖清水的静谧。</p>
+<p>奶奶说，炉膛的柴火若是爆裂，那是有贵客要登门了。我总是不信。直到有一次，舅公伴着柴火的爆裂声，出现在家门口，我才将信将疑。</p>
+<p>所以，让我们在下雨天烧柴火灶，在跳跃的火苗里，等待一种不确定的相逢。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
@@ -6829,6 +6949,124 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       <tags>
         <tag>Medicine</tag>
         <tag>Life</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>胆红素与冠心病：抗氧化保护的证据与争议</title>
+    <url>/2026/08/15/%E8%83%86%E7%BA%A2%E7%B4%A0%E4%B8%8E%E5%86%A0%E5%BF%83%E7%97%85/</url>
+    <content><![CDATA[<p>体检报告上"间接胆红素轻度升高"是一个很常见的发现。多数时候医生会说"没事,可能是吉尔伯特综合征",但网上流传着另一种说法:胆红素高的人心脏更好,因为胆红素是强效抗氧化剂。这个说法从 1987 年一篇《Science》论文开始,经历了从机制、临床观察到大型遗传学研究的完整验证,最后得到的结论比想象中复杂得多——它部分成立,但"升高胆红素能保护心脏"这个因果命题,在目前最强的证据里并不成立。</p>
+<h2 id="起点-1987-年-胆红素被重新定义"><a class="header-anchor" href="#起点-1987-年-胆红素被重新定义">¶</a>起点:1987 年,胆红素被重新定义</h2>
+<p>在 1987 年之前,胆红素在医学教科书里的身份是血红素分解的"有毒废料"——新生儿黄疸、肝病黄疸的主角。加州大学伯克利分校的 Stocker 和 Ames 团队首次证明:未结合(间接)胆红素其实是一种极其强效的脂溶性抗氧化剂<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>。</p>
+<ul>
+<li>在生理组织氧浓度(2% 氧)下,胆红素抑制脂质过氧化的效率<strong>超过 α-生育酚(维生素 E)</strong>——后者当时被认为是脂质过氧化最强的内源性抗氧化剂;</li>
+<li>1 分子白蛋白结合型胆红素可清除约 2 分子过氧自由基,血液中正常存在的少量胆红素足以保护白蛋白结合脂肪酸不被氧化<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>;</li>
+<li>反应机理是氢原子转移(HAT):供氢基团是四吡咯结构两端二吡咯酮环的 N-H 键,动力学实测 1 分子胆红素可清除约 2 分子过氧自由基<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>。</li>
+</ul>
+<p>此后四十年的生化研究不断补充机制:胆红素与 α-生育酚构成协同抗氧化网络(添加胆红素可使维生素 E 的消耗停止)<sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup>;生理浓度胆红素可清除氯胺并抑制髓过氧化物酶(MPO)诱导的蛋白和脂质氧化<sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup>;2020 年后又发现胆红素是 PPAR-α 的选择性内源性配体,能重塑白色脂肪组织代谢,因此被称为"黄色激素"(the yellow hormone)<sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup><sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup>。</p>
+<p>但抗氧化并非无限度:细胞实验显示,细胞内未结合胆红素蓄积超过约 25 ng/mg 蛋白后,从抗氧化转为<strong>促氧化并产生细胞毒性</strong><sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup>——这为"为什么只有轻度升高有益"提供了分子解释。</p>
+<h2 id="临床观察-低胆红素与冠心病风险"><a class="header-anchor" href="#临床观察-低胆红素与冠心病风险">¶</a>临床观察:低胆红素与冠心病风险</h2>
+<p>机制研究之后,临床流行病学接棒。1994 年 Schwertner 等在血管造影确诊的冠心病男性队列中首次发现:ln(总胆红素)与冠脉疾病严重程度独立负相关,总胆红素下降 50%,处于更严重冠脉疾病分级的几率增加 47%,关联强度"与收缩压相当"<sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup>。</p>
+<p>2002 年,查尔斯大学 Vítek 团队做了一个更直接的人群对照:50 例 40 岁以上的吉尔伯特综合征患者 vs 2296 例一般人群,吉尔伯特组缺血性心脏病患病率仅 <strong>2%</strong>,对照组 <strong>12.1%</strong>(P&lt;0.05),且吉尔伯特组血清总抗氧化能力显著更高<sup class="footnote-ref"><a href="#fn10" id="fnref10">[10]</a></sup>。</p>
+<p>2006 年弗雷明汉心脏研究把证据推到基因层面:按 UGT1A1*28 基因型(吉尔伯特综合征的遗传基础,人群频率约 11%)分层,7/7 纯合子携带者心血管疾病风险 HR = 0.36(95% CI 0.18–0.74),冠心病 HR = 0.30<sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup>。这组数据至今仍被广泛引用。</p>
+<p>后续荟萃分析确认了方向:每升高 1 个标准差胆红素,心血管风险约降 7%–10%<sup class="footnote-ref"><a href="#fn12" id="fnref12">[12]</a></sup>;生理范围内胆红素升高使首次心梗长期风险降 22%(RR 0.78)<sup class="footnote-ref"><a href="#fn13" id="fnref13">[13]</a></sup>;卒中风险最高 vs 最低组 RR = 0.85<sup class="footnote-ref"><a href="#fn14" id="fnref14">[14]</a></sup>。他汀人群 13 万人数据显示 L 形关联:与 10 μmol/L 相比,5 μmol/L 者心血管事件 +18%、心梗 +34%<sup class="footnote-ref"><a href="#fn15" id="fnref15">[15]</a></sup>。</p>
+<p>不过观察性证据有两个长期被忽视的软肋:一是<strong>吸烟混杂</strong>——吸烟者 42% 处于胆红素最低四分位,戒烟后胆红素回升,"低胆红素 + 高心血管风险"有一部分是吸烟驱动的<sup class="footnote-ref"><a href="#fn16" id="fnref16">[16]</a></sup>;二是<strong>性别差异</strong>——阳性证据大多来自男性,女性中关联弱或不显著<sup class="footnote-ref"><a href="#fn17" id="fnref17">[17]</a></sup><sup class="footnote-ref"><a href="#fn18" id="fnref18">[18]</a></sup>。</p>
+<h2 id="分水岭-孟德尔随机化给出否定答案"><a class="header-anchor" href="#分水岭-孟德尔随机化给出否定答案">¶</a>分水岭:孟德尔随机化给出否定答案</h2>
+<p>观察性关联无法区分因果与混杂。孟德尔随机化(MR)利用"基因型在受精时随机分配"这一自然实验,绕开吸烟、饮酒、生活方式等混杂,是检验因果性的最强观察设计。这个领域在 2013 年和 2023 年迎来了两次大型否定:</p>
+<p><strong>哥本哈根三队列 MR(2013)</strong>:43,708 人测胆红素,67,068 人基因分型,含 11,686 例缺血性心脏病事件。观察性分析中胆红素最高三分位 HR = 0.86,但多因素校正后衰减为 0.93(不显著);而基因型分析(TT vs GG,胆红素升高约 95%)对缺血性心脏病的 OR = 1.03,完全无效。加上既往 8 项研究的荟萃:OR = 1.01(0.88–1.16)。结论原文:<strong>“血浆胆红素与缺血性心脏病风险无因果关联”</strong><sup class="footnote-ref"><a href="#fn19" id="fnref19">[19]</a></sup>。</p>
+<p><strong>UK Biobank + FinnGen(2023)</strong>:46.3 万人基因分型 + 42.9 万人复现。观察性层面,高胆红素与总体健康、心梗、胆固醇等广泛结局强负相关;但遗传学层面,这些负相关在吉尔伯特基因型人群中<strong>全部未复现</strong>——基因预测的胆红素仅与胆道/肝脏病理显著相关(胆结石 OR = 1.16,P = 5.7×10⁻¹⁶)。结论原文:<strong>“遗传学分析提示胆红素对心血管疾病、慢阻肺及其他关键结局无因果保护作用”</strong><sup class="footnote-ref"><a href="#fn20" id="fnref20">[20]</a></sup>。</p>
+<p>这两项研究分别代表欧洲最大样本和全球最大样本,事件数都足以检出真实效应。阴性结果的解释力很强:如果"胆红素保护心脏"的因果效应真实存在,这些设计理应能够发现。</p>
+<h2 id="但事情没有完全结束"><a class="header-anchor" href="#但事情没有完全结束">¶</a>但事情没有完全结束</h2>
+<p>欧洲的否定不等于全部。亚洲和非洲人群的部分 MR 研究给出了阳性信号:</p>
+<ul>
+<li><strong>韩/日人群多变量 MR(2024)</strong>:间接胆红素对缺血性卒中 OR = 0.76,但共定位分析未找到共享因果变异,阳性需谨慎<sup class="footnote-ref"><a href="#fn21" id="fnref21">[21]</a></sup>;</li>
+<li><strong>非裔人群 MR(2021)</strong>:胆红素对高血压呈因果保护(β = −0.76)<sup class="footnote-ref"><a href="#fn22" id="fnref22">[22]</a></sup>;</li>
+<li><strong>中国汉族</strong>:上海 2380 例冠脉造影人群,UGT1A1 rs887829 隐性模型与男性冠心病显著负相关(OR = 0.24)<sup class="footnote-ref"><a href="#fn23" id="fnref23">[23]</a></sup>;东风-同济队列 2 型糖尿病患者中,间接胆红素 Q4 vs Q1 的冠心病 HR = 0.74<sup class="footnote-ref"><a href="#fn24" id="fnref24">[24]</a></sup>。</li>
+</ul>
+<p>另外 2023 年《Circulation Research》的动物-人联合研究显示,胆红素缺乏小鼠的动脉粥样硬化斑块更不稳定(纤维帽变薄、斑块内出血),人冠脉斑块中血红素代谢上调——机制层面的保护证据仍在积累<sup class="footnote-ref"><a href="#fn25" id="fnref25">[25]</a></sup>。</p>
+<p>而<strong>胆结石</strong>是唯一在基因型与结局层面完全一致的因果证据:61,212 人前瞻队列 + MR,胆红素最高十分位症状性胆结石 HR = 1.57,TT 纯合基因型 HR = 1.22,存在剂量-反应<sup class="footnote-ref"><a href="#fn26" id="fnref26">[26]</a></sup>。</p>
+<h2 id="几个反直觉的细节"><a class="header-anchor" href="#几个反直觉的细节">¶</a>几个反直觉的细节</h2>
+<ul>
+<li><strong>剂量-反应是 U 形,不是越多越好</strong>:12 项前瞻研究荟萃显示风险最低点约在 17–20 μmol/L,过低过高都不利<sup class="footnote-ref"><a href="#fn27" id="fnref27">[27]</a></sup>;</li>
+<li><strong>急性期方向反转</strong>:心梗或卒中急性期,高胆红素反而预示更差预后——急性期胆红素升高反映氧化应激负荷,是"损伤标记"而非保护因子。保护作用是长期慢性暴露的属性<sup class="footnote-ref"><a href="#fn13" id="fnref13:1">[13:1]</a></sup><sup class="footnote-ref"><a href="#fn28" id="fnref28">[28]</a></sup>;</li>
+<li><strong>组分之争</strong>:不同研究中间接(未结合)与直接(结合)胆红素方向可能相反<sup class="footnote-ref"><a href="#fn29" id="fnref29">[29]</a></sup>;</li>
+<li><strong>预测价值有限</strong>:加入胆红素后风险模型的 C 指数仅提升 0.0013(P=0.13),没有临床意义的预测增益<sup class="footnote-ref"><a href="#fn12" id="fnref12:1">[12:1]</a></sup>。</li>
+</ul>
+<h2 id="结论-一个准确的说法"><a class="header-anchor" href="#结论-一个准确的说法">¶</a>结论:一个准确的说法</h2>
+<p>把四十年的证据放在一起,最准确的表述是:</p>
+<blockquote>
+<p><strong>生理性轻度高胆红素血症(吉尔伯特综合征)是心血管风险的独立反向生物标志物,具有真实而复杂的抗氧化、抗炎与代谢活性;但"胆红素因果性地保护心脏"在欧洲人群最强设计中未获支持,不能作为临床干预的依据。</strong></p>
+</blockquote>
+<p>对个体而言,体检发现孤立性间接胆红素轻度升高(排除溶血与肝病后)应视为良性状态——既不必因此放松标准的心血管风险管理(血压、血脂、吸烟、运动),也不应被当作"心脏有保护"的免死金牌。对用药而言,吉尔伯特综合征患者使用 UGT1A1 底物药物(如伊立替康)需关注暴露增加。</p>
+<p>一个常被误读的细节值得记住:2006 年弗雷明汉那篇著名的 HR = 0.36 是<strong>基因型-结局关联研究</strong>,不是孟德尔随机化;真正的 MR 检验直到 2013 年才由哥本哈根团队完成,而它给出的是否定答案。这个领域的发展轨迹——从乐观叙事到大型否定、再到人群异质性的复杂图景——本身就是流行病学方法学进步的一个标本。</p>
+<hr>
+<h2 id="参考文献"><a class="header-anchor" href="#参考文献">¶</a>参考文献</h2>
+<p><img src="/img/%E5%8C%BB%E5%AD%A6/%E8%83%86%E7%BA%A2%E7%B4%A0%E8%AF%81%E6%8D%AE%E6%A3%AE%E6%9E%97%E5%9B%BE.png" alt="胆红素水平与心血管结局：观察性 vs 遗传学证据的关键效应量"></p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>Stocker R, Yamamoto Y, McDonagh AF, Glazer AN, Ames BN. <em>Bilirubin is an antioxidant of possible physiological importance.</em> Science. 1987;235(4792):1043-6. <a href="https://pubmed.ncbi.nlm.nih.gov/3029864/">PMID: 3029864</a> <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>Stocker R, Glazer AN, Ames BN. <em>Antioxidant activity of albumin-bound bilirubin.</em> Proc Natl Acad Sci USA. 1987;84(16):5918-22. <a href="https://pubmed.ncbi.nlm.nih.gov/3475708/">PMID: 3475708</a> <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p>Stocker R, et al. <em>Polypyrroles as antioxidants: kinetic studies on reactions of bilirubin and biliverdin dimethyl esters with peroxyl radicals.</em> J Org Chem. 2006;71(1):180-9. <a href="https://pubmed.ncbi.nlm.nih.gov/16388613/">PMID: 16388613</a> <a href="#fnref3" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p>Neuzil J, Stocker R. <em>Free and albumin-bound bilirubin are efficient co-antioxidants for alpha-tocopherol…</em> J Biol Chem. 1994;269(24):16712-9. <a href="https://pubmed.ncbi.nlm.nih.gov/8206992/">PMID: 8206992</a> <a href="#fnref4" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn5" class="footnote-item"><p>Boon AC, et al. <em>Bilirubin scavenges chloramines and inhibits myeloperoxidase-induced protein/lipid oxidation…</em> Free Radic Biol Med. 2015;86:259-68. <a href="https://pubmed.ncbi.nlm.nih.gov/26057938/">PMID: 26057938</a> <a href="#fnref5" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn6" class="footnote-item"><p>Gordon DM, et al. <em>Bilirubin remodels murine white adipose tissue…</em> J Biol Chem. 2020;295(30):10296-10310. <a href="https://pubmed.ncbi.nlm.nih.gov/32404366/">PMID: 32404366</a> <a href="#fnref6" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn7" class="footnote-item"><p>Vítek L, Tiribelli C. <em>Bilirubin: the yellow hormone?</em> J Hepatol. 2021;75(6):1485-1490. <a href="https://pubmed.ncbi.nlm.nih.gov/34153399/">PMID: 34153399</a> <a href="#fnref7" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn8" class="footnote-item"><p>Bianco A, et al. <em>The extent of intracellular accumulation of bilirubin determines its anti- or pro-oxidant effect.</em> Int J Mol Sci. 2020;21(21):8101. <a href="https://pubmed.ncbi.nlm.nih.gov/33143041/">PMID: 33143041</a> <a href="#fnref8" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn9" class="footnote-item"><p>Schwertner HA, Jackson WG, Tolan G. <em>Association of low serum concentration of bilirubin with increased risk of coronary artery disease.</em> Clin Chem. 1994;40(1):18-23. <a href="https://pubmed.ncbi.nlm.nih.gov/8287538/">PMID: 8287538</a> <a href="#fnref9" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn10" class="footnote-item"><p>Vítek L, Jirsa M, Brodanová M, et al. <em>Gilbert syndrome and ischemic heart disease: a protective effect of elevated bilirubin levels.</em> Atherosclerosis. 2002;160(2):449-56. <a href="https://pubmed.ncbi.nlm.nih.gov/11849670/">PMID: 11849670</a> <a href="#fnref10" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn11" class="footnote-item"><p>Lin JP, O’Donnell CJ, Schwaiger JP, et al. <em>Association between the UGT1A1*28 allele, bilirubin levels, and coronary heart disease in the Framingham Heart Study.</em> Circulation. 2006;114(14):1476-81. <a href="https://pubmed.ncbi.nlm.nih.gov/17000907/">PMID: 17000907</a> <a href="#fnref11" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn12" class="footnote-item"><p>Kunutsor SK, et al. <em>Circulating total bilirubin and risk of incident cardiovascular disease in the general population.</em> Arterioscler Thromb Vasc Biol. 2015;35(3):716-24. <a href="https://pubmed.ncbi.nlm.nih.gov/25593130/">PMID: 25593130</a> <a href="#fnref12" class="footnote-backref">↩︎</a> <a href="#fnref12:1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn13" class="footnote-item"><p>Yao ME, et al. <em>Physiologically increased total bilirubin is associated with reduced risk of first myocardial infarction…</em> Nutr Metab Cardiovasc Dis. 2021;31(4):1076-1085. <a href="https://pubmed.ncbi.nlm.nih.gov/33612380/">PMID: 33612380</a> <a href="#fnref13" class="footnote-backref">↩︎</a> <a href="#fnref13:1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn14" class="footnote-item"><p>Wang G, et al. <em>Association between bilirubin levels and risk of stroke: a systematic review and meta-analysis.</em> BMJ Open. 2023;13(5):e067833. <a href="https://pubmed.ncbi.nlm.nih.gov/37164466/">PMID: 37164466</a> <a href="#fnref14" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn15" class="footnote-item"><p>Horsfall LJ, Nazareth I, Petersen I. <em>Cardiovascular events as a function of serum bilirubin levels in a large, statin-treated cohort.</em> Circulation. 2012;126(22):2556-64. <a href="https://pubmed.ncbi.nlm.nih.gov/23110860/">PMID: 23110860</a> <a href="#fnref15" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn16" class="footnote-item"><p>Schwertner HA. <em>Association of smoking and low serum bilirubin antioxidant concentrations.</em> Atherosclerosis. 1998;136(2):383-7. <a href="https://pubmed.ncbi.nlm.nih.gov/9543110/">PMID: 9543110</a> <a href="#fnref16" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn17" class="footnote-item"><p>Hopkins PN, et al. <em>Higher serum bilirubin is associated with decreased risk for early familial coronary artery disease.</em> Arterioscler Thromb Vasc Biol. 1996;16(2):250-5. <a href="https://pubmed.ncbi.nlm.nih.gov/8620339/">PMID: 8620339</a> <a href="#fnref17" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn18" class="footnote-item"><p>Hunt SC, et al. <em>Association of plasma bilirubin with coronary heart disease and segregation of bilirubin as a major gene trait…</em> Atherosclerosis. 2001;154(3):747-54. <a href="https://pubmed.ncbi.nlm.nih.gov/11257278/">PMID: 11257278</a> <a href="#fnref18" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn19" class="footnote-item"><p>Stender S, et al. <em>Genetically elevated bilirubin and risk of ischaemic heart disease: three Mendelian randomization studies and a meta-analysis.</em> J Intern Med. 2013;273(1):59-68. <a href="https://pubmed.ncbi.nlm.nih.gov/22805420/">PMID: 22805420</a> <a href="#fnref19" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn20" class="footnote-item"><p>Hamilton FW, et al. <em>Effect of bilirubin and Gilbert syndrome on health: cohort analysis of observational, genetic, and Mendelian randomisation associations.</em> BMJ Med. 2023;2(1):e000467. <a href="https://pubmed.ncbi.nlm.nih.gov/37456363/">PMID: 37456363</a> <a href="#fnref20" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn21" class="footnote-item"><p>Shin JW, et al. <em>Causal association between serum bilirubin and ischemic stroke: multivariable Mendelian randomization.</em> Epidemiol Health. 2024;46:e2024070. <a href="https://pubmed.ncbi.nlm.nih.gov/39210787/">PMID: 39210787</a> <a href="#fnref21" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn22" class="footnote-item"><p>Chen G, et al. <em>A UGT1A1 variant is associated with serum total bilirubin levels, which are causal for hypertension in African-ancestry individuals.</em> NPJ Genom Med. 2021;6(1):44. <a href="https://pubmed.ncbi.nlm.nih.gov/34117260/">PMID: 34117260</a> <a href="#fnref22" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn23" class="footnote-item"><p>Lin R, et al. <em>Common variants of four bilirubin metabolism genes and their association with serum bilirubin and coronary artery disease in Chinese Han population.</em> Pharmacogenet Genomics. 2009;19(4):310-8. <a href="https://pubmed.ncbi.nlm.nih.gov/19238116/">PMID: 19238116</a> <a href="#fnref23" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn24" class="footnote-item"><p>Wang J, et al. <em>Serum bilirubin concentrations and incident coronary heart disease risk among patients with type 2 diabetes: the Dongfeng-Tongji cohort.</em> Acta Diabetol. 2017;54(3):257-264. <a href="https://pubmed.ncbi.nlm.nih.gov/27933515/">PMID: 27933515</a> <a href="#fnref24" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn25" class="footnote-item"><p>Chen W, et al. <em>Destabilization of atherosclerotic plaque by bilirubin deficiency.</em> Circ Res. 2023;132(7):812-824. <a href="https://pubmed.ncbi.nlm.nih.gov/36876485/">PMID: 36876485</a> <a href="#fnref25" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn26" class="footnote-item"><p>Stender S, et al. <em>Extreme bilirubin levels as a causal risk factor for symptomatic gallstone disease.</em> JAMA Intern Med. 2013;173(13):1222-8. <a href="https://pubmed.ncbi.nlm.nih.gov/23753274/">PMID: 23753274</a> <a href="#fnref26" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn27" class="footnote-item"><p>Zuo L, et al. <em>Dose-response association between bilirubin and cardiovascular disease: a systematic review and meta-analysis.</em> Angiology. 2022;73(9):807-816. <a href="https://pubmed.ncbi.nlm.nih.gov/35015578/">PMID: 35015578</a> <a href="#fnref27" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn28" class="footnote-item"><p>Zhao K, et al. <em>Association between bilirubin levels with incidence and prognosis of stroke: A meta-analysis.</em> Front Neurosci. 2023;17:1122235. <a href="https://pubmed.ncbi.nlm.nih.gov/36866331/">PMID: 36866331</a> <a href="#fnref28" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn29" class="footnote-item"><p>Tang C, et al. <em>The association between bilirubin and hypertension among a Chinese ageing cohort: a prospective follow-up study.</em> J Transl Med. 2022;20(1):108. <a href="https://pubmed.ncbi.nlm.nih.gov/35246141/">PMID: 35246141</a> <a href="#fnref29" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+]]></content>
+      <tags>
+        <tag>Medicine</tag>
       </tags>
   </entry>
   <entry>
