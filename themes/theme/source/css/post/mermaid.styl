@@ -19,7 +19,7 @@
     // 悬停效果
     &:hover
         border-color $color-accent
-        box-shadow 0 4*$px 12*$px rgba(0, 0, 0, 0.1)
+        box-shadow 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1)
 
     // 提示文字
     &::after
@@ -62,8 +62,8 @@
         position absolute
         top $margin-m-2
         right $margin-m-2
-        width 48*$px
-        height 48*$px
+        width 3rem
+        height 3rem
         background $color-background
         border $line-third solid $color-border
         border-radius 50%
@@ -71,7 +71,7 @@
         display flex
         justify-content center
         align-items center
-        font-size 24*$px
+        font-size 1.5rem
         color $color-text-primary
         transition all $transition-duration
 
@@ -88,7 +88,7 @@
         background $color-background
         padding $margin-l-0
         border-radius $margin-s-2
-        box-shadow 0 8*$px 32*$px rgba(0, 0, 0, 0.3)
+        box-shadow 0 0.5rem 2rem rgba(0, 0, 0, 0.3)
 
         svg
             display block
