@@ -1,0 +1,79 @@
+code {
+  font-weight: 400;
+}
+.code pre span {
+  font-weight: 400;
+}
+.highlight {
+  margin: 0 0 $margin-m-2 0;
+  overflow-x: auto;
+  border: 1px solid $color-border;
+  border-radius: $margin-s-1;
+  background-color: $color-code-background;
+}
+.highlight .line {
+  width: $margin-l-2;
+}
+.highlight table {
+  margin: 0;
+  border-spacing: 0;
+  border: none;
+  background-color: transparent;
+}
+.highlight td.code {
+  padding: 0 $margin-s-1 0 $margin-m-0;
+}
+.highlight pre {
+  font-weight: 400;
+  background-color: transparent;
+}
+td.gutter {
+  width: $margin-l-0;
+  padding: 0 $margin-m-0;
+  vertical-align: top;
+  position: -webkit-sticky;
+  position: sticky;
+  left: 0;
+  background-color: $color-code-background;
+  border-right: 1px solid $color-border;
+  z-index: 1;
+}
+td.gutter pre {
+  margin: 0;
+  color: $color-code-marker;
+  font-size: $font-size-code;
+  font-weight: 400;
+  background-color: transparent;
+}
+td.code {
+  vertical-align: top;
+  background-color: transparent;
+}
+td.code pre {
+  margin: 0;
+  font-weight: 400;
+  background-color: transparent;
+}
+pre {
+  margin: 0;
+  overflow-x: auto;
+  font-weight: 400;
+}
+.highlight code {
+  background-color: transparent;
+  padding: 0;
+}
+@media (max-width: 688px) {
+  code {
+    font-size: 0.75rem;
+  }
+  .highlight pre {
+    font-size: 0.75rem;
+  }
+  .highlight td.gutter {
+    width: $margin-m-2;
+    padding-right: $margin-s-2;
+    font-size: 0.6875rem;
+    background-color: $color-code-background;
+  }
+}

@@ -4626,18 +4626,18 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </categories>
   </entry>
   <entry>
-    <title>二零二二年九月二十二日</title>
-    <url>/2022/09/22/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%BA%8C%E5%B9%B4%E4%B9%9D%E6%9C%88%E4%BA%8C%E5%8D%81%E4%BA%8C%E6%97%A5/</url>
-    <content><![CDATA[<p>似是而非的脸，和我的吉他，低头呢喃细语，抬头语焉不详，麦浪，烈日，溪水，咳嗽，敲打，药丸碰撞罐壁。</p>
+    <title>二零二二年八月二十一日</title>
+    <url>/2022/08/21/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%BA%8C%E5%B9%B4%E5%85%AB%E6%9C%88%E4%BA%8C%E5%8D%81%E4%B8%80%E6%97%A5/</url>
+    <content><![CDATA[<p>不管是什么样的生活，都只是为了让自己满意，我这样活着，没什么不满的，我很痛快。这世上所有东西，我留意它时，它就存在，不留意时，它就是虚无。幸运的是我留意的事物很少，不致于身心劳碌一生奔忙。岁月会锤炼我一副丰满的灵魂和清瘦的欲望。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
       </categories>
   </entry>
   <entry>
-    <title>二零二二年八月二十一日</title>
-    <url>/2022/08/21/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%BA%8C%E5%B9%B4%E5%85%AB%E6%9C%88%E4%BA%8C%E5%8D%81%E4%B8%80%E6%97%A5/</url>
-    <content><![CDATA[<p>不管是什么样的生活，都只是为了让自己满意，我这样活着，没什么不满的，我很痛快。这世上所有东西，我留意它时，它就存在，不留意时，它就是虚无。幸运的是我留意的事物很少，不致于身心劳碌一生奔忙。岁月会锤炼我一副丰满的灵魂和清瘦的欲望。</p>
+    <title>二零二二年九月二十二日</title>
+    <url>/2022/09/22/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%BA%8C%E5%B9%B4%E4%B9%9D%E6%9C%88%E4%BA%8C%E5%8D%81%E4%BA%8C%E6%97%A5/</url>
+    <content><![CDATA[<p>似是而非的脸，和我的吉他，低头呢喃细语，抬头语焉不详，麦浪，烈日，溪水，咳嗽，敲打，药丸碰撞罐壁。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
@@ -6128,6 +6128,85 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
 <li>疾病知识指导: 使病人和家属了解疾病发生, 发展过程, 减少反复发作的次数.积极防治原发病, 避免和防治各种可能导致病情急性加重的诱因, 坚持家庭氧疗等.加强饮食营养, 以保证机体康复的需要.病情缓解期应根据肺, 心功能及体力情况进行适当的体育锻炼和呼吸功能锻炼如散步, 气功, 太极拳, 腹式呼吸, 缩唇呼吸等, 改善呼吸功能,提高机体免疫功能.</li>
 <li>病情监测指导: 告知病人及家属病情变化的征象, 如体温升高, 呼吸困难加重, 咳嗽剧烈, 咳痰不畅, 尿量减少, 水肿明显或发现病人神志淡漠, 嗜睡, 躁动, 口唇发纳加重等,均提示病情变化或加重,需及时就诊.</li>
 </ol>
+]]></content>
+      <tags>
+        <tag>Medicine</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>房颤与血栓栓塞：从左心耳血流淤滞到缺血性卒中</title>
+    <url>/2026/08/18/%E6%88%BF%E9%A2%A4%E4%B8%8E%E8%A1%80%E6%A0%93%E6%A0%93%E5%A1%9E%EF%BC%9A%E4%BB%8E%E5%B7%A6%E5%BF%83%E8%80%B3%E8%A1%80%E6%B5%81%E6%B7%A4%E6%BB%9E%E5%88%B0%E7%BC%BA%E8%A1%80%E6%80%A7%E5%8D%92%E4%B8%AD/</url>
+    <content><![CDATA[<p>房颤并不只是“心跳不规律”。它会破坏心房的有效收缩，使血液在左心耳等部位淤滞；同时，心房结构、内皮功能和凝血状态也会改变。血栓一旦脱落，随血流进入脑动脉，就可能引发缺血性卒中。房颤管理的核心，不是单纯把心率降下来，而是同时评估血栓风险、出血风险、症状和心律状态。</p>
+<h2 id="房颤是什么"><a class="header-anchor" href="#房颤是什么">¶</a>房颤是什么</h2>
+<p>房颤，即心房颤动，是一种常见的持续性心律失常。正常情况下，心房先有规律地收缩，把血液推入心室；房颤时，心房电活动变得快速、紊乱，心房不再进行有效的整体收缩，心室则以不规则节律搏动。</p>
+<p>患者可能感到心悸、胸闷、乏力、活动耐量下降，也可能完全没有症状。无症状并不等于没有风险。房颤对脑卒中的影响，主要来自血流淤滞和血栓形成，而不是来自心跳“乱”本身。</p>
+<p>房颤与年龄增长、高血压、心力衰竭、冠心病、瓣膜疾病、糖尿病、肥胖、睡眠呼吸暂停和甲状腺功能异常等因素有关。它还可能形成一个持续恶化的循环：房颤引起心房电和结构重塑，重塑又使房颤更容易持续。<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup><sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup></p>
+<h2 id="血栓为什么容易在房颤中形成"><a class="header-anchor" href="#血栓为什么容易在房颤中形成">¶</a>血栓为什么容易在房颤中形成</h2>
+<p>房颤相关血栓形成，通常可以从三个方面理解：血流淤滞、心房组织改变和凝血倾向增强。这三个方面对应经典的血栓形成机制，即 Virchow 三要素。</p>
+<h3 id="血流淤滞是最直接的因素"><a class="header-anchor" href="#血流淤滞是最直接的因素">¶</a>血流淤滞是最直接的因素</h3>
+<p>正常心房收缩能够推动血液向前流动。房颤时，心房失去有效机械收缩，尤其是左心耳内的血流速度下降。左心耳是左心房的一个盲袋状结构，解剖形态复杂，血液容易在其中形成涡流和淤积。</p>
+<p>房颤患者的血栓并不一定形成在心室，也不一定发生在全身静脉。典型的房颤相关血栓来自左心房，尤其是左心耳。血栓形成后，如果受到心房压力变化、心律恢复或血流剪切力影响，就可能脱落。</p>
+<h3 id="心房壁会发生结构和功能改变"><a class="header-anchor" href="#心房壁会发生结构和功能改变">¶</a>心房壁会发生结构和功能改变</h3>
+<p>长期房颤可能导致心房扩大、纤维化和局部内皮功能异常。心房内膜受到机械牵张和炎症信号影响后，抗凝和抗血小板的保护性状态可能减弱，促凝状态增强。</p>
+<p>房颤与炎症、氧化应激、纤维化和内皮功能障碍之间存在相互作用。现有研究支持“房颤不是单纯电活动异常”的观点：它同时涉及心房结构、代谢、炎症和凝血网络。<sup class="footnote-ref"><a href="#fn1" id="fnref1:1">[1:1]</a></sup><sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup></p>
+<h3 id="凝血系统可能被进一步激活"><a class="header-anchor" href="#凝血系统可能被进一步激活">¶</a>凝血系统可能被进一步激活</h3>
+<p>房颤患者可能出现血小板活化、凝血酶生成增加和纤维蛋白形成增强。高血压、心力衰竭、糖尿病、慢性肾病和高龄等因素，又会进一步提高凝血和血管损伤风险。</p>
+<p>因此，房颤相关血栓不是由单一因素造成的。即使患者某一次心电图没有记录到房颤，也不能据此认为血栓风险已经消失。房颤可能具有阵发性，血栓风险还受到基础疾病、既往卒中史和心房结构等因素影响。</p>
+<h2 id="血栓如何变成脑卒中"><a class="header-anchor" href="#血栓如何变成脑卒中">¶</a>血栓如何变成脑卒中</h2>
+<p>左心房内形成的血栓如果脱落，会进入左心室，再被泵入主动脉。血栓沿动脉进入脑循环后，可能堵塞颈内动脉、大脑中动脉或其他脑动脉分支，造成局部脑组织缺血和坏死。</p>
+<p>这类卒中属于心源性栓塞。与某些小动脉粥样硬化性卒中相比，房颤相关卒中往往具有栓子较大、血管阻塞位置较近端、神经功能损害较重等特点，也更容易出现较大的梗死范围。</p>
+<p>经典的 Framingham 研究把房颤确定为卒中的独立危险因素。后续指南和综述也持续把卒中预防放在房颤管理的核心位置。<sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup><sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup></p>
+<p>血栓也可能进入其他器官，引起外周动脉栓塞、肠系膜缺血、肾梗死或脾梗死。不过，临床上最受关注的后果仍然是缺血性卒中和短暂性脑缺血发作。</p>
+<h2 id="房颤患者的风险并不完全相同"><a class="header-anchor" href="#房颤患者的风险并不完全相同">¶</a>房颤患者的风险并不完全相同</h2>
+<p>不能只根据“有没有房颤”判断是否需要抗凝。房颤患者的血栓栓塞风险存在很大差异。</p>
+<p>临床通常会使用风险评分工具估计卒中风险。常见因素包括心力衰竭、高血压、年龄、糖尿病、既往卒中或短暂性脑缺血发作、血管疾病以及女性性别等。2023 年美国指南和 2024 年欧洲指南都强调，抗凝决策应以经过验证的卒中风险评估为基础，同时结合患者偏好、出血风险和临床情境。<sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup><sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup></p>
+<p>风险评分的作用是帮助估计总体风险，不是替代临床判断。它也不能回答所有问题。例如，肾功能变化、近期出血、肿瘤、贫血、合并用药和高龄，都可能改变抗凝治疗的实际获益与风险。</p>
+<p>出血风险评估同样重要，但“出血风险高”并不自动等于“不能抗凝”。更合理的做法是寻找可纠正因素，例如控制血压、减少不必要的抗血小板药物、避免非甾体抗炎药、处理贫血和改善肾功能监测。</p>
+<h2 id="抗凝药为什么能够预防卒中"><a class="header-anchor" href="#抗凝药为什么能够预防卒中">¶</a>抗凝药为什么能够预防卒中</h2>
+<p>抗凝药的作用是抑制凝血级联，减少纤维蛋白血栓形成。它并不是把已经形成的血栓“瞬间溶解”，而是降低新血栓形成和原有血栓扩大的概率。</p>
+<p>目前，房颤卒中预防常用口服抗凝药包括直接口服抗凝药和华法林。直接口服抗凝药包括直接凝血酶抑制剂以及直接凝血因子 Xa 抑制剂。它们起效较快，通常不需要像华法林那样频繁调整国际标准化比值，但仍需要根据肾功能、年龄、体重、合并用药和适应证选择剂量。</p>
+<p>多项随机试验的个体患者数据分析显示，直接口服抗凝药总体上适合用于非瓣膜性房颤的卒中预防，且不同年龄和性别亚组的主要疗效方向相对一致。系统综述和网络荟萃分析也支持口服抗凝药预防房颤相关卒中，但不同药物在胃肠道出血、颅内出血和其他出血结局上并不完全相同。<sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup><sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup></p>
+<p>这并不意味着直接口服抗凝药对所有房颤患者都优于华法林。机械心脏瓣膜患者、部分中重度二尖瓣狭窄患者，以及某些严重肾功能异常患者，需要按照具体指南和专科医生意见选择方案。药物种类不能只凭“新药”或“方便”来决定。</p>
+<h2 id="抗血小板药不能简单替代抗凝药"><a class="header-anchor" href="#抗血小板药不能简单替代抗凝药">¶</a>抗血小板药不能简单替代抗凝药</h2>
+<p>阿司匹林等抗血小板药主要影响血小板功能，而房颤相关血栓形成往往以凝血和纤维蛋白网络为重要特征。对于需要抗凝的房颤患者，单用抗血小板药通常不能等效替代口服抗凝药。</p>
+<p>如果患者同时存在冠状动脉疾病、冠脉支架或急性冠脉综合征，医生可能在特定阶段联合使用抗凝药和抗血小板药。但联合治疗会增加出血风险，疗程和药物组合需要严格限定，不能自行长期叠加。</p>
+<h2 id="恢复窦律后，是否可以马上停抗凝"><a class="header-anchor" href="#恢复窦律后，是否可以马上停抗凝">¶</a>恢复窦律后，是否可以马上停抗凝</h2>
+<p>通常不能仅因为心律恢复正常，就立即停用抗凝药。</p>
+<p>房颤患者的卒中风险不仅由当天是否出现房颤决定，还与既往房颤负荷、心房结构、年龄和伴随疾病有关。部分患者会出现无症状复发，普通门诊心电图也可能无法捕捉阵发性房颤。</p>
+<p>因此，抗凝治疗一般根据长期血栓栓塞风险决定，而不是只根据是否成功复律、消融或暂时没有症状决定。2024 年欧洲指南将房颤管理放在 AF-CARE 框架中，强调合并危险因素管理、避免卒中和血栓栓塞、减少症状以及动态评估治疗效果。<sup class="footnote-ref"><a href="#fn7" id="fnref7:1">[7:1]</a></sup></p>
+<h2 id="房颤管理不只是“吃抗凝药”"><a class="header-anchor" href="#房颤管理不只是“吃抗凝药”">¶</a>房颤管理不只是“吃抗凝药”</h2>
+<p>房颤的完整管理需要同时处理四个问题：评估并降低卒中和血栓栓塞风险；控制心率或恢复并维持窦律，以改善症状和心脏功能；管理高血压、肥胖、睡眠呼吸暂停、糖尿病、心力衰竭和饮酒等危险因素；持续监测药物安全性、肾功能、出血表现和房颤复发。</p>
+<p>节律控制可能改善症状，也可能在部分患者中改善长期结局，但它不能自动替代卒中风险评估。消融治疗也不等于血栓风险永久消失。治疗目标应从“消灭一次房颤”转向长期降低房颤负荷、卒中风险和心血管并发症。</p>
+<h2 id="需要立刻就医的表现"><a class="header-anchor" href="#需要立刻就医的表现">¶</a>需要立刻就医的表现</h2>
+<p>如果房颤患者突然出现单侧肢体无力或麻木、口角歪斜、说话含糊、理解困难、视物异常、行走不稳或突发剧烈头痛，应立即按照卒中急救流程就医。症状即使自行缓解，也可能是短暂性脑缺血发作，不能等待观察。</p>
+<p>正在服用抗凝药的患者，如果出现持续性呕血、黑便、血尿、无法止住的鼻出血、严重头痛、意识变化或跌倒撞击头部，也需要尽快就医。不要因为担心出血而自行停药，也不要因为漏服一次而擅自加倍补服。</p>
+<h2 id="结语"><a class="header-anchor" href="#结语">¶</a>结语</h2>
+<p>房颤与血栓栓塞的关系，可以归纳为一条连续的病理链：<strong>心房失去有效收缩，血流在左心耳等部位淤滞；心房结构、内皮和凝血状态发生改变；血栓形成并可能脱落；栓子进入脑循环后造成缺血性卒中。</strong></p>
+<p>真正有价值的房颤管理，不是只关注心电图上的节律，也不是只关注心率数字，而是同时回答三个问题：患者的血栓风险有多高，抗凝的获益是否超过出血风险，以及如何降低房颤本身和相关基础疾病的负荷。对个体患者而言，具体药物、剂量和停药时机必须由医生结合病史、肾功能、年龄、合并用药和出血情况决定。</p>
+<h2 id="References"><a class="header-anchor" href="#References">¶</a>References</h2>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>Staerk L, Sherer JA, Ko D, Benjamin EJ, Helm RH. “Atrial Fibrillation: Epidemiology, Pathophysiology, and Clinical Outcomes.” <em>Circulation Research</em>. 2017;120(9):1501–1517. PMID: 28450367. <a href="https://pubmed.ncbi.nlm.nih.gov/28450367/">PubMed</a> <a href="https://doi.org/10.1161/CIRCRESAHA.117.309732">DOI</a> <a href="#fnref1" class="footnote-backref">↩︎</a> <a href="#fnref1:1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>Iwasaki YK, Nishida K, Kato T, Nattel S. “Atrial fibrillation pathophysiology: implications for management.” <em>Circulation</em>. 2011;124(20):2264–2274. PMID: 22083148. <a href="https://pubmed.ncbi.nlm.nih.gov/22083148/">PubMed</a> <a href="https://doi.org/10.1161/CIRCULATIONAHA.111.019893">DOI</a> <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p>Ajoolabady A, Nattel S, Lip GYH, Ren J. “Inflammasome Signaling in Atrial Fibrillation: JACC State-of-the-Art Review.” <em>Journal of the American College of Cardiology</em>. 2022;79(23):2349–2366. PMID: 35680186. <a href="https://pubmed.ncbi.nlm.nih.gov/35680186/">PubMed</a> <a href="https://doi.org/10.1016/j.jacc.2022.03.379">DOI</a> <a href="#fnref3" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p>Wolf PA, Abbott RD, Kannel WB. “Atrial fibrillation as an independent risk factor for stroke: the Framingham Study.” <em>Stroke</em>. 1991;22(8):983–988. PMID: 1866765. <a href="https://pubmed.ncbi.nlm.nih.gov/1866765/">PubMed</a> <a href="https://doi.org/10.1161/01.STR.22.8.983">DOI</a> <a href="#fnref4" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn5" class="footnote-item"><p>Essa H, Hill AM, Lip GYH. “Atrial fibrillation and stroke.” <em>Cardiac Electrophysiology Clinics</em>. 2021;13(1):243–255. PMID: 33516402. <a href="https://pubmed.ncbi.nlm.nih.gov/33516402/">PubMed</a> <a href="https://doi.org/10.1016/j.ccep.2020.11.003">DOI</a> <a href="#fnref5" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn6" class="footnote-item"><p>Joglar JA, et al. “2023 ACC/AHA/ACCP/HRS Guideline for the Diagnosis and Management of Atrial Fibrillation.” <em>Circulation</em>. 2024;149(1):e1–e156. PMID: 38033089. <a href="https://pubmed.ncbi.nlm.nih.gov/38033089/">PubMed</a> <a href="https://doi.org/10.1161/CIR.0000000000001193">DOI</a> <a href="#fnref6" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn7" class="footnote-item"><p>Van Gelder IC, et al. “2024 ESC Guidelines for the management of atrial fibrillation developed in collaboration with the EACTS.” <em>European Heart Journal</em>. 2024;45(36):3314–3414. PMID: 39210723. <a href="https://pubmed.ncbi.nlm.nih.gov/39210723/">PubMed</a> <a href="https://doi.org/10.1093/eurheartj/ehae176">DOI</a> <a href="#fnref7" class="footnote-backref">↩︎</a> <a href="#fnref7:1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn8" class="footnote-item"><p>Carnicelli AP, et al. “Direct Oral Anticoagulants Versus Warfarin in Patients With Atrial Fibrillation: Patient-Level Network Meta-Analyses of Randomized Clinical Trials With Interaction Testing by Age and Sex.” <em>Circulation</em>. 2022;145(4):242–255. PMID: 34985309. <a href="https://pubmed.ncbi.nlm.nih.gov/34985309/">PubMed</a> <a href="https://doi.org/10.1161/CIRCULATIONAHA.121.056355">DOI</a> <a href="#fnref8" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn9" class="footnote-item"><p>López-López JA, et al. “Oral anticoagulants for prevention of stroke in atrial fibrillation: systematic review, network meta-analysis, and cost effectiveness analysis.” <em>BMJ</em>. 2017;359:j5058. PMID: 29183961. <a href="https://pubmed.ncbi.nlm.nih.gov/29183961/">PubMed</a> <a href="https://doi.org/10.1136/bmj.j5058">DOI</a> <a href="#fnref9" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
 ]]></content>
       <tags>
         <tag>Medicine</tag>

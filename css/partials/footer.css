@@ -1,0 +1,18 @@
+.footer {
+  margin-top: auto;
+  border-top: 1px solid $color-border;
+}
+.footer .footer-text {
+  margin-top: $margin-m-0;
+  margin-bottom: $margin-m-0;
+}
+@media (max-width: 688px) {
+  .footer {
+    margin-top: $margin-l-0;
+  }
+  .footer .footer-text {
+    font-size: 0.625rem;
+    margin-top: $margin-s-1;
+    margin-bottom: $margin-s-1;
+  }
+}
