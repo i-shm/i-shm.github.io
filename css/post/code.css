@@ -1,6 +1,12 @@
 code {
   font-weight: 400;
 }
+pre,
+code,
+kbd,
+samp {
+  font-family: $font-family-code;
+}
 .code pre span {
   font-weight: 400;
 }
