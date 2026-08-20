@@ -1136,6 +1136,69 @@ await prisma.$transaction(async tx =&gt; &#123;
       </tags>
   </entry>
   <entry>
+    <title>OCaml News 2024-1</title>
+    <url>/2024/01/08/OCaml-News-2024-1/</url>
+    <content><![CDATA[<h2 id="News"><a class="header-anchor" href="#News">¶</a>News</h2>
+<ul>
+<li><a href="https://tarides.com/blog/2023-12-20-ocaml-survey-developers-perception-interest-and-perceived-barriers/">OCaml Survey: Developers’ Perception, Interest, and Perceived Barriers</a></li>
+<li><a href="https://tarides.com/blog/2023-12-29-announcing-the-orchide-project-powering-satellite-innovation/">Announcing the ORCHIDE Project: Powering Satellite Innovation</a></li>
+<li><a href="https://github.com/ocaml/ocaml/pull/12885">Dynarrays, unboxed (with local dummies) #12885</a></li>
+<li><a href="https://github.com/ocaml/ocaml/pull/12871">Stdlib priority queues #12871</a></li>
+<li><a href="https://github.com/ocaml/ocaml/pull/12596">Compile recursive bindings in Lambda #12596</a></li>
+<li><a href="https://github.com/ocaml/ocaml/pull/12828">Add short syntax for dependent functor types #12828</a></li>
+<li><a href="https://github.com/ocaml/ocaml/pull/12508">[shapes] Add support for project-wide occurrences #12508</a></li>
+<li><a href="https://github.com/ocaml/ocaml/pull/1802">Make the character set for OCaml source code officially UTF-8. #1802</a></li>
+<li><a href="https://github.com/ocaml/ocaml/pull/12719">Add thread local storage #12719</a></li>
+</ul>
+<h2 id="Videos"><a class="header-anchor" href="#Videos">¶</a>Videos</h2>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=zG7JejHlQoM">“Melange: The next frontier in type-safe web development” by Dillon Mulroy - RVAJS 2023</a></li>
+<li><a href="https://www.youtube.com/watch?v=R-XJzUrP7bQ">Trying out OCaml TUI framework Mint Tea!</a></li>
+<li><a href="https://www.youtube.com/watch?v=XyDbG9FGR1o">A TUI chat in OCaml 🐫</a></li>
+<li>[Building a Game Engine… with OCaml ?! [Part 1]](<a href="https://www.youtube.com/watch?v=1XpUaTnssQE">https://www.youtube.com/watch?v=1XpUaTnssQE</a></li>
+</ul>
+<h2 id="Blogs"><a class="header-anchor" href="#Blogs">¶</a>Blogs</h2>
+<ul>
+<li><a href="https://sancho.dev/blog/whats-possible-with-melange">What’s possible with Melange</a></li>
+<li><a href="https://discuss.ocaml.org/t/access-inferred-types/13805">Access inferred types</a></li>
+<li><a href="https://discuss.ocaml.org/t/using-menhir-to-parse-into-idiomatic-js-typescript-structures/13809">Using Menhir to parse into idiomatic JS (TypeScript) structures</a></li>
+<li><a href="https://discuss.ocaml.org/t/why-constructors-are-not-curried/13792">Why constructors are not curried?</a></li>
+<li><a href="https://discuss.ocaml.org/t/practical-example-of-applicative-vs-generative-functors/13777">Practical example of applicative vs generative functors?</a></li>
+<li><a href="https://discuss.ocaml.org/t/compiler-optimization-on-flattening-adt-for-less-boxing/13764">Compiler optimization on flattening ADT for less boxing?</a></li>
+<li><a href="https://discuss.ocaml.org/t/how-to-express-koka-home-page-example/13748">How to express Koka home page example?</a></li>
+<li><a href="https://practicalocaml.com/parsing-with-binary-string-pattern-matching/">Parsing with Binary String Pattern Matching</a></li>
+</ul>
+<h2 id="Highlighted-Projects"><a class="header-anchor" href="#Highlighted-Projects">¶</a>Highlighted Projects</h2>
+<ul>
+<li><a href="https://github.com/backtracking/grid">grid: A tiny library for two-dimensional arrays</a></li>
+<li><a href="https://github.com/leostera/minttea">A fun little TUI framework for OCaml</a></li>
+<li><a href="https://github.com/terrateamio/ocaml-ts-mode">ocaml-ts-mode: Ocaml mode for emacs using treesitter</a></li>
+<li><a href="https://github.com/dmmulroy/create-melange-app">create-melange-app: An example app created by create-melange-app</a></li>
+<li><a href="https://github.com/andersfugmann/ppx_protocol_conv">ppx_protocol_conv: Pluggable serialization and deserialization of ocaml data strucures based on type_conv</a></li>
+<li><a href="https://spatial-shell.app/">spatial-shell: Spatial Shell is a daemon implementing a spatial model inspired by Material Shell, for i3 and sway. More precisely, it organizes your windows within a grid whose rows are the workspaces of your favorite WM.</a></li>
+<li><a href="https://codeberg.org/marcc/fixgen">Fixgen: A language agnostic fixture generator</a></li>
+<li><a href="https://github.com/tweag/opam-nix">opam-nix: Turn opam-based OCaml projects into Nix derivations</a></li>
+<li><a href="https://github.com/leostera/blink">Blink: A pure OCaml HTTP client for Riot</a></li>
+<li><a href="https://github.com/leostera/colors">colors: A pure OCaml library for manipulating colors in different color spaces.</a></li>
+<li><a href="https://github.com/nationalarchives/miiify">miilfy: A web annotation server built with the same principles as Git</a></li>
+</ul>
+<h2 id="New-Releases"><a class="header-anchor" href="#New-Releases">¶</a>New Releases</h2>
+<ul>
+<li><a href="https://github.com/leostera/riot">Roit v0.0.7: An actor-model multi-core scheduler for OCaml 5 🐫</a></li>
+<li>[CAStore: A portable pure OCaml CA Store, with no dependencies, inspired by Elixir’s <a href="https://github.com/elixir-mint/castore">:castore</a>.](<a href="https://github.com/leostera/castore">https://github.com/leostera/castore</a>)</li>
+<li><a href="https://discuss.ocaml.org/t/learn-ocaml-1-0-approaching-call-for-testers/13621">Lean-OCaml 1.0: A Web Application for Learning OCaml</a></li>
+<li><a href="https://erratique.ch/software/cmarkit">cmarkit 0.3.0&quot; CommonMark parser and renderer for OCaml</a></li>
+<li><a href="https://ocaml.org/p/dream-html/latest">dream-html 2.0.0: A library for generating HTML</a></li>
+<li><a href="https://git.frama-c.com/pub/caisar/">Caisar: A platform under active development at CEA LIST, aiming to provide a wide range of features to characterize the safety and robustness of artificial intelligence based software.</a></li>
+<li><a href="https://github.com/jserot/rfsm">RFSM 2.0: A toolset for describing and simulating StateChart-like state diagrams.</a></li>
+<li><a href="https://github.com/chshersh/zbg/tree/main">Zbg 2.0: <code>zbg</code> (short for <strong>Z</strong>ero <strong>B</strong>ullshit <strong>G</strong>it) is a CLI tool for using <code>git</code> efficiently.</a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>OCaml News 2024-2</title>
     <url>/2024/01/18/OCaml-News-2024-2/</url>
     <content><![CDATA[<h2 id="News"><a class="header-anchor" href="#News">¶</a>News</h2>
@@ -1207,69 +1270,6 @@ await prisma.$transaction(async tx =&gt; &#123;
 </ul>
 </li>
 <li><a href="https://discuss.ocaml.org/t/ann-new-release-of-menhir-20231231/13816">[ANN] New release of Menhir (20231231)</a></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>OCaml News 2024-1</title>
-    <url>/2024/01/08/OCaml-News-2024-1/</url>
-    <content><![CDATA[<h2 id="News"><a class="header-anchor" href="#News">¶</a>News</h2>
-<ul>
-<li><a href="https://tarides.com/blog/2023-12-20-ocaml-survey-developers-perception-interest-and-perceived-barriers/">OCaml Survey: Developers’ Perception, Interest, and Perceived Barriers</a></li>
-<li><a href="https://tarides.com/blog/2023-12-29-announcing-the-orchide-project-powering-satellite-innovation/">Announcing the ORCHIDE Project: Powering Satellite Innovation</a></li>
-<li><a href="https://github.com/ocaml/ocaml/pull/12885">Dynarrays, unboxed (with local dummies) #12885</a></li>
-<li><a href="https://github.com/ocaml/ocaml/pull/12871">Stdlib priority queues #12871</a></li>
-<li><a href="https://github.com/ocaml/ocaml/pull/12596">Compile recursive bindings in Lambda #12596</a></li>
-<li><a href="https://github.com/ocaml/ocaml/pull/12828">Add short syntax for dependent functor types #12828</a></li>
-<li><a href="https://github.com/ocaml/ocaml/pull/12508">[shapes] Add support for project-wide occurrences #12508</a></li>
-<li><a href="https://github.com/ocaml/ocaml/pull/1802">Make the character set for OCaml source code officially UTF-8. #1802</a></li>
-<li><a href="https://github.com/ocaml/ocaml/pull/12719">Add thread local storage #12719</a></li>
-</ul>
-<h2 id="Videos"><a class="header-anchor" href="#Videos">¶</a>Videos</h2>
-<ul>
-<li><a href="https://www.youtube.com/watch?v=zG7JejHlQoM">“Melange: The next frontier in type-safe web development” by Dillon Mulroy - RVAJS 2023</a></li>
-<li><a href="https://www.youtube.com/watch?v=R-XJzUrP7bQ">Trying out OCaml TUI framework Mint Tea!</a></li>
-<li><a href="https://www.youtube.com/watch?v=XyDbG9FGR1o">A TUI chat in OCaml 🐫</a></li>
-<li>[Building a Game Engine… with OCaml ?! [Part 1]](<a href="https://www.youtube.com/watch?v=1XpUaTnssQE">https://www.youtube.com/watch?v=1XpUaTnssQE</a></li>
-</ul>
-<h2 id="Blogs"><a class="header-anchor" href="#Blogs">¶</a>Blogs</h2>
-<ul>
-<li><a href="https://sancho.dev/blog/whats-possible-with-melange">What’s possible with Melange</a></li>
-<li><a href="https://discuss.ocaml.org/t/access-inferred-types/13805">Access inferred types</a></li>
-<li><a href="https://discuss.ocaml.org/t/using-menhir-to-parse-into-idiomatic-js-typescript-structures/13809">Using Menhir to parse into idiomatic JS (TypeScript) structures</a></li>
-<li><a href="https://discuss.ocaml.org/t/why-constructors-are-not-curried/13792">Why constructors are not curried?</a></li>
-<li><a href="https://discuss.ocaml.org/t/practical-example-of-applicative-vs-generative-functors/13777">Practical example of applicative vs generative functors?</a></li>
-<li><a href="https://discuss.ocaml.org/t/compiler-optimization-on-flattening-adt-for-less-boxing/13764">Compiler optimization on flattening ADT for less boxing?</a></li>
-<li><a href="https://discuss.ocaml.org/t/how-to-express-koka-home-page-example/13748">How to express Koka home page example?</a></li>
-<li><a href="https://practicalocaml.com/parsing-with-binary-string-pattern-matching/">Parsing with Binary String Pattern Matching</a></li>
-</ul>
-<h2 id="Highlighted-Projects"><a class="header-anchor" href="#Highlighted-Projects">¶</a>Highlighted Projects</h2>
-<ul>
-<li><a href="https://github.com/backtracking/grid">grid: A tiny library for two-dimensional arrays</a></li>
-<li><a href="https://github.com/leostera/minttea">A fun little TUI framework for OCaml</a></li>
-<li><a href="https://github.com/terrateamio/ocaml-ts-mode">ocaml-ts-mode: Ocaml mode for emacs using treesitter</a></li>
-<li><a href="https://github.com/dmmulroy/create-melange-app">create-melange-app: An example app created by create-melange-app</a></li>
-<li><a href="https://github.com/andersfugmann/ppx_protocol_conv">ppx_protocol_conv: Pluggable serialization and deserialization of ocaml data strucures based on type_conv</a></li>
-<li><a href="https://spatial-shell.app/">spatial-shell: Spatial Shell is a daemon implementing a spatial model inspired by Material Shell, for i3 and sway. More precisely, it organizes your windows within a grid whose rows are the workspaces of your favorite WM.</a></li>
-<li><a href="https://codeberg.org/marcc/fixgen">Fixgen: A language agnostic fixture generator</a></li>
-<li><a href="https://github.com/tweag/opam-nix">opam-nix: Turn opam-based OCaml projects into Nix derivations</a></li>
-<li><a href="https://github.com/leostera/blink">Blink: A pure OCaml HTTP client for Riot</a></li>
-<li><a href="https://github.com/leostera/colors">colors: A pure OCaml library for manipulating colors in different color spaces.</a></li>
-<li><a href="https://github.com/nationalarchives/miiify">miilfy: A web annotation server built with the same principles as Git</a></li>
-</ul>
-<h2 id="New-Releases"><a class="header-anchor" href="#New-Releases">¶</a>New Releases</h2>
-<ul>
-<li><a href="https://github.com/leostera/riot">Roit v0.0.7: An actor-model multi-core scheduler for OCaml 5 🐫</a></li>
-<li>[CAStore: A portable pure OCaml CA Store, with no dependencies, inspired by Elixir’s <a href="https://github.com/elixir-mint/castore">:castore</a>.](<a href="https://github.com/leostera/castore">https://github.com/leostera/castore</a>)</li>
-<li><a href="https://discuss.ocaml.org/t/learn-ocaml-1-0-approaching-call-for-testers/13621">Lean-OCaml 1.0: A Web Application for Learning OCaml</a></li>
-<li><a href="https://erratique.ch/software/cmarkit">cmarkit 0.3.0&quot; CommonMark parser and renderer for OCaml</a></li>
-<li><a href="https://ocaml.org/p/dream-html/latest">dream-html 2.0.0: A library for generating HTML</a></li>
-<li><a href="https://git.frama-c.com/pub/caisar/">Caisar: A platform under active development at CEA LIST, aiming to provide a wide range of features to characterize the safety and robustness of artificial intelligence based software.</a></li>
-<li><a href="https://github.com/jserot/rfsm">RFSM 2.0: A toolset for describing and simulating StateChart-like state diagrams.</a></li>
-<li><a href="https://github.com/chshersh/zbg/tree/main">Zbg 2.0: <code>zbg</code> (short for <strong>Z</strong>ero <strong>B</strong>ullshit <strong>G</strong>it) is a CLI tool for using <code>git</code> efficiently.</a></li>
 </ul>
 ]]></content>
       <tags>
@@ -1418,79 +1418,6 @@ await prisma.$transaction(async tx =&gt; &#123;
 <li>
 <p><a href="https://discuss.ocaml.org/t/ann-docfd-tui-multiline-fuzzy-document-finder-2-2-0/14109/1">[ANN] Docfd: TUI multiline fuzzy document finder 2.2.0</a></p>
 </li>
-</ul>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>OCaml News 2024-5</title>
-    <url>/2024/06/27/OCaml-News-2024-5/</url>
-    <content><![CDATA[<h2 id="语言的发展"><a class="header-anchor" href="#语言的发展">¶</a>语言的发展</h2>
-<ul>
-<li><a href="https://link.zhihu.com/?target=https%3A//github.com/ocaml/ocaml/pull/13097">Immutable arrays #13097: This PR proposes to add immutable arrays to OCaml.</a></li>
-<li><a href="https://link.zhihu.com/?target=https%3A//github.com/ocaml/ocaml/pull/13199">Support running native debuggers in ocamltest #13199</a>.</li>
-<li><a href="https://link.zhihu.com/?target=https%3A//github.com/ocaml/ocaml/pull/13152">The Pattern-Matching Bug: fix totality information by gasche · Pull Request #13152 · ocaml/ocaml</a>.</li>
-<li><a href="https://link.zhihu.com/?target=https%3A//github.com/ocaml/ocaml/pull/11974%23discussion_r1621832545">Add loongarch architecture support #11974</a>.</li>
-<li><a href="https://link.zhihu.com/?target=https%3A//github.com/ocaml/ocaml/pull/13101">Add Stdlib.todo #13101</a>.</li>
-<li><a href="https://link.zhihu.com/?target=https%3A//tarides.com/blog/2024-06-26-enhancing-the-ocaml-org-community-page-boosting-ux-and-ui-based-on-user-research/">Enhancing the OCaml.org Community Page: Boosting UX and UI Based on User Research.</a></li>
-<li><a href="https://link.zhihu.com/?target=https%3A//tarides.com/blog/2024-05-22-launching-the-first-class-windows-project/">Launching the First-Class Windows Project</a>.</li>
-</ul>
-<h2 id="新消息"><a class="header-anchor" href="#新消息">¶</a>新消息</h2>
-<ul>
-<li>
-<p><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/ann-project-wide-occurrences-in-merlin-and-lsp/14847">[ANN] Project wide occurrences in Merlin and LSP</a>.</p>
-</li>
-<li>
-<p><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/ann-opam-2-2-0-rc1-release/14842">[ANN] opam 2.2.0 rc1 release</a>.</p>
-</li>
-<li>
-<p><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/ann-first-release-of-baby/14840">[ANN] First release of baby</a>.</p>
-</li>
-<li>
-<p><a href="https://link.zhihu.com/?target=https%3A//github.com/fpottier/baby">baby</a> is an OCaml library that offers several implementations of balanced binary search trees.</p>
-</li>
-<li>
-<p><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/ann-preview-of-stripe-client-and-mock-server-dkstdrestapis/14841">[ANN] Preview of Stripe client and mock server - DkStdRestApis</a>.</p>
-</li>
-<li>
-<p><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/ann-caisar-release-2-0-a-platform-for-characterizing-ai-safety-and-robustness/14831">[ANN] CAISAR release 2.0, a platform for characterizing AI safety and robustness</a>.</p>
-</li>
-<li>
-<p><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/ann-forester-4-1/14800">[ANN] Forester 4.1</a>.</p>
-</li>
-<li>
-<p><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/ann-dream-html-pure-html-3-5-2/14808">[ANN] dream-html &amp; pure-html 3.5.2</a></p>
-</li>
-</ul>
-<h2 id="有价值的文章"><a class="header-anchor" href="#有价值的文章">¶</a>有价值的文章</h2>
-<ul>
-<li><a href="https://link.zhihu.com/?target=https%3A//tarides.com/blog/2024-06-19-keeping-up-with-the-compiler-how-we-help-maintain-the-ocaml-language/">Keeping Up With the Compiler: How we Help Maintain the OCaml Language</a></li>
-<li><a href="https://link.zhihu.com/?target=https%3A//github.com/ocaml/ocaml/pull/10995">Explain mapping between OCaml memory model and C.</a></li>
-<li><a href="https://link.zhihu.com/?target=https%3A//xavierleroy.org/CdF/2023-2024/index.html">Control structures – Xavier Leroy</a>.</li>
-<li><a href="https://link.zhihu.com/?target=https%3A//dev.to/chshersh/8-months-of-ocaml-after-8-years-of-haskell-in-production-h96">8 months of OCaml after 8 years of Haskell in production</a>.</li>
-<li><a href="https://link.zhihu.com/?target=https%3A//hypirion.com/musings/getting-ocaml-through-the-eye-of-a-needle">Getting OCaml Through the Eye of a Needle</a>.</li>
-<li><a href="https://link.zhihu.com/?target=https%3A//tarides.com/blog/2024-06-05-secure-from-the-ground-up-introducing-the-fides-project-combining-risc-v-and-mirageos/">Secure From the Ground Up: Introducing the FIDES Project Combining RISC-V and MirageOS.</a></li>
-<li><a href="https://link.zhihu.com/?target=https%3A//tarides.com/blog/2024-05-29-effective-ml-through-merlin-s-destruct-command/">Effective ML Through Merlin’s Destruct Command.</a></li>
-<li><a href="https://link.zhihu.com/?target=https%3A//blog.osau.re/articles/reproducible.html">Dinosaure’s website - Reproducibility!</a></li>
-<li><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/experiments-in-jitting/14853">Experiments in JITting</a>.</li>
-<li><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/how-to-write-an-efficient-cp-r-clone-with-eio/14848">How to write an efficient ‘cp -R’ clone with Eio?</a></li>
-<li><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/generating-infix-extension-nodes-with-ppxlib/14833">Generating infix extension nodes with Ppxlib</a>.</li>
-<li><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/this-made-my-day-float-to-string-and-string-of-float-without-loss-of-precision/14825">This made my day (float to string and string of float without loss of precision)</a>.</li>
-<li><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/help-with-cryptic-dependency-cycle-compile-errors-using-dune-build/14864">Help with cryptic dependency cycle compile errors using <code>dune build</code></a>.</li>
-<li><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/why-does-relaxed-value-restriction-treat-function-types-differently/14802">Why does relaxed value restriction treat function types differently?</a></li>
-<li><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/binding-existentials-in-a-non-uniform-gadt/14809">Binding existentials in a non-uniform GADT</a>.</li>
-</ul>
-<h2 id="有趣的项目"><a class="header-anchor" href="#有趣的项目">¶</a>有趣的项目</h2>
-<ul>
-<li><a href="https://link.zhihu.com/?target=https%3A//ocaml.org/p/ocaml-index/latest">ocaml-index 1.0 (latest) · OCaml Package: A tool that indexes value usages from cmt files</a>.</li>
-<li><a href="https://link.zhihu.com/?target=https%3A//ocaml.org/p/fileutils/latest">fileutils 0.6.4 (latest) · OCaml Package: API to manipulate files (POSIX like) and filenames.</a></li>
-<li><a href="https://link.zhihu.com/?target=https%3A//ocaml.org/p/pure-html/latest">pure-html 3.5.2 (latest) · OCaml Package</a></li>
-<li><a href="https://link.zhihu.com/?target=https%3A//github.com/fpottier/baby">GitHub - fpottier/baby: A balanced binary search tree library for OCaml</a>.</li>
-<li><a href="https://link.zhihu.com/?target=https%3A//github.com/akabe/ocaml-jupyter">GitHub - akabe/ocaml-jupyter: An OCaml kernel for Jupyter (IPython) notebook</a>.</li>
-<li><a href="https://link.zhihu.com/?target=https%3A//github.com/robur-coop/orb">Github - robur-coop/orb: check opam package reproductibility.</a></li>
-<li><a href="https://link.zhihu.com/?target=https%3A//github.com/ocaml-multicore/dscheck%23motivation">Github - ocaml-multicore/dscheck: Experimental model checker for testing concurrent algorithms.</a></li>
 </ul>
 ]]></content>
       <tags>
@@ -1662,6 +1589,79 @@ await prisma.$transaction(async tx =&gt; &#123;
 <li>
 <p><a href="https://link.zhihu.com/?target=https%3A//github.com/gridbugs/llama">llama: A library for building software-defined modular synthesizers in a declarative style.</a></p>
 </li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OCaml News 2024-5</title>
+    <url>/2024/06/27/OCaml-News-2024-5/</url>
+    <content><![CDATA[<h2 id="语言的发展"><a class="header-anchor" href="#语言的发展">¶</a>语言的发展</h2>
+<ul>
+<li><a href="https://link.zhihu.com/?target=https%3A//github.com/ocaml/ocaml/pull/13097">Immutable arrays #13097: This PR proposes to add immutable arrays to OCaml.</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//github.com/ocaml/ocaml/pull/13199">Support running native debuggers in ocamltest #13199</a>.</li>
+<li><a href="https://link.zhihu.com/?target=https%3A//github.com/ocaml/ocaml/pull/13152">The Pattern-Matching Bug: fix totality information by gasche · Pull Request #13152 · ocaml/ocaml</a>.</li>
+<li><a href="https://link.zhihu.com/?target=https%3A//github.com/ocaml/ocaml/pull/11974%23discussion_r1621832545">Add loongarch architecture support #11974</a>.</li>
+<li><a href="https://link.zhihu.com/?target=https%3A//github.com/ocaml/ocaml/pull/13101">Add Stdlib.todo #13101</a>.</li>
+<li><a href="https://link.zhihu.com/?target=https%3A//tarides.com/blog/2024-06-26-enhancing-the-ocaml-org-community-page-boosting-ux-and-ui-based-on-user-research/">Enhancing the OCaml.org Community Page: Boosting UX and UI Based on User Research.</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//tarides.com/blog/2024-05-22-launching-the-first-class-windows-project/">Launching the First-Class Windows Project</a>.</li>
+</ul>
+<h2 id="新消息"><a class="header-anchor" href="#新消息">¶</a>新消息</h2>
+<ul>
+<li>
+<p><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/ann-project-wide-occurrences-in-merlin-and-lsp/14847">[ANN] Project wide occurrences in Merlin and LSP</a>.</p>
+</li>
+<li>
+<p><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/ann-opam-2-2-0-rc1-release/14842">[ANN] opam 2.2.0 rc1 release</a>.</p>
+</li>
+<li>
+<p><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/ann-first-release-of-baby/14840">[ANN] First release of baby</a>.</p>
+</li>
+<li>
+<p><a href="https://link.zhihu.com/?target=https%3A//github.com/fpottier/baby">baby</a> is an OCaml library that offers several implementations of balanced binary search trees.</p>
+</li>
+<li>
+<p><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/ann-preview-of-stripe-client-and-mock-server-dkstdrestapis/14841">[ANN] Preview of Stripe client and mock server - DkStdRestApis</a>.</p>
+</li>
+<li>
+<p><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/ann-caisar-release-2-0-a-platform-for-characterizing-ai-safety-and-robustness/14831">[ANN] CAISAR release 2.0, a platform for characterizing AI safety and robustness</a>.</p>
+</li>
+<li>
+<p><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/ann-forester-4-1/14800">[ANN] Forester 4.1</a>.</p>
+</li>
+<li>
+<p><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/ann-dream-html-pure-html-3-5-2/14808">[ANN] dream-html &amp; pure-html 3.5.2</a></p>
+</li>
+</ul>
+<h2 id="有价值的文章"><a class="header-anchor" href="#有价值的文章">¶</a>有价值的文章</h2>
+<ul>
+<li><a href="https://link.zhihu.com/?target=https%3A//tarides.com/blog/2024-06-19-keeping-up-with-the-compiler-how-we-help-maintain-the-ocaml-language/">Keeping Up With the Compiler: How we Help Maintain the OCaml Language</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//github.com/ocaml/ocaml/pull/10995">Explain mapping between OCaml memory model and C.</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//xavierleroy.org/CdF/2023-2024/index.html">Control structures – Xavier Leroy</a>.</li>
+<li><a href="https://link.zhihu.com/?target=https%3A//dev.to/chshersh/8-months-of-ocaml-after-8-years-of-haskell-in-production-h96">8 months of OCaml after 8 years of Haskell in production</a>.</li>
+<li><a href="https://link.zhihu.com/?target=https%3A//hypirion.com/musings/getting-ocaml-through-the-eye-of-a-needle">Getting OCaml Through the Eye of a Needle</a>.</li>
+<li><a href="https://link.zhihu.com/?target=https%3A//tarides.com/blog/2024-06-05-secure-from-the-ground-up-introducing-the-fides-project-combining-risc-v-and-mirageos/">Secure From the Ground Up: Introducing the FIDES Project Combining RISC-V and MirageOS.</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//tarides.com/blog/2024-05-29-effective-ml-through-merlin-s-destruct-command/">Effective ML Through Merlin’s Destruct Command.</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//blog.osau.re/articles/reproducible.html">Dinosaure’s website - Reproducibility!</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/experiments-in-jitting/14853">Experiments in JITting</a>.</li>
+<li><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/how-to-write-an-efficient-cp-r-clone-with-eio/14848">How to write an efficient ‘cp -R’ clone with Eio?</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/generating-infix-extension-nodes-with-ppxlib/14833">Generating infix extension nodes with Ppxlib</a>.</li>
+<li><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/this-made-my-day-float-to-string-and-string-of-float-without-loss-of-precision/14825">This made my day (float to string and string of float without loss of precision)</a>.</li>
+<li><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/help-with-cryptic-dependency-cycle-compile-errors-using-dune-build/14864">Help with cryptic dependency cycle compile errors using <code>dune build</code></a>.</li>
+<li><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/why-does-relaxed-value-restriction-treat-function-types-differently/14802">Why does relaxed value restriction treat function types differently?</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//discuss.ocaml.org/t/binding-existentials-in-a-non-uniform-gadt/14809">Binding existentials in a non-uniform GADT</a>.</li>
+</ul>
+<h2 id="有趣的项目"><a class="header-anchor" href="#有趣的项目">¶</a>有趣的项目</h2>
+<ul>
+<li><a href="https://link.zhihu.com/?target=https%3A//ocaml.org/p/ocaml-index/latest">ocaml-index 1.0 (latest) · OCaml Package: A tool that indexes value usages from cmt files</a>.</li>
+<li><a href="https://link.zhihu.com/?target=https%3A//ocaml.org/p/fileutils/latest">fileutils 0.6.4 (latest) · OCaml Package: API to manipulate files (POSIX like) and filenames.</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//ocaml.org/p/pure-html/latest">pure-html 3.5.2 (latest) · OCaml Package</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//github.com/fpottier/baby">GitHub - fpottier/baby: A balanced binary search tree library for OCaml</a>.</li>
+<li><a href="https://link.zhihu.com/?target=https%3A//github.com/akabe/ocaml-jupyter">GitHub - akabe/ocaml-jupyter: An OCaml kernel for Jupyter (IPython) notebook</a>.</li>
+<li><a href="https://link.zhihu.com/?target=https%3A//github.com/robur-coop/orb">Github - robur-coop/orb: check opam package reproductibility.</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//github.com/ocaml-multicore/dscheck%23motivation">Github - ocaml-multicore/dscheck: Experimental model checker for testing concurrent algorithms.</a></li>
 </ul>
 ]]></content>
       <tags>
@@ -2111,28 +2111,6 @@ A relation table (also sometimes called a <em>JOIN</em>, <em>link</em> or <em>pi
       </tags>
   </entry>
   <entry>
-    <title>Radiographic Absence of the Left Humeral Head</title>
-    <url>/2023/10/25/Radiographic-Absence-of-the-Left-Humeral-Head/</url>
-    <content><![CDATA[<p>A 67-year-old man with thoracolumbar scoliosis, poor mobility, and history of frequent falls presented to the emergency department with 2 months of left shoulder pain, stiffness and reduced range of motion, and numbness and paresthesias in his left upper extremity.</p>
-<p>Ten years prior to presentation, he underwent surgical decompression for syringomyelia.</p>
-<p>A magnetic resonance imaging (MRI) scan of his cervical and thoracic spine performed 2 years prior to presentation revealed a recurrent syrinx extending from Cl C1 to T11, which was not resected because it did not cause symptoms at that time.</p>
-<p>On physical examination, he had mild tenderness to palpation and reduced range of motion of the left shoulder with abduction and flexion limited to 120° (normal range of motion, 180°).</p>
-<p>The left scapular muscles were atrophic, and pain and temperature sensation were reduced in his proximal left arm, and dorsal aspect of his left shoulder.</p>
-<p>His complete blood cell count, serum glucose levels, C-reactive protein levels, and erythrocyte sedimentation rate were normal.</p>
-<p>Results of tests for rheumatoid factor and antinuclear antibody were negative.</p>
-<p>Left shoulder radiograph showed complete absence of the left humeral head and a well-demarcated smooth osseous margin of the proximal humerus with associated soft tissue swelling and periarticular calcification.</p>
-<p>A chest radiograph taken 2 years prior revealed a normal left shoulder joint. The patient was hospitalized for further evaluation and treatment.</p>
-<ul>
-<li><a href="/papers/Radiographic%20Absence%20of%20the%20Left%20Humeral%20Head.pdf">报告原档</a></li>
-</ul>
-<p>这里提到了一种罕见的进展性疾病, 叫Charcot肩, 是一种神经性关节病变，特点是关节迅速被破坏和相关软组织肿胀。患者通常表现为肩部逐渐增大的肿胀，可能伴有疼痛或无痛，肩部无力和活动范围减少。<br>
-大约80%的Charcot肩患者有脊髓空洞症, 表现为脊髓中的液体充满腔体</p>
-]]></content>
-      <tags>
-        <tag>Medicine</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Repository pattern in Typescript</title>
     <url>/2025/02/19/Repository-pattern-in-Typescript/</url>
     <content><![CDATA[<blockquote>
@@ -2169,6 +2147,28 @@ A relation table (also sometimes called a <em>JOIN</em>, <em>link</em> or <em>pi
 ]]></content>
       <tags>
         <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Radiographic Absence of the Left Humeral Head</title>
+    <url>/2023/10/25/Radiographic-Absence-of-the-Left-Humeral-Head/</url>
+    <content><![CDATA[<p>A 67-year-old man with thoracolumbar scoliosis, poor mobility, and history of frequent falls presented to the emergency department with 2 months of left shoulder pain, stiffness and reduced range of motion, and numbness and paresthesias in his left upper extremity.</p>
+<p>Ten years prior to presentation, he underwent surgical decompression for syringomyelia.</p>
+<p>A magnetic resonance imaging (MRI) scan of his cervical and thoracic spine performed 2 years prior to presentation revealed a recurrent syrinx extending from Cl C1 to T11, which was not resected because it did not cause symptoms at that time.</p>
+<p>On physical examination, he had mild tenderness to palpation and reduced range of motion of the left shoulder with abduction and flexion limited to 120° (normal range of motion, 180°).</p>
+<p>The left scapular muscles were atrophic, and pain and temperature sensation were reduced in his proximal left arm, and dorsal aspect of his left shoulder.</p>
+<p>His complete blood cell count, serum glucose levels, C-reactive protein levels, and erythrocyte sedimentation rate were normal.</p>
+<p>Results of tests for rheumatoid factor and antinuclear antibody were negative.</p>
+<p>Left shoulder radiograph showed complete absence of the left humeral head and a well-demarcated smooth osseous margin of the proximal humerus with associated soft tissue swelling and periarticular calcification.</p>
+<p>A chest radiograph taken 2 years prior revealed a normal left shoulder joint. The patient was hospitalized for further evaluation and treatment.</p>
+<ul>
+<li><a href="/papers/Radiographic%20Absence%20of%20the%20Left%20Humeral%20Head.pdf">报告原档</a></li>
+</ul>
+<p>这里提到了一种罕见的进展性疾病, 叫Charcot肩, 是一种神经性关节病变，特点是关节迅速被破坏和相关软组织肿胀。患者通常表现为肩部逐渐增大的肿胀，可能伴有疼痛或无痛，肩部无力和活动范围减少。<br>
+大约80%的Charcot肩患者有脊髓空洞症, 表现为脊髓中的液体充满腔体</p>
+]]></content>
+      <tags>
+        <tag>Medicine</tag>
       </tags>
   </entry>
   <entry>
@@ -2492,6 +2492,19 @@ A relation table (also sometimes called a <em>JOIN</em>, <em>link</em> or <em>pi
       </tags>
   </entry>
   <entry>
+    <title>TSOPT 检查</title>
+    <url>/2025/12/29/TSOPT-%E6%A3%80%E6%9F%A5/</url>
+    <content><![CDATA[<p>T-SPOT检查，其全称为T-SPOT.TB，是一种用于检测结核分枝杆菌感染的体外诊断血液检测技术。该方法属于一类被称为γ-干扰素释放试验（Interferon Gamma Release Assay, IGRA）的检测手段，旨在辅助医生诊断个体是否存在结核菌感染，包括活动性结核病和潜伏性结-核感染。此项检测并非直接寻找病原体，而是通过评估人体免疫系统对结核菌特定抗原的反应来做出间接判断，因此，其结果需要结合临床风险评估、影像学检查及其他医疗诊断信息进行综合解读。</p>
+<p>该检测的核心原理在于测量外周血中效应T淋巴细胞的功能。具体而言，检测过程中会分离患者血液中的单个核细胞，并在体外用两种结核分枝杆菌特异性抗原——早期分泌性抗原靶6（ESAT-6）和培养滤液蛋白10（CFP-10）——对其进行刺激。这两种蛋白由结核分枝杆菌表达，但绝大多数非结核分枝杆菌以及目前使用的所有卡介苗（BCG疫苗）菌株均不表达，这使得T-SPOT.TB检测相比于传统的结核菌素皮肤试验（TST）具有更高的特异性，能有效避免因卡介苗接种史或大多数非结核分枝杆菌感染而导致的假阳性结果。</p>
+<p>如果受检者的免疫系统曾经接触过结核分枝杆菌，其血液中会存在能够识别这些特异性抗原的效应T细胞。当这些T细胞在体外再次遇到ESAT-6和CFP-10时，会被激活并释放γ-干扰素（IFN-γ）。T-SPOT.TB检测利用一种名为酶联免疫斑点（ELISPOT）的技术，在微孔板中捕获并可视化这些由单个T细胞释放的γ-干扰素，形成可见的“斑点”。通过计数这些斑点的数量，可以量化对结核菌抗原敏感的T细胞的丰度，从而判断免疫系统是否对结核菌存在记忆反应。</p>
+<p>检测结果通常以阳性、阴性或临界（可疑）的形式报告。阳性结果表明受检者很可能感染了结核分枝杆菌；阴性结果则意味着未检测到对结核菌的免疫反应，提示可能没有感染；而临界结果则表示无法明确判断，可能建议重新进行检测或结合其他诊断方法进一步评估。由于其操作的标准化和对特定抗原的依赖，T-SPOT.TB被认为是一种重要的结核病辅助诊断工具，尤其适用于那些因免疫抑制状态（如HIV感染者或长期使用免疫抑制剂的患者）而导致结核菌素皮肤试验结果不可靠的人群。</p>
+<h3 id="参考文献"><a class="header-anchor" href="#参考文献">¶</a>参考文献</h3>
+]]></content>
+      <tags>
+        <tag>Medicine</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>TDD 和 DDD 的一些小想法</title>
     <url>/2025/03/20/TDD-%E5%92%8C-DDD-%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%83%B3%E6%B3%95/</url>
     <content><![CDATA[<p>Test-Driven Development (TDD) 和 Domain-Driven Design (DDD) 是两种不同的软件开发方法论，各自有其独特的优缺点和应用场景。</p>
@@ -2529,19 +2542,6 @@ A relation table (also sometimes called a <em>JOIN</em>, <em>link</em> or <em>pi
 ]]></content>
       <tags>
         <tag>Technique</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>TSOPT 检查</title>
-    <url>/2025/12/29/TSOPT-%E6%A3%80%E6%9F%A5/</url>
-    <content><![CDATA[<p>T-SPOT检查，其全称为T-SPOT.TB，是一种用于检测结核分枝杆菌感染的体外诊断血液检测技术。该方法属于一类被称为γ-干扰素释放试验（Interferon Gamma Release Assay, IGRA）的检测手段，旨在辅助医生诊断个体是否存在结核菌感染，包括活动性结核病和潜伏性结-核感染。此项检测并非直接寻找病原体，而是通过评估人体免疫系统对结核菌特定抗原的反应来做出间接判断，因此，其结果需要结合临床风险评估、影像学检查及其他医疗诊断信息进行综合解读。</p>
-<p>该检测的核心原理在于测量外周血中效应T淋巴细胞的功能。具体而言，检测过程中会分离患者血液中的单个核细胞，并在体外用两种结核分枝杆菌特异性抗原——早期分泌性抗原靶6（ESAT-6）和培养滤液蛋白10（CFP-10）——对其进行刺激。这两种蛋白由结核分枝杆菌表达，但绝大多数非结核分枝杆菌以及目前使用的所有卡介苗（BCG疫苗）菌株均不表达，这使得T-SPOT.TB检测相比于传统的结核菌素皮肤试验（TST）具有更高的特异性，能有效避免因卡介苗接种史或大多数非结核分枝杆菌感染而导致的假阳性结果。</p>
-<p>如果受检者的免疫系统曾经接触过结核分枝杆菌，其血液中会存在能够识别这些特异性抗原的效应T细胞。当这些T细胞在体外再次遇到ESAT-6和CFP-10时，会被激活并释放γ-干扰素（IFN-γ）。T-SPOT.TB检测利用一种名为酶联免疫斑点（ELISPOT）的技术，在微孔板中捕获并可视化这些由单个T细胞释放的γ-干扰素，形成可见的“斑点”。通过计数这些斑点的数量，可以量化对结核菌抗原敏感的T细胞的丰度，从而判断免疫系统是否对结核菌存在记忆反应。</p>
-<p>检测结果通常以阳性、阴性或临界（可疑）的形式报告。阳性结果表明受检者很可能感染了结核分枝杆菌；阴性结果则意味着未检测到对结核菌的免疫反应，提示可能没有感染；而临界结果则表示无法明确判断，可能建议重新进行检测或结合其他诊断方法进一步评估。由于其操作的标准化和对特定抗原的依赖，T-SPOT.TB被认为是一种重要的结核病辅助诊断工具，尤其适用于那些因免疫抑制状态（如HIV感染者或长期使用免疫抑制剂的患者）而导致结核菌素皮肤试验结果不可靠的人群。</p>
-<h3 id="参考文献"><a class="header-anchor" href="#参考文献">¶</a>参考文献</h3>
-]]></content>
-      <tags>
-        <tag>Medicine</tag>
       </tags>
   </entry>
   <entry>
@@ -6236,7 +6236,7 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
 <p>下图为教学示意，不是患者原始心电图的重建，也不用于自动诊断。点击“播放动画”后，扫描线会沿时间轴移动；点击观察点按钮可以突出相应标注。动画用于说明“连续记录”和“节律间期”的概念，不代表真实心电设备的采样参数。</p>
 <div class="ecg-demo" data-ecg-demo>
 <style>
-.ecg-demo{--ink:#1c1917;--muted:#78716c;--paper:#faf8f5;--grid:rgba(210,190,174,.42);--red:#dc2626;--blue:#2563eb;--green:#15803d;margin:2rem 0;padding:1rem;background:var(--paper);border:2px solid var(--ink);box-shadow:5px 5px 0 var(--ink);color:var(--ink);overflow:hidden}.ecg-demo *{box-sizing:border-box}.ecg-demo h3{margin:0;font-size:1rem}.ecg-demo p{margin:.35rem 0 0;color:var(--muted);font-size:.8rem;line-height:1.65}.ecg-demo-head{display:flex;align-items:flex-start;justify-content:space-between;gap:.75rem;border-bottom:1px solid #d6d3d1;padding-bottom:.7rem}.ecg-demo-badge{padding:.2rem .45rem;border:1px solid var(--red);color:var(--red);font:700 .7rem/1.2 monospace;transform:rotate(-1deg)}.ecg-demo-controls{display:flex;flex-wrap:wrap;gap:.45rem;margin:.8rem 0}.ecg-demo button{cursor:pointer;padding:.38rem .58rem;border:1px solid #a8a29e;background:#fff;color:var(--ink);font:700 .72rem/1.2 monospace}.ecg-demo button:hover,.ecg-demo button[data-active=true]{border-color:var(--ink);background:var(--ink);color:#fff}.ecg-demo-canvas{overflow-x:auto;padding:.55rem;border:1px solid #78716c;background-color:#fffdfb;background-image:linear-gradient(to right,var(--grid) 1px,transparent 1px),linear-gradient(to bottom,var(--grid) 1px,transparent 1px);background-size:10px 10px}.ecg-demo-canvas svg{display:block;width:100%;min-width:620px;height:auto}.ecg-demo .ecg-trace{stroke-dasharray:5 2;animation:ecg-flow 1.8s linear infinite}.ecg-demo .scan-line{animation:ecg-scan 3.2s linear infinite}.ecg-demo .pulse-dot{animation:ecg-pulse 1.2s ease-in-out infinite}.ecg-demo.paused .ecg-trace,.ecg-demo.paused .scan-line,.ecg-demo.paused .pulse-dot{animation-play-state:paused}.ecg-demo .layer{transition:opacity .22s ease}@keyframes ecg-flow{to{stroke-dashoffset:-28}}@keyframes ecg-scan{from{transform:translateX(0)}to{transform:translateX(650px)}}@keyframes ecg-pulse{0%,100%{opacity:.3;r:3}50%{opacity:1;r:6}}.ecg-demo-note{margin-top:.7rem;padding:.65rem .75rem;border-left:4px solid var(--blue);background:#eff6ff;color:#1e3a8a;font-size:.82rem;line-height:1.7}.ecg-demo-legend{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-top:.75rem;font:.7rem/1.5 monospace}.ecg-demo-legend span{padding:.35rem;background:#fff;border:1px solid #d6d3d1}@media(max-width:640px){.ecg-demo-head{display:block}.ecg-demo-badge{display:inline-block;margin-top:.55rem}.ecg-demo-legend{grid-template-columns:1fr}}@media(prefers-reduced-motion:reduce){.ecg-demo .ecg-trace,.ecg-demo .scan-line,.ecg-demo .pulse-dot{animation:none}}
+.ecg-demo{--ink:#1c1917;--muted:#78716c;--paper:#faf8f5;--grid:rgba(210,190,174,.42);--red:#dc2626;--blue:#2563eb;--green:#15803d;margin:2rem 0;padding:1rem;background:var(--paper);border:2px solid var(--ink);box-shadow:5px 5px 0 var(--ink);color:var(--ink);overflow:hidden}.ecg-demo *{box-sizing:border-box}.ecg-demo h3{margin:0;font-size:1rem}.ecg-demo p{margin:.35rem 0 0;color:var(--muted);font-size:.8rem;line-height:1.65}.ecg-demo-head{display:flex;align-items:flex-start;justify-content:space-between;gap:.75rem;border-bottom:1px solid #d6d3d1;padding-bottom:.7rem}.ecg-demo-badge{padding:.2rem .45rem;border:1px solid var(--red);color:var(--red);font:700 .7rem/1.2 monospace;transform:rotate(-1deg)}.ecg-demo-controls{display:flex;flex-wrap:wrap;gap:.45rem;margin:.8rem 0}.ecg-demo button{cursor:pointer;padding:.38rem .58rem;border:1px solid #a8a29e;background:#fff;color:var(--ink);font:700 .72rem/1.2 monospace}.ecg-demo button:hover,.ecg-demo button[data-active=true]{border-color:var(--ink);background:var(--ink);color:#fff}.ecg-demo-canvas{overflow-x:auto;padding:.55rem;border:1px solid #78716c;background-color:#fffdfb;background-image:linear-gradient(to right,var(--grid) 1px,transparent 1px),linear-gradient(to bottom,var(--grid) 1px,transparent 1px);background-size:10px 10px}.ecg-demo-canvas svg{display:block;width:100%;min-width:620px;height:auto}.ecg-demo .ecg-trace{stroke-dasharray:none}.ecg-demo .scan-line,.ecg-demo .pulse-dot{animation:ecg-scan 3.2s linear infinite}.ecg-demo.paused .scan-line,.ecg-demo.paused .pulse-dot{animation-play-state:paused}.ecg-demo .layer{transition:opacity .22s ease}@keyframes ecg-scan{from{transform:translateX(0)}to{transform:translateX(650px)}}.ecg-demo-note{margin-top:.7rem;padding:.65rem .75rem;border-left:4px solid var(--blue);background:#eff6ff;color:#1e3a8a;font-size:.82rem;line-height:1.7}.ecg-demo-legend{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-top:.75rem;font:.7rem/1.5 monospace}.ecg-demo-legend span{padding:.35rem;background:#fff;border:1px solid #d6d3d1}@media(max-width:640px){.ecg-demo-head{display:block}.ecg-demo-badge{display:inline-block;margin-top:.55rem}.ecg-demo-legend{grid-template-columns:1fr}}@media(prefers-reduced-motion:reduce){.ecg-demo .ecg-trace,.ecg-demo .scan-line,.ecg-demo .pulse-dot{animation:none}}
 </style>
 <div class="ecg-demo-head"><div><h3>连续节律示意：窦性心律与房颤</h3><p>教学示意｜动画表示时间轴移动，不代表原始检测记录</p></div><span class="ecg-demo-badge">ECG SKETCH</span></div>
 <div class="ecg-demo-controls" role="group" aria-label="心电图动画控制"><button type="button" data-play data-active="true">暂停动画</button><button type="button" data-focus="all" data-active="true">总览</button><button type="button" data-focus="pwave">P 波 / f 波</button><button type="button" data-focus="rr">R-R 间期</button><button type="button" data-focus="qrs">QRS 波群</button></div>
