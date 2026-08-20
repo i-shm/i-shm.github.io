@@ -301,12 +301,12 @@ mjx-container[display="true"] + br {
     <blockquote>
 <p>本文解读 Giuseppe Castagna、Guillaume Duboc 与 José Valim 的论文《The Design Principles of the Elixir Type System》。论文提出了一套面向 Elixir 的渐进式类型系统，重点处理集合论类型、语义子类型、模式匹配、guard、map、动态代码与 BEAM 运行时检查之间的关系。</p>
 </blockquote>
-<p>论文的核心判断是：Elixir 需要静态类型检查，但类型系统不能脱离 Elixir 的语言习惯重新设计一套陌生语言。它必须理解多子句函数、函数元数、模式匹配、guard、map、协议、动态代码和 BEAM 的运行时行为。作者因此没有选择一套简单的“类型标签”，而是把集合论类型、局部类型推断、类型收窄和渐进式类型检查组合在一起，构成一套逐步集成到 Elixir 编译器中的设计方案。[1]</p>
-<h2 id="一、论文讨论的不是-Typespec-的小修补"><a class="header-anchor" href="#一、论文讨论的不是-Typespec-的小修补">¶</a>一、论文讨论的不是 Typespec 的小修补</h2>
+<p>论文的核心判断是：Elixir 需要静态类型检查，但类型系统不能脱离 Elixir 的语言习惯重新设计一套陌生语言。它必须理解多子句函数、函数 arity、模式匹配、guard、map、协议、动态代码和 BEAM 的运行时行为。作者因此没有选择一套简单的“类型标签”，而是把集合论类型、局部类型推断、类型收窄和渐进式类型检查组合在一起，构成一套逐步集成到 Elixir 编译器中的设计方案。[1]</p>
+<h2 id="Elixir-为什么需要另一套类型系统"><a class="header-anchor" href="#Elixir-为什么需要另一套类型系统">¶</a>Elixir 为什么需要另一套类型系统</h2>
 <p>Elixir 已经有 Typespec，也可以使用 Dialyzer 分析代码。问题在于，Typespec 的声明并不会由 Elixir 编译器完整验证，Dialyzer 则采用 success typing：它只在能够证明某处存在问题时报告警告，从而尽量避免误报。这种策略适合分析规模庞大的既有代码，却会放过一部分潜在错误。</p>
 <p>论文提出的系统追求更强的类型安全保证。它希望在编译期报告更多类型错误，同时允许项目继续保留未标注的动态代码。类型系统因此必须同时完成两件事：一方面精确表达函数和数据结构的约束，另一方面控制迁移成本，不要求开发者一次性改写整个代码库。[1]</p>
 <p>这项工作属于语言设计和类型理论研究，不是一篇以 benchmark 为中心的实验论文。论文给出了 Core Elixir 的形式化类型规则，介绍了原型实现，并列出未来的编译器集成路线；作者也明确承认，大规模代码库上的性能、警告质量和社区接受度仍需要后续实现验证。[1]</p>
-<h2 id="二、为什么简单的并集类型不够用"><a class="header-anchor" href="#二、为什么简单的并集类型不够用">¶</a>二、为什么简单的并集类型不够用</h2>
+<h2 id="or-不够用：集合论类型怎样表达函数行为"><a class="header-anchor" href="#or-不够用：集合论类型怎样表达函数行为">¶</a><code>or</code> 不够用：集合论类型怎样表达函数行为</h2>
 <p>先看一个函数：</p>
 <figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>(integer() <span class="keyword">or</span> boolean()) -&gt; (integer() <span class="keyword">or</span> boolean())</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">negate</span></span>(x) <span class="keyword">when</span> is_integer(x), <span class="symbol">do:</span> -x</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">negate</span></span>(x) <span class="keyword">when</span> is_boolean(x), <span class="symbol">do:</span> <span class="keyword">not</span> x</span><br></pre></td></tr></table></figure>
 <p>这个声明只说明输入可以是整数或布尔值，输出也可以是整数或布尔值。它没有表达输入和输出之间的对应关系。因此，当下面的代码调用 <code>negate/1</code> 时，类型检查器无法确认结果一定是整数：</p>
@@ -329,15 +329,15 @@ mjx-container[display="true"] + br {
 <p>与：</p>
 <figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{integer(), boolean()} <span class="keyword">or</span> {string(), boolean()}</span><br></pre></td></tr></table></figure>
 <p>表示同一个值集合。语义子类型通过集合包含关系定义，因此类型检查器可以识别这种等价性，而不需要依赖类型表达式的表面语法。[1]</p>
-<h2 id="三、函数元数必须进入类型语义"><a class="header-anchor" href="#三、函数元数必须进入类型语义">¶</a>三、函数元数必须进入类型语义</h2>
-<p>在 Elixir 中，函数元数不是附属信息。<code>foo/1</code> 和 <code>foo/2</code> 是两个不同的函数，<code>is_function(value, 2)</code> 也可以在运行时检查函数是否接受两个参数。</p>
+<h2 id="函数-arity-也属于类型"><a class="header-anchor" href="#函数-arity-也属于类型">¶</a>函数 arity 也属于类型</h2>
+<p>在 Elixir 中，函数 arity 不是附属信息。<code>foo/1</code> 和 <code>foo/2</code> 是两个不同的函数，<code>is_function(value, 2)</code> 也可以在运行时检查函数是否接受两个参数。</p>
 <p>传统的一元函数类型系统往往把多参数函数编码为接受 tuple 的函数。例如，二元函数可能被表示成接受 <code>{x, y}</code> 的一元函数。这种编码无法准确表达 Elixir 的 arity，也无法正确处理 <code>is_function/2</code>。</p>
 <p>论文因此直接把元数写入函数类型：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(t1, ..., tn) -&gt; t</span><br></pre></td></tr></table></figure>
 <p>形式化定义中的函数空间使用 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="1.357ex" height="1.025ex" role="img" focusable="false" viewBox="0 -442 600 453"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g></g></g></svg></mjx-container> 元输入，而不是单个输入集合。类型子型关系首先要求元数相同，然后比较各个参数域和返回域。不同元数的函数类型交集为空集，这与 Elixir 的运行时语义一致。[1]</p>
-<p>这一点看似基础，实际影响很大。guard 分析、函数应用检查和多子句函数的重载行为都依赖于准确的 arity 信息。</p>
-<h2 id="四、参数多态与局部类型推断"><a class="header-anchor" href="#四、参数多态与局部类型推断">¶</a>四、参数多态与局部类型推断</h2>
-<p>集合论类型并不排斥参数多态。论文用 <code>map/2</code> 和 <code>reduce/3</code> 说明这一点：</p>
+<p>guard 分析、函数应用检查和多子句函数的重载行为都依赖于准确的 arity 信息。</p>
+<h2 id="参数多态与局部类型推断"><a class="header-anchor" href="#参数多态与局部类型推断">¶</a>参数多态与局部类型推断</h2>
+<p>论文用 <code>map/2</code> 和 <code>reduce/3</code> 说明集合论类型如何支持参数多态：</p>
 <figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>([a], (a -&gt; b)) -&gt; [b]</span><br><span class="line">  <span class="keyword">when</span> <span class="symbol">a:</span> term(), <span class="symbol">b:</span> term()</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">map</span></span>([h | t], fun), <span class="symbol">do:</span> [fun.(h) | map(t, fun)]</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">map</span></span>([], _fun), <span class="symbol">do:</span> []</span><br></pre></td></tr></table></figure>
 <p>它的含义是：对于任意类型 <code>a</code> 和 <code>b</code>，<code>map/2</code> 接受 <code>a</code> 类型元素的列表，以及一个从 <code>a</code> 映射到 <code>b</code> 的函数，返回 <code>b</code> 类型元素的列表。</p>
 <p>调用时不需要显式实例化类型变量：</p>
@@ -348,7 +348,7 @@ mjx-container[display="true"] + br {
 <p>这个定义允许叶节点是 <code>a</code> 类型且不是 list 的值，也允许节点是由其他树组成的 list。于是 <code>flatten/1</code> 可以获得如下类型：</p>
 <figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tree(a) -&gt; [a]</span><br></pre></td></tr></table></figure>
 <p>这种类型表达能力对处理 Elixir 的通用集合函数很重要。单纯把所有值都近似成 <code>term()</code>，会迅速丢失输入元素与输出元素之间的关系。</p>
-<h2 id="五、guard-是类型信息，而不只是运行时条件"><a class="header-anchor" href="#五、guard-是类型信息，而不只是运行时条件">¶</a>五、guard 是类型信息，而不只是运行时条件</h2>
+<h2 id="从-pattern-和-guard-中提取类型"><a class="header-anchor" href="#从-pattern-和-guard-中提取类型">¶</a>从 pattern 和 guard 中提取类型</h2>
 <p>Elixir 程序大量依赖 guard。论文的一个核心工作，是把 guard 分析纳入类型系统，而不是只把 guard 当成无法理解的运行时黑箱。</p>
 <p>例如：</p>
 <figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_age</span></span>(person) <span class="keyword">when</span> is_integer(person.age), <span class="symbol">do:</span> person.age</span><br></pre></td></tr></table></figure>
@@ -373,7 +373,7 @@ mjx-container[display="true"] + br {
 <p>第一种情况是 <code>x</code> 为 boolean，<code>y</code> 可以是任意值；第二种情况是 <code>y</code> 为 integer，<code>x</code> 可以是任意值。因此第一条子句的返回类型是：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{term(), boolean()} or {integer(), term()}</span><br></pre></td></tr></table></figure>
 <p>系统不能简单地把 <code>x</code> 和 <code>y</code> 各自标成一个 union 类型，而需要为 <code>or</code> 的两个分支建立不同的类型环境，再合并分支结果。论文的 guard 分析规则从左到右处理 guard，并考虑 Elixir guard 的求值顺序和可能失败的表达式。[1]</p>
-<h2 id="六、当-guard-无法被类型精确表达时，系统使用上下近似"><a class="header-anchor" href="#六、当-guard-无法被类型精确表达时，系统使用上下近似">¶</a>六、当 guard 无法被类型精确表达时，系统使用上下近似</h2>
+<h2 id="guard-无法精确表达时怎么办"><a class="header-anchor" href="#guard-无法精确表达时怎么办">¶</a>guard 无法精确表达时怎么办</h2>
 <p>类型系统无法表达所有运行时谓词。例如：</p>
 <figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo</span></span>(x) <span class="keyword">when</span> map_size(x) == <span class="number">2</span>, <span class="symbol">do:</span> <span class="title class_">Map</span>.to_list(x)</span><br></pre></td></tr></table></figure>
 <p>“所有恰好包含两个字段的 map”是一个运行时集合，但不一定能够用当前类型语法精确表达。</p>
@@ -388,7 +388,7 @@ mjx-container[display="true"] + br {
 <p>第一条子句可能接受两字段 map，也接受所有 list。系统无法精确表达两字段 map，但可以确定所有 list 都已经被第一条子句捕获。因此第一条子句的：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">potentially accepted type = map() or list()</span><br><span class="line">surely accepted type = list()</span><br></pre></td></tr></table></figure>
 <p>这足以判定第二条子句是冗余的，因为 <code>length/1</code> 只对 list 有意义，而所有 list 已经被前一条子句处理。[1]</p>
-<h2 id="七、穷尽性检查和冗余分支检查"><a class="header-anchor" href="#七、穷尽性检查和冗余分支检查">¶</a>七、穷尽性检查和冗余分支检查</h2>
+<h2 id="模式匹配还能检查什么"><a class="header-anchor" href="#模式匹配还能检查什么">¶</a>模式匹配还能检查什么</h2>
 <p>模式匹配的价值不只在于解构数据，也在于它能够给出完整的控制流信息。</p>
 <p>论文定义：</p>
 <figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">result() =</span><br><span class="line">  %{<span class="symbol">output:</span> <span class="symbol">:ok</span>, <span class="symbol">socket:</span> socket()} <span class="keyword">or</span></span><br><span class="line">  %{<span class="symbol">output:</span> <span class="symbol">:error</span>, <span class="symbol">message:</span> <span class="symbol">:timeout</span> <span class="keyword">or</span> {<span class="symbol">:delay</span>, integer()}}</span><br></pre></td></tr></table></figure>
@@ -403,7 +403,7 @@ mjx-container[display="true"] + br {
 <li>exhaustivity checking：检查是否覆盖所有可能输入；</li>
 <li>redundancy checking：检查是否存在永远无法匹配的分支。</li>
 </ul>
-<h2 id="八、统一理解-record-与-dictionary"><a class="header-anchor" href="#八、统一理解-record-与-dictionary">¶</a>八、统一理解 record 与 dictionary</h2>
+<h2 id="map-同时承担-record-与-dictionary"><a class="header-anchor" href="#map-同时承担-record-与-dictionary">¶</a>map 同时承担 record 与 dictionary</h2>
 <p>Elixir 的 map 有两个常见用途：</p>
 <figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">person.age</span><br></pre></td></tr></table></figure>
 <p>把 map 当成 record；</p>
@@ -440,8 +440,8 @@ mjx-container[display="true"] + br {
 <li><code>bar</code> 可以缺失，存在时是 atom；</li>
 <li>其他 atom key 对应 integer。</li>
 </ul>
-<p>固定 singleton key 的声明优先于更宽泛的 key domain。这一点使类型系统能够表达结构化数据与动态字典混合的实际用法。</p>
-<h2 id="九、渐进式类型检查：dynamic-的作用"><a class="header-anchor" href="#九、渐进式类型检查：dynamic-的作用">¶</a>九、渐进式类型检查：dynamic() 的作用</h2>
+<p>固定 singleton key 的声明优先于更宽泛的 key domain，因此同一个 map 类型可以同时表达结构化字段和动态字典键。</p>
+<h2 id="dynamic-为旧代码留下迁移路径"><a class="header-anchor" href="#dynamic-为旧代码留下迁移路径">¶</a><code>dynamic()</code> 为旧代码留下迁移路径</h2>
 <p>Elixir 已经存在大量动态代码。若要迁移这些代码，类型系统必须允许静态部分和动态部分共存。</p>
 <p>论文引入：</p>
 <figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dynamic()</span><br></pre></td></tr></table></figure>
@@ -454,7 +454,7 @@ mjx-container[display="true"] + br {
 <p>这里仍然要求 <code>fun</code> 具有函数类型。下面的调用会被拒绝：</p>
 <figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">foo2({<span class="number">7</span>, <span class="number">42</span>})</span><br></pre></td></tr></table></figure>
 <p>因为 tuple 不是函数，即使函数参数的其他细节是动态的。</p>
-<h2 id="十、普通函数箭头与-strong-arrow"><a class="header-anchor" href="#十、普通函数箭头与-strong-arrow">¶</a>十、普通函数箭头与 strong arrow</h2>
+<h2 id="strong-arrow-如何利用已有的运行时检查"><a class="header-anchor" href="#strong-arrow-如何利用已有的运行时检查">¶</a>strong arrow 如何利用已有的运行时检查</h2>
 <p>这是论文最关键、也最容易被忽略的部分。</p>
 <p>考虑两个身份函数：</p>
 <figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>integer() -&gt; integer()</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">id_weak</span></span>(x), <span class="symbol">do:</span> x</span><br><span class="line"></span><br><span class="line"><span class="variable">$ </span>integer() -&gt; integer()</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">id_strong</span></span>(x) <span class="keyword">when</span> is_integer(x), <span class="symbol">do:</span> x</span><br></pre></td></tr></table></figure>
@@ -476,7 +476,7 @@ mjx-container[display="true"] + br {
 <figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>dynamic() -&gt; {dynamic(), integer()}</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo3</span></span>(x), <span class="symbol">do:</span> {id_weak(x), id_strong(x)}</span><br></pre></td></tr></table></figure>
 <p>第一项仍然是 <code>dynamic()</code>，因为 <code>id_weak/1</code> 没有运行时检查；第二项可以被确定为 <code>integer()</code>，因为 <code>id_strong/1</code> 要么返回整数，要么在输入错误时失败。</p>
 <p>这套设计解决了一个工程问题：传统 sound gradual typing 通常需要编译器在动态代码与静态代码交界处插入 cast。本文方案要求类型系统不改变 Elixir 的编译结果，因此它改为分析现有的 guard、模式匹配和 BEAM 检查，利用已经存在的运行时行为完成安全性推断。[1]</p>
-<h2 id="十一、形式化核心：Core-Elixir-与双向类型检查"><a class="header-anchor" href="#十一、形式化核心：Core-Elixir-与双向类型检查">¶</a>十一、形式化核心：Core Elixir 与双向类型检查</h2>
+<h2 id="Core-Elixir：把这些规则写成类型系统"><a class="header-anchor" href="#Core-Elixir：把这些规则写成类型系统">¶</a>Core Elixir：把这些规则写成类型系统</h2>
 <p>论文没有直接形式化整个 Elixir，而是定义了一个 Core Elixir。其表达式包括：</p>
 <ul>
 <li>常量和变量；</li>
@@ -495,7 +495,7 @@ mjx-container[display="true"] + br {
 <p><mjx-container class="MathJax" jax="SVG" display="true"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="20.559ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 9087.2 1000"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(600,0)"><path data-c="1D45C" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g><g data-mml-node="mi" transform="translate(1085,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(1685,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="mo" transform="translate(2151,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mo" transform="translate(2540,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g><g data-mml-node="mo" transform="translate(3206.8,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mi" transform="translate(4262.6,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(4862.6,0)"><path data-c="1D45C" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g><g data-mml-node="mi" transform="translate(5347.6,0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g><g data-mml-node="mo" transform="translate(5708.6,0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="mi" transform="translate(6153.2,0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g><g data-mml-node="mi" transform="translate(6514.2,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="mi" transform="translate(6980.2,0)"><path data-c="1D45F" d="M21 287Q22 290 23 295T28 317T38 348T53 381T73 411T99 433T132 442Q161 442 183 430T214 408T225 388Q227 382 228 382T236 389Q284 441 347 441H350Q398 441 422 400Q430 381 430 363Q430 333 417 315T391 292T366 288Q346 288 334 299T322 328Q322 376 378 392Q356 405 342 405Q286 405 239 331Q229 315 224 298T190 165Q156 25 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 114 189T154 366Q154 405 128 405Q107 405 92 377T68 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(7431.2,0)"><path data-c="1D45A" d="M21 287Q22 293 24 303T36 341T56 388T88 425T132 442T175 435T205 417T221 395T229 376L231 369Q231 367 232 367L243 378Q303 442 384 442Q401 442 415 440T441 433T460 423T475 411T485 398T493 385T497 373T500 364T502 357L510 367Q573 442 659 442Q713 442 746 415T780 336Q780 285 742 178T704 50Q705 36 709 31T724 26Q752 26 776 56T815 138Q818 149 821 151T837 153Q857 153 857 145Q857 144 853 130Q845 101 831 73T785 17T716 -10Q669 -10 648 17T627 73Q627 92 663 193T700 345Q700 404 656 404H651Q565 404 506 303L499 291L466 157Q433 26 428 16Q415 -11 385 -11Q372 -11 364 -4T353 8T350 18Q350 29 384 161L420 307Q423 322 423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 181Q151 335 151 342Q154 357 154 369Q154 405 129 405Q107 405 92 377T69 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mo" transform="translate(8309.2,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mo" transform="translate(8698.2,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g></g></svg></mjx-container></p>
 <p>类型检查采用双向思想：一部分表达式合成类型，另一部分表达式在给定期望类型的条件下进行检查。case 表达式的类型规则会计算每个 pattern/guard 能够处理的输入区域，并用这些区域生成分支环境。</p>
 <p>论文把 guard 的类型分析拆成多个子环境，以处理 <code>or</code> 分支以及前置 guard 失败后的求值路径。类型系统还区分能够保证穷尽性的规则和只能给出 warning 的近似规则：如果只能使用 potentially accepted type 判断覆盖范围，系统会提示 case 可能在运行时没有匹配分支。[1]</p>
-<h2 id="十二、编译器集成原则"><a class="header-anchor" href="#十二、编译器集成原则">¶</a>十二、编译器集成原则</h2>
+<h2 id="类型系统怎样进入-Elixir-编译器"><a class="header-anchor" href="#类型系统怎样进入-Elixir-编译器">¶</a>类型系统怎样进入 Elixir 编译器</h2>
 <p>论文提出了几项明确的集成要求。</p>
 <h3 id="12-1-不改变-Elixir-表达式语法"><a class="header-anchor" href="#12-1-不改变-Elixir-表达式语法">¶</a>12.1 不改变 Elixir 表达式语法</h3>
 <p>类型系统不能要求每个函数参数都增加新语法。Elixir 已经把大量语言结构写在自身宏系统中，因此类型语法也必须遵守现有语言的表达习惯。</p>
@@ -511,7 +511,7 @@ mjx-container[display="true"] + br {
 <p>第三步，引入函数类型注解。没有显式类型的参数默认使用 <code>dynamic()</code>，从而保持旧代码可编译。</p>
 <h3 id="12-3-类型检查优先于完整类型重建"><a class="header-anchor" href="#12-3-类型检查优先于完整类型重建">¶</a>12.3 类型检查优先于完整类型重建</h3>
 <p>论文认为，优先支持大多数 Elixir 习惯用法，比立即实现高成本的完整类型重建更实际。类型重建会带来复杂的约束求解和多轮代码分析，因此应当在语言常用结构得到支持后再推进。</p>
-<h2 id="十三、尚未完成的部分"><a class="header-anchor" href="#十三、尚未完成的部分">¶</a>十三、尚未完成的部分</h2>
+<h2 id="论文没有解决的部分"><a class="header-anchor" href="#论文没有解决的部分">¶</a>论文没有解决的部分</h2>
 <p>论文没有把类型系统包装成已经完成的工程产品。作者列出了一系列尚未完成的研究方向。</p>
 <h3 id="13-1-类型重建与-occurrence-typing"><a class="header-anchor" href="#13-1-类型重建与-occurrence-typing">¶</a>13.1 类型重建与 occurrence typing</h3>
 <p>当前系统可以检查某些精确类型，但未必能够自动重建这些类型。例如 <code>filter/2</code> 的精确结果类型需要分析谓词函数对元素的判断，并把判断结果传递回元素变量。这需要更强的 occurrence typing 技术。</p>
@@ -529,14 +529,14 @@ mjx-container[display="true"] + br {
 <li><code>start/3</code> 的第一个参数必须是兼容的 behaviour 模块。</li>
 </ul>
 <p>这要求类型系统处理模块类型、抽象类型、参数化 behaviour 以及更复杂的存在类型关系。</p>
-<h2 id="十四、与-Dialyzer、eqWAlizer-和-Gleam-的关系"><a class="header-anchor" href="#十四、与-Dialyzer、eqWAlizer-和-Gleam-的关系">¶</a>十四、与 Dialyzer、eqWAlizer 和 Gleam 的关系</h2>
+<h2 id="它与-Dialyzer、eqWAlizer-和-Gleam-有什么不同"><a class="header-anchor" href="#它与-Dialyzer、eqWAlizer-和-Gleam-有什么不同">¶</a>它与 Dialyzer、eqWAlizer 和 Gleam 有什么不同</h2>
 <h3 id="Dialyzer"><a class="header-anchor" href="#Dialyzer">¶</a>Dialyzer</h3>
 <p>Dialyzer 采用 success typing，优先减少误报。论文方案追求更强的 soundness，因此可能报告更多问题。二者代表不同的工程取舍：前者适合在大型动态代码库中保守分析，后者试图提供更强的编译期契约保证。[1]</p>
 <h3 id="eqWAlizer"><a class="header-anchor" href="#eqWAlizer">¶</a>eqWAlizer</h3>
 <p>eqWAlizer 支持泛型、局部类型推断、类型收窄和渐进式类型，但论文方案进一步使用集合论类型、否定类型和 strong arrows，并把 map record 与 dictionary 放在统一类型体系中。[1]</p>
 <h3 id="Gleam"><a class="header-anchor" href="#Gleam">¶</a>Gleam</h3>
 <p>Gleam 选择一套从 ML 家族继承而来的静态类型路线，拥有 Hindley–Milner 类型推断和有限的 row polymorphism。它从语言设计之初就选择静态类型；本文方案则直接面对现有 Elixir 代码库，优先解决逐步迁移与语义兼容问题。[1]</p>
-<h2 id="十五、如何评价这套设计"><a class="header-anchor" href="#十五、如何评价这套设计">¶</a>十五、如何评价这套设计</h2>
+<h2 id="这套设计的边界"><a class="header-anchor" href="#这套设计的边界">¶</a>这套设计的边界</h2>
 <p>这套方案的理论优势很明确。交集箭头可以表达多子句函数的输入输出对应关系；guard 分析可以把 Elixir 的控制流信息转化为类型信息；开放 map 类型可以同时处理 record 和 dictionary；strong arrow 则利用已有运行时检查，避免类型系统为了保证安全而自动改变代码执行方式。</p>
 <p>工程风险同样明确。类型表达式可能非常复杂，子类型判断可能增加编译成本，更强的 soundness 可能带来更多 warning，而宏、消息传递和 behaviour 仍需要继续研究。论文没有提供大型真实项目上的编译耗时、警告精度和迁移成本数据，因此它应当被看作一套有形式化基础的设计提案和原型路线，而不是已经完成的生产级类型检查器。</p>
 <p>这篇论文最重要的贡献，是把问题重新表述为：如何让静态类型适应 Elixir 的运行时和编程风格。它没有要求 Elixir 放弃动态性，也没有把 Elixir 改造成另一门静态函数式语言，而是试图从 pattern、guard、map、BEAM 检查和已有函数契约中逐步提取可靠的类型信息。</p>
