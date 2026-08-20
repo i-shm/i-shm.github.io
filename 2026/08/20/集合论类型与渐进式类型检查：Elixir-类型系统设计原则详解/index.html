@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="韩暮秋">
+    
+        
+            <meta name="subtitle" content="暮秋小屋">
+            
+                
+                    <meta name="description" content="这里是暮秋小屋，思念和灵感的寄存处">
+                    
+                        
+                            <meta name="keywords" content="韩暮秋,MuqiuHan,'Muqiu Han', 'muqiu han', muqiuhan">
+                            
+
+                                
+
+                                    <title>
+                                        
+                                            集合论类型与渐进式类型检查：Elixir 类型系统设计原则详解 | 
+                                                    暮秋小屋
+                                    </title>
+
+                                    
+                                        
+                                            <link rel="icon" href="/favicon.ico">
+                                            
+
+                                                        
+                                                            
+                                                                <!-- stylesheets list from _config.yml -->
+                                                                
+                                                                    <link rel="stylesheet" href="/css/style.css">
+                                                                    
+                                                                        
+
+            
+                <link rel="preload" href="/fonts/FZYouSongS-509R.woff2" as="font" type="font/woff2" crossorigin>
+
+                                                                    
+                                                                        
+                                                                            <!-- scripts list from _config.yml -->
+                                                                            
+                                                                                <script
+                                                                                    src="/js/menu.js"></script>
+                                                                                
+                                                                                    
+
+                                                                                        
+                                                                                            
+                                                                                                <script
+                                                                                                    src="https://polyfill.alicdn.com/polyfill.js?features=es6"></script>
+                                                                                                <script
+                                                                                                    id="MathJax-script"
+                                                                                                    async
+                                                                                                    src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/mathjax/3.2.0/es5/tex-mml-chtml.js"></script>
+                                                                                                
+
+                                                                                                    
+                                                                                                        
+  <meta name="generator" content="Hexo 6.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+  <body>
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+              暮秋小屋
+                
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        菜单
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+                <li class="menu-item">
+                  <a href="/">
+                    主页
+                  </a>
+                </li>
+                
+                  
+            
+                <li class="menu-item">
+                  <a href="/categories/gallery/">
+                    日记本
+                  </a>
+                </li>
+                
+                  
+            
+                <li class="menu-item">
+                  <a href="/tags/Medicine/">
+                    泛医学
+                  </a>
+                </li>
+                
+                  
+            
+                <li class="menu-item">
+                  <a href="/tags/Technique/">
+                    计算机
+                  </a>
+                </li>
+                
+                  
+            
+                <li class="menu-item">
+                  <a href="/tags/Life/">
+                    生活
+                  </a>
+                </li>
+                
+                  
+            
+                <li class="menu-item">
+                  <a href="/archives">
+                    全部
+                  </a>
+                </li>
+                
+                  
+            
+                <li class="menu-item">
+                  <a href="/about">
+                    关于
+                  </a>
+                </li>
+                
+                  
+                    
+                      <li class="menu-item">
+                        <a href="/search">搜索</a>
+                      </li>
+                      
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/Technique/">
+                            Technique
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                集合论类型与渐进式类型检查：Elixir 类型系统设计原则详解
+            
+            
+        </div>
+        <span class="post-date">
+            Aug 20, 2026
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <blockquote>
+<p>本文解读 Giuseppe Castagna、Guillaume Duboc 与 José Valim 的论文《The Design Principles of the Elixir Type System》。论文提出了一套面向 Elixir 的渐进式类型系统，重点处理集合论类型、语义子类型、模式匹配、guard、map、动态代码与 BEAM 运行时检查之间的关系。</p>
+</blockquote>
+<p>论文的核心判断是：Elixir 需要静态类型检查，但类型系统不能脱离 Elixir 的语言习惯重新设计一套陌生语言。它必须理解多子句函数、函数元数、模式匹配、guard、map、协议、动态代码和 BEAM 的运行时行为。作者因此没有选择一套简单的“类型标签”，而是把集合论类型、局部类型推断、类型收窄和渐进式类型检查组合在一起，构成一套逐步集成到 Elixir 编译器中的设计方案。[1]</p>
+<h2 id="一、论文讨论的不是-Typespec-的小修补"><a class="header-anchor" href="#一、论文讨论的不是-Typespec-的小修补">¶</a>一、论文讨论的不是 Typespec 的小修补</h2>
+<p>Elixir 已经有 Typespec，也可以使用 Dialyzer 分析代码。问题在于，Typespec 的声明并不会由 Elixir 编译器完整验证，Dialyzer 则采用 success typing：它只在能够证明某处存在问题时报告警告，从而尽量避免误报。这种策略适合分析规模庞大的既有代码，却会放过一部分潜在错误。</p>
+<p>论文提出的系统追求更强的类型安全保证。它希望在编译期报告更多类型错误，同时允许项目继续保留未标注的动态代码。类型系统因此必须同时完成两件事：一方面精确表达函数和数据结构的约束，另一方面控制迁移成本，不要求开发者一次性改写整个代码库。[1]</p>
+<p>这项工作属于语言设计和类型理论研究，不是一篇以 benchmark 为中心的实验论文。论文给出了 Core Elixir 的形式化类型规则，介绍了原型实现，并列出未来的编译器集成路线；作者也明确承认，大规模代码库上的性能、警告质量和社区接受度仍需要后续实现验证。[1]</p>
+<h2 id="二、为什么简单的并集类型不够用"><a class="header-anchor" href="#二、为什么简单的并集类型不够用">¶</a>二、为什么简单的并集类型不够用</h2>
+<p>先看一个函数：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>(integer() <span class="keyword">or</span> boolean()) -&gt; (integer() <span class="keyword">or</span> boolean())</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">negate</span></span>(x) <span class="keyword">when</span> is_integer(x), <span class="symbol">do:</span> -x</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">negate</span></span>(x) <span class="keyword">when</span> is_boolean(x), <span class="symbol">do:</span> <span class="keyword">not</span> x</span><br></pre></td></tr></table></figure>
+<p>这个声明只说明输入可以是整数或布尔值，输出也可以是整数或布尔值。它没有表达输入和输出之间的对应关系。因此，当下面的代码调用 <code>negate/1</code> 时，类型检查器无法确认结果一定是整数：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">integer_value + negate(integer_value)</span><br></pre></td></tr></table></figure>
+<p>论文改用函数箭头类型的交集：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>(integer() -&gt; integer()) <span class="keyword">and</span></span><br><span class="line">  (boolean() -&gt; boolean())</span><br></pre></td></tr></table></figure>
+<p>这个类型表达了两个子行为：整数输入得到整数输出，布尔值输入得到布尔值输出。它比前一个并集类型更精确。</p>
+<p>集合论类型把类型理解为值的集合：</p>
+<ul>
+<li><code>integer()</code> 表示所有整数构成的集合；</li>
+<li><code>boolean()</code> 表示 <code>{true, false}</code>；</li>
+<li><code>t1 or t2</code> 表示两个集合的并集；</li>
+<li><code>t1 and t2</code> 表示两个集合的交集；</li>
+<li><code>not t</code> 表示集合补集；</li>
+<li><code>none()</code> 表示空集合；</li>
+<li><code>term()</code> 表示所有 Elixir 值。</li>
+</ul>
+<p>这种解释使类型运算服从集合论的交换律、结合律和分配律。比如：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{integer() <span class="keyword">or</span> string(), boolean()}</span><br></pre></td></tr></table></figure>
+<p>与：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{integer(), boolean()} <span class="keyword">or</span> {string(), boolean()}</span><br></pre></td></tr></table></figure>
+<p>表示同一个值集合。语义子类型通过集合包含关系定义，因此类型检查器可以识别这种等价性，而不需要依赖类型表达式的表面语法。[1]</p>
+<h2 id="三、函数元数必须进入类型语义"><a class="header-anchor" href="#三、函数元数必须进入类型语义">¶</a>三、函数元数必须进入类型语义</h2>
+<p>在 Elixir 中，函数元数不是附属信息。<code>foo/1</code> 和 <code>foo/2</code> 是两个不同的函数，<code>is_function(value, 2)</code> 也可以在运行时检查函数是否接受两个参数。</p>
+<p>传统的一元函数类型系统往往把多参数函数编码为接受 tuple 的函数。例如，二元函数可能被表示成接受 <code>{x, y}</code> 的一元函数。这种编码无法准确表达 Elixir 的 arity，也无法正确处理 <code>is_function/2</code>。</p>
+<p>论文因此直接把元数写入函数类型：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(t1, ..., tn) -&gt; t</span><br></pre></td></tr></table></figure>
+<p>形式化定义中的函数空间使用 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="1.357ex" height="1.025ex" role="img" focusable="false" viewBox="0 -442 600 453"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g></g></g></svg></mjx-container> 元输入，而不是单个输入集合。类型子型关系首先要求元数相同，然后比较各个参数域和返回域。不同元数的函数类型交集为空集，这与 Elixir 的运行时语义一致。[1]</p>
+<p>这一点看似基础，实际影响很大。guard 分析、函数应用检查和多子句函数的重载行为都依赖于准确的 arity 信息。</p>
+<h2 id="四、参数多态与局部类型推断"><a class="header-anchor" href="#四、参数多态与局部类型推断">¶</a>四、参数多态与局部类型推断</h2>
+<p>集合论类型并不排斥参数多态。论文用 <code>map/2</code> 和 <code>reduce/3</code> 说明这一点：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>([a], (a -&gt; b)) -&gt; [b]</span><br><span class="line">  <span class="keyword">when</span> <span class="symbol">a:</span> term(), <span class="symbol">b:</span> term()</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">map</span></span>([h | t], fun), <span class="symbol">do:</span> [fun.(h) | map(t, fun)]</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">map</span></span>([], _fun), <span class="symbol">do:</span> []</span><br></pre></td></tr></table></figure>
+<p>它的含义是：对于任意类型 <code>a</code> 和 <code>b</code>，<code>map/2</code> 接受 <code>a</code> 类型元素的列表，以及一个从 <code>a</code> 映射到 <code>b</code> 的函数，返回 <code>b</code> 类型元素的列表。</p>
+<p>调用时不需要显式实例化类型变量：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">map([<span class="number">1</span>, <span class="number">4</span>], <span class="keyword">fn</span> x -&gt; negate(x) <span class="keyword">end</span>)</span><br></pre></td></tr></table></figure>
+<p>局部类型推断可以把 <code>a</code> 和 <code>b</code> 都实例化为 <code>integer()</code>，因此结果类型为 <code>[integer()]</code>。</p>
+<p>论文还用递归类型描述嵌套列表：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tree(a) = (a <span class="keyword">and</span> <span class="keyword">not</span> list()) <span class="keyword">or</span> [tree(a)]</span><br></pre></td></tr></table></figure>
+<p>这个定义允许叶节点是 <code>a</code> 类型且不是 list 的值，也允许节点是由其他树组成的 list。于是 <code>flatten/1</code> 可以获得如下类型：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tree(a) -&gt; [a]</span><br></pre></td></tr></table></figure>
+<p>这种类型表达能力对处理 Elixir 的通用集合函数很重要。单纯把所有值都近似成 <code>term()</code>，会迅速丢失输入元素与输出元素之间的关系。</p>
+<h2 id="五、guard-是类型信息，而不只是运行时条件"><a class="header-anchor" href="#五、guard-是类型信息，而不只是运行时条件">¶</a>五、guard 是类型信息，而不只是运行时条件</h2>
+<p>Elixir 程序大量依赖 guard。论文的一个核心工作，是把 guard 分析纳入类型系统，而不是只把 guard 当成无法理解的运行时黑箱。</p>
+<p>例如：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_age</span></span>(person) <span class="keyword">when</span> is_integer(person.age), <span class="symbol">do:</span> person.age</span><br></pre></td></tr></table></figure>
+<p>类型检查器可以从 <code>person.age</code> 和 <code>is_integer/1</code> 推断：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%{age: integer(), ...} -&gt; integer()</span><br></pre></td></tr></table></figure>
+<p>这里的 <code>...</code> 表示开放 map：map 至少包含 <code>age</code> 字段，也可以包含其他字段。</p>
+<p>这个推断同时完成了三件事：</p>
+<ol>
+<li><code>person</code> 必须是 map；</li>
+<li><code>person</code> 必须定义 <code>age</code> 字段；</li>
+<li><code>age</code> 的值必须是整数。</li>
+</ol>
+<p>因此，类型系统可以把 guard 视为对变量类型的约束，并在后续表达式中使用这些约束。</p>
+<h3 id="5-1-类型收窄"><a class="header-anchor" href="#5-1-类型收窄">¶</a>5.1 类型收窄</h3>
+<p>考虑：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">negate_alt</span></span>(x) <span class="keyword">do</span></span><br><span class="line">  <span class="keyword">if</span> is_integer(x), <span class="symbol">do:</span> -x, <span class="symbol">else:</span> <span class="keyword">not</span> x</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>如果 <code>x</code> 初始类型是 <code>integer() or boolean()</code>，类型检查器会在 <code>do</code> 分支把它收窄成 <code>integer()</code>，在 <code>else</code> 分支把它收窄成 <code>boolean()</code>。</p>
+<p>论文把这种技术称为 narrowing。它也适用于被测试表达式内部的变量，例如 map 字段和 tuple 元素。</p>
+<h3 id="5-2-复杂-guard-的环境分裂"><a class="header-anchor" href="#5-2-复杂-guard-的环境分裂">¶</a>5.2 复杂 guard 的环境分裂</h3>
+<p>下面的 guard 有两个逻辑分支：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">baz</span></span>(x, y) <span class="keyword">when</span> is_boolean(x) <span class="keyword">or</span> is_integer(y), <span class="symbol">do:</span> {y, x}</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">baz</span></span>(_, _), <span class="symbol">do:</span> <span class="literal">nil</span></span><br></pre></td></tr></table></figure>
+<p>第一种情况是 <code>x</code> 为 boolean，<code>y</code> 可以是任意值；第二种情况是 <code>y</code> 为 integer，<code>x</code> 可以是任意值。因此第一条子句的返回类型是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{term(), boolean()} or {integer(), term()}</span><br></pre></td></tr></table></figure>
+<p>系统不能简单地把 <code>x</code> 和 <code>y</code> 各自标成一个 union 类型，而需要为 <code>or</code> 的两个分支建立不同的类型环境，再合并分支结果。论文的 guard 分析规则从左到右处理 guard，并考虑 Elixir guard 的求值顺序和可能失败的表达式。[1]</p>
+<h2 id="六、当-guard-无法被类型精确表达时，系统使用上下近似"><a class="header-anchor" href="#六、当-guard-无法被类型精确表达时，系统使用上下近似">¶</a>六、当 guard 无法被类型精确表达时，系统使用上下近似</h2>
+<p>类型系统无法表达所有运行时谓词。例如：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo</span></span>(x) <span class="keyword">when</span> map_size(x) == <span class="number">2</span>, <span class="symbol">do:</span> <span class="title class_">Map</span>.to_list(x)</span><br></pre></td></tr></table></figure>
+<p>“所有恰好包含两个字段的 map”是一个运行时集合，但不一定能够用当前类型语法精确表达。</p>
+<p>论文因此区分两种近似。</p>
+<h3 id="Potentially-accepted-type"><a class="header-anchor" href="#Potentially-accepted-type">¶</a>Potentially accepted type</h3>
+<p>它是一个上近似，包含所有可能通过 pattern/guard 的值，也可能包含一些实际上不会通过 guard 的值。</p>
+<p>在上面的例子中，可以使用 <code>map()</code> 作为 potentially accepted type。它比“大小为 2 的 map”更宽，但包含后者的全部值。</p>
+<h3 id="Surely-accepted-type"><a class="header-anchor" href="#Surely-accepted-type">¶</a>Surely accepted type</h3>
+<p>它是一个下近似，只包含确定会通过 pattern/guard 的值。</p>
+<p>例如：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bar</span></span>(x) <span class="keyword">when</span></span><br><span class="line">  (is_map(x) <span class="keyword">and</span> map_size(x) == <span class="number">2</span>) <span class="keyword">or</span> is_list(x), <span class="symbol">do:</span> to_string(x)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bar</span></span>(x) <span class="keyword">when</span> length(x) == <span class="number">2</span>, <span class="symbol">do:</span> x</span><br></pre></td></tr></table></figure>
+<p>第一条子句可能接受两字段 map，也接受所有 list。系统无法精确表达两字段 map，但可以确定所有 list 都已经被第一条子句捕获。因此第一条子句的：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">potentially accepted type = map() or list()</span><br><span class="line">surely accepted type = list()</span><br></pre></td></tr></table></figure>
+<p>这足以判定第二条子句是冗余的，因为 <code>length/1</code> 只对 list 有意义，而所有 list 已经被前一条子句处理。[1]</p>
+<h2 id="七、穷尽性检查和冗余分支检查"><a class="header-anchor" href="#七、穷尽性检查和冗余分支检查">¶</a>七、穷尽性检查和冗余分支检查</h2>
+<p>模式匹配的价值不只在于解构数据，也在于它能够给出完整的控制流信息。</p>
+<p>论文定义：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">result() =</span><br><span class="line">  %{<span class="symbol">output:</span> <span class="symbol">:ok</span>, <span class="symbol">socket:</span> socket()} <span class="keyword">or</span></span><br><span class="line">  %{<span class="symbol">output:</span> <span class="symbol">:error</span>, <span class="symbol">message:</span> <span class="symbol">:timeout</span> <span class="keyword">or</span> {<span class="symbol">:delay</span>, integer()}}</span><br></pre></td></tr></table></figure>
+<p>函数却只处理：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">handle</span></span>(r) <span class="keyword">when</span> r.output == <span class="symbol">:ok</span>, <span class="symbol">do:</span> <span class="string">"Msg received"</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">handle</span></span>(r) <span class="keyword">when</span> r.message == <span class="symbol">:timeout</span>, <span class="symbol">do:</span> <span class="string">"Timeout"</span></span><br></pre></td></tr></table></figure>
+<p>仍有一种输入没有实现：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%{<span class="symbol">output:</span> <span class="symbol">:error</span>, <span class="symbol">message:</span> {<span class="symbol">:delay</span>, integer()}}</span><br></pre></td></tr></table></figure>
+<p>类型检查器可以报告函数定义不完整，并直接指出缺失的输入类型。相比只说“可能存在未匹配分支”，这种警告更适合重构大型代码库。</p>
+<p>反过来，如果函数输入类型只允许 map，却增加了一个匹配 tuple 的子句，类型检查器可以报告该分支永远不会执行。</p>
+<p>这两种能力分别对应：</p>
+<ul>
+<li>exhaustivity checking：检查是否覆盖所有可能输入；</li>
+<li>redundancy checking：检查是否存在永远无法匹配的分支。</li>
+</ul>
+<h2 id="八、统一理解-record-与-dictionary"><a class="header-anchor" href="#八、统一理解-record-与-dictionary">¶</a>八、统一理解 record 与 dictionary</h2>
+<p>Elixir 的 map 有两个常见用途：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">person.age</span><br></pre></td></tr></table></figure>
+<p>把 map 当成 record；</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">person[key]</span><br></pre></td></tr></table></figure>
+<p>把 map 当成 dictionary。</p>
+<p>两种访问方式的运行时语义不同：</p>
+<ul>
+<li><code>person.age</code> 要求 <code>age</code> 一定存在，否则抛出异常；</li>
+<li><code>person[:age]</code> 允许 key 缺失，此时返回 <code>nil</code>。</li>
+</ul>
+<p>论文用 required 和 optional 字段标记这种差异：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%{required(<span class="symbol">:age</span>) =&gt; integer(), optional(term()) =&gt; term()}</span><br></pre></td></tr></table></figure>
+<p>也可以使用更直观的开放 map 写法：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%{<span class="symbol">age:</span> integer(), ...}</span><br></pre></td></tr></table></figure>
+<p>如果字段可能缺失：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%{optional(<span class="symbol">:age</span>) =&gt; integer()}</span><br></pre></td></tr></table></figure>
+<p>此时：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">person.age</span><br></pre></td></tr></table></figure>
+<p>会触发类型警告，因为 <code>age</code> 不一定存在；而：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">person[<span class="symbol">:age</span>]</span><br></pre></td></tr></table></figure>
+<p>的结果类型是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">integer() or nil</span><br></pre></td></tr></table></figure>
+<p>如果 map 中的字段被声明为必需字段：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%{<span class="symbol">foo:</span> integer(), <span class="symbol">bar:</span> integer()}</span><br></pre></td></tr></table></figure>
+<p>那么：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m[<span class="symbol">:foo</span>] + m[<span class="symbol">:bar</span>]</span><br></pre></td></tr></table></figure>
+<p>可以被推断为整数运算，因为两个字段都不可能返回 <code>nil</code>。</p>
+<h3 id="8-1-混合记录字段与字典键域"><a class="header-anchor" href="#8-1-混合记录字段与字典键域">¶</a>8.1 混合记录字段与字典键域</h3>
+<p>论文允许一个 map 类型同时包含固定字段和动态键域：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">type t() = %{<span class="symbol">foo:</span> atom(),</span><br><span class="line">              optional(<span class="symbol">:bar</span>) =&gt; atom(),</span><br><span class="line">              optional(atom()) =&gt; integer()}</span><br></pre></td></tr></table></figure>
+<p>它表示：</p>
+<ul>
+<li><code>foo</code> 必须存在，并且是 atom；</li>
+<li><code>bar</code> 可以缺失，存在时是 atom；</li>
+<li>其他 atom key 对应 integer。</li>
+</ul>
+<p>固定 singleton key 的声明优先于更宽泛的 key domain。这一点使类型系统能够表达结构化数据与动态字典混合的实际用法。</p>
+<h2 id="九、渐进式类型检查：dynamic-的作用"><a class="header-anchor" href="#九、渐进式类型检查：dynamic-的作用">¶</a>九、渐进式类型检查：dynamic() 的作用</h2>
+<p>Elixir 已经存在大量动态代码。若要迁移这些代码，类型系统必须允许静态部分和动态部分共存。</p>
+<p>论文引入：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dynamic()</span><br></pre></td></tr></table></figure>
+<p>它不是普通的顶层类型。<code>term()</code> 表示所有值，而 <code>dynamic()</code> 表示类型检查器暂时不知道某个表达式的具体类型，并允许它在运行时以不同类型出现。</p>
+<p>例如：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>dynamic() -&gt; _</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo1</span></span>(x), <span class="symbol">do:</span> ...</span><br></pre></td></tr></table></figure>
+<p>函数可以接受任意类型的参数，函数体中每次使用 <code>x</code> 时也可以处于不同的动态类型环境。</p>
+<p>但 <code>dynamic()</code> 不会让类型检查完全失去意义：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>(dynamic() -&gt; dynamic()) -&gt; _</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo2</span></span>(fun), <span class="symbol">do:</span> ...</span><br></pre></td></tr></table></figure>
+<p>这里仍然要求 <code>fun</code> 具有函数类型。下面的调用会被拒绝：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">foo2({<span class="number">7</span>, <span class="number">42</span>})</span><br></pre></td></tr></table></figure>
+<p>因为 tuple 不是函数，即使函数参数的其他细节是动态的。</p>
+<h2 id="十、普通函数箭头与-strong-arrow"><a class="header-anchor" href="#十、普通函数箭头与-strong-arrow">¶</a>十、普通函数箭头与 strong arrow</h2>
+<p>这是论文最关键、也最容易被忽略的部分。</p>
+<p>考虑两个身份函数：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>integer() -&gt; integer()</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">id_weak</span></span>(x), <span class="symbol">do:</span> x</span><br><span class="line"></span><br><span class="line"><span class="variable">$ </span>integer() -&gt; integer()</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">id_strong</span></span>(x) <span class="keyword">when</span> is_integer(x), <span class="symbol">do:</span> x</span><br></pre></td></tr></table></figure>
+<p>从静态输入输出关系看，它们都像是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">integer() -&gt; integer()</span><br></pre></td></tr></table></figure>
+<p>运行时行为却不同：</p>
+<ul>
+<li><code>id_weak/1</code> 没有检查输入，传入字符串时可能原样返回字符串；</li>
+<li><code>id_strong/1</code> 通过 guard 检查输入，非整数会匹配失败。</li>
+</ul>
+<p>因此，论文把第二种函数视为 strong function，把第一种函数视为 weak function。</p>
+<p>strong arrow 的语义是：函数即使收到不属于声明 domain 的动态输入，也必须满足以下条件之一：</p>
+<ol>
+<li>返回符合 codomain 的结果；</li>
+<li>通过 BEAM 或程序员写出的运行时检查失败；</li>
+<li>发散而不返回。</li>
+</ol>
+<p>于是：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>dynamic() -&gt; {dynamic(), integer()}</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo3</span></span>(x), <span class="symbol">do:</span> {id_weak(x), id_strong(x)}</span><br></pre></td></tr></table></figure>
+<p>第一项仍然是 <code>dynamic()</code>，因为 <code>id_weak/1</code> 没有运行时检查；第二项可以被确定为 <code>integer()</code>，因为 <code>id_strong/1</code> 要么返回整数，要么在输入错误时失败。</p>
+<p>这套设计解决了一个工程问题：传统 sound gradual typing 通常需要编译器在动态代码与静态代码交界处插入 cast。本文方案要求类型系统不改变 Elixir 的编译结果，因此它改为分析现有的 guard、模式匹配和 BEAM 检查，利用已经存在的运行时行为完成安全性推断。[1]</p>
+<h2 id="十一、形式化核心：Core-Elixir-与双向类型检查"><a class="header-anchor" href="#十一、形式化核心：Core-Elixir-与双向类型检查">¶</a>十一、形式化核心：Core Elixir 与双向类型检查</h2>
+<p>论文没有直接形式化整个 Elixir，而是定义了一个 Core Elixir。其表达式包括：</p>
+<ul>
+<li>常量和变量；</li>
+<li>lambda 与函数应用；</li>
+<li>tuple 与 tuple projection；</li>
+<li>带类型注解的 let；</li>
+<li>加法；</li>
+<li>带 pattern 和 guard 的 case。</li>
+</ul>
+<p>类型语法包括：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">b ::= int | atom | 1fun | 1tup</span><br><span class="line"></span><br><span class="line">t ::= b | c | α | t -&gt; t | {t} | t or t | not t</span><br></pre></td></tr></table></figure>
+<p>交集可以由否定和并集编码：</p>
+<p><mjx-container class="MathJax" jax="SVG" display="true"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="32.687ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 14447.7 1000"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g><g data-mml-node="mn" transform="translate(394,-150) scale(0.707)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g><g data-mml-node="TeXAtom" data-mjx-texclass="BIN" transform="translate(1019.8,0)"><g data-mml-node="mi"><path data-c="1D44E" d="M33 157Q33 258 109 349T280 441Q331 441 370 392Q386 422 416 422Q429 422 439 414T449 394Q449 381 412 234T374 68Q374 43 381 35T402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487Q506 153 506 144Q506 138 501 117T481 63T449 13Q436 0 417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157ZM351 328Q351 334 346 350T323 385T277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q217 26 254 59T298 110Q300 114 325 217T351 328Z"></path></g><g data-mml-node="mi" transform="translate(529,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(1129,0)"><path data-c="1D451" d="M366 683Q367 683 438 688T511 694Q523 694 523 686Q523 679 450 384T375 83T374 68Q374 26 402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487H491Q506 153 506 145Q506 140 503 129Q490 79 473 48T445 8T417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157Q33 205 53 255T101 341Q148 398 195 420T280 442Q336 442 364 400Q369 394 369 396Q370 400 396 505T424 616Q424 629 417 632T378 637H357Q351 643 351 645T353 664Q358 683 366 683ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path></g></g><g data-mml-node="msub" transform="translate(2891,0)"><g data-mml-node="mi"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g><g data-mml-node="mn" transform="translate(394,-150) scale(0.707)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g><g data-mml-node="mo" transform="translate(3966.3,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mi" transform="translate(5022.1,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(5622.1,0)"><path data-c="1D45C" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g><g data-mml-node="mi" transform="translate(6107.1,0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g><g data-mml-node="mo" transform="translate(6468.1,0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="mo" transform="translate(6912.8,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mi" transform="translate(7301.8,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(7901.8,0)"><path data-c="1D45C" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g><g data-mml-node="mi" transform="translate(8386.8,0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g><g data-mml-node="mo" transform="translate(8747.8,0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="msub" transform="translate(9192.4,0)"><g data-mml-node="mi"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g><g data-mml-node="mn" transform="translate(394,-150) scale(0.707)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g><g data-mml-node="TeXAtom" data-mjx-texclass="BIN" transform="translate(10212.2,0)"><g data-mml-node="mi"><path data-c="1D45C" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g><g data-mml-node="mi" transform="translate(485,0)"><path data-c="1D45F" d="M21 287Q22 290 23 295T28 317T38 348T53 381T73 411T99 433T132 442Q161 442 183 430T214 408T225 388Q227 382 228 382T236 389Q284 441 347 441H350Q398 441 422 400Q430 381 430 363Q430 333 417 315T391 292T366 288Q346 288 334 299T322 328Q322 376 378 392Q356 405 342 405Q286 405 239 331Q229 315 224 298T190 165Q156 25 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 114 189T154 366Q154 405 128 405Q107 405 92 377T68 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g></g><g data-mml-node="mi" transform="translate(11370.4,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(11970.4,0)"><path data-c="1D45C" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g><g data-mml-node="mi" transform="translate(12455.4,0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g><g data-mml-node="mo" transform="translate(12816.4,0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="msub" transform="translate(13261.1,0)"><g data-mml-node="mi"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g><g data-mml-node="mn" transform="translate(394,-150) scale(0.707)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g><g data-mml-node="mo" transform="translate(14058.7,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g></g></svg></mjx-container></p>
+<p>顶层类型和空类型分别编码为：</p>
+<p><mjx-container class="MathJax" jax="SVG" display="true"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="36.484ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 16125.9 1000"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g><g data-mml-node="mi" transform="translate(361,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="mi" transform="translate(827,0)"><path data-c="1D45F" d="M21 287Q22 290 23 295T28 317T38 348T53 381T73 411T99 433T132 442Q161 442 183 430T214 408T225 388Q227 382 228 382T236 389Q284 441 347 441H350Q398 441 422 400Q430 381 430 363Q430 333 417 315T391 292T366 288Q346 288 334 299T322 328Q322 376 378 392Q356 405 342 405Q286 405 239 331Q229 315 224 298T190 165Q156 25 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 114 189T154 366Q154 405 128 405Q107 405 92 377T68 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(1278,0)"><path data-c="1D45A" d="M21 287Q22 293 24 303T36 341T56 388T88 425T132 442T175 435T205 417T221 395T229 376L231 369Q231 367 232 367L243 378Q303 442 384 442Q401 442 415 440T441 433T460 423T475 411T485 398T493 385T497 373T500 364T502 357L510 367Q573 442 659 442Q713 442 746 415T780 336Q780 285 742 178T704 50Q705 36 709 31T724 26Q752 26 776 56T815 138Q818 149 821 151T837 153Q857 153 857 145Q857 144 853 130Q845 101 831 73T785 17T716 -10Q669 -10 648 17T627 73Q627 92 663 193T700 345Q700 404 656 404H651Q565 404 506 303L499 291L466 157Q433 26 428 16Q415 -11 385 -11Q372 -11 364 -4T353 8T350 18Q350 29 384 161L420 307Q423 322 423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 181Q151 335 151 342Q154 357 154 369Q154 405 129 405Q107 405 92 377T69 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mo" transform="translate(2156,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mo" transform="translate(2545,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g><g data-mml-node="mo" transform="translate(3211.8,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mi" transform="translate(4267.6,0)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(4612.6,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(5212.6,0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="BIN" transform="translate(5795.8,0)"><g data-mml-node="mi"><path data-c="1D45C" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g><g data-mml-node="mi" transform="translate(485,0)"><path data-c="1D45F" d="M21 287Q22 290 23 295T28 317T38 348T53 381T73 411T99 433T132 442Q161 442 183 430T214 408T225 388Q227 382 228 382T236 389Q284 441 347 441H350Q398 441 422 400Q430 381 430 363Q430 333 417 315T391 292T366 288Q346 288 334 299T322 328Q322 376 378 392Q356 405 342 405Q286 405 239 331Q229 315 224 298T190 165Q156 25 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 114 189T154 366Q154 405 128 405Q107 405 92 377T68 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g></g><g data-mml-node="mi" transform="translate(6954,0)"><path data-c="1D44E" d="M33 157Q33 258 109 349T280 441Q331 441 370 392Q386 422 416 422Q429 422 439 414T449 394Q449 381 412 234T374 68Q374 43 381 35T402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487Q506 153 506 144Q506 138 501 117T481 63T449 13Q436 0 417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157ZM351 328Q351 334 346 350T323 385T277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q217 26 254 59T298 110Q300 114 325 217T351 328Z"></path></g><g data-mml-node="mi" transform="translate(7483,0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g><g data-mml-node="mi" transform="translate(7844,0)"><path data-c="1D45C" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g><g data-mml-node="mi" transform="translate(8329,0)"><path data-c="1D45A" d="M21 287Q22 293 24 303T36 341T56 388T88 425T132 442T175 435T205 417T221 395T229 376L231 369Q231 367 232 367L243 378Q303 442 384 442Q401 442 415 440T441 433T460 423T475 411T485 398T493 385T497 373T500 364T502 357L510 367Q573 442 659 442Q713 442 746 415T780 336Q780 285 742 178T704 50Q705 36 709 31T724 26Q752 26 776 56T815 138Q818 149 821 151T837 153Q857 153 857 145Q857 144 853 130Q845 101 831 73T785 17T716 -10Q669 -10 648 17T627 73Q627 92 663 193T700 345Q700 404 656 404H651Q565 404 506 303L499 291L466 157Q433 26 428 16Q415 -11 385 -11Q372 -11 364 -4T353 8T350 18Q350 29 384 161L420 307Q423 322 423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 181Q151 335 151 342Q154 357 154 369Q154 405 129 405Q107 405 92 377T69 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="BIN" transform="translate(9429.2,0)"><g data-mml-node="mi"><path data-c="1D45C" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g><g data-mml-node="mi" transform="translate(485,0)"><path data-c="1D45F" d="M21 287Q22 290 23 295T28 317T38 348T53 381T73 411T99 433T132 442Q161 442 183 430T214 408T225 388Q227 382 228 382T236 389Q284 441 347 441H350Q398 441 422 400Q430 381 430 363Q430 333 417 315T391 292T366 288Q346 288 334 299T322 328Q322 376 378 392Q356 405 342 405Q286 405 239 331Q229 315 224 298T190 165Q156 25 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 114 189T154 366Q154 405 128 405Q107 405 92 377T68 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g></g><g data-mml-node="mn" transform="translate(10587.4,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g><g data-mml-node="mi" transform="translate(11087.4,0)"><path data-c="1D453" d="M118 -162Q120 -162 124 -164T135 -167T147 -168Q160 -168 171 -155T187 -126Q197 -99 221 27T267 267T289 382V385H242Q195 385 192 387Q188 390 188 397L195 425Q197 430 203 430T250 431Q298 431 298 432Q298 434 307 482T319 540Q356 705 465 705Q502 703 526 683T550 630Q550 594 529 578T487 561Q443 561 443 603Q443 622 454 636T478 657L487 662Q471 668 457 668Q445 668 434 658T419 630Q412 601 403 552T387 469T380 433Q380 431 435 431Q480 431 487 430T498 424Q499 420 496 407T491 391Q489 386 482 386T428 385H372L349 263Q301 15 282 -47Q255 -132 212 -173Q175 -205 139 -205Q107 -205 81 -186T55 -132Q55 -95 76 -78T118 -61Q162 -61 162 -103Q162 -122 151 -136T127 -157L118 -162Z"></path></g><g data-mml-node="mi" transform="translate(11637.4,0)"><path data-c="1D462" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(12209.4,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="BIN" transform="translate(13031.7,0)"><g data-mml-node="mi"><path data-c="1D45C" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g><g data-mml-node="mi" transform="translate(485,0)"><path data-c="1D45F" d="M21 287Q22 290 23 295T28 317T38 348T53 381T73 411T99 433T132 442Q161 442 183 430T214 408T225 388Q227 382 228 382T236 389Q284 441 347 441H350Q398 441 422 400Q430 381 430 363Q430 333 417 315T391 292T366 288Q346 288 334 299T322 328Q322 376 378 392Q356 405 342 405Q286 405 239 331Q229 315 224 298T190 165Q156 25 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 114 189T154 366Q154 405 128 405Q107 405 92 377T68 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g></g><g data-mml-node="mn" transform="translate(14189.9,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g><g data-mml-node="mi" transform="translate(14689.9,0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g><g data-mml-node="mi" transform="translate(15050.9,0)"><path data-c="1D462" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(15622.9,0)"><path data-c="1D45D" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path></g></g></g></svg></mjx-container></p>
+<p><mjx-container class="MathJax" jax="SVG" display="true"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="20.559ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 9087.2 1000"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(600,0)"><path data-c="1D45C" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g><g data-mml-node="mi" transform="translate(1085,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(1685,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="mo" transform="translate(2151,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mo" transform="translate(2540,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g><g data-mml-node="mo" transform="translate(3206.8,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mi" transform="translate(4262.6,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(4862.6,0)"><path data-c="1D45C" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g><g data-mml-node="mi" transform="translate(5347.6,0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g><g data-mml-node="mo" transform="translate(5708.6,0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="mi" transform="translate(6153.2,0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g><g data-mml-node="mi" transform="translate(6514.2,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="mi" transform="translate(6980.2,0)"><path data-c="1D45F" d="M21 287Q22 290 23 295T28 317T38 348T53 381T73 411T99 433T132 442Q161 442 183 430T214 408T225 388Q227 382 228 382T236 389Q284 441 347 441H350Q398 441 422 400Q430 381 430 363Q430 333 417 315T391 292T366 288Q346 288 334 299T322 328Q322 376 378 392Q356 405 342 405Q286 405 239 331Q229 315 224 298T190 165Q156 25 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 114 189T154 366Q154 405 128 405Q107 405 92 377T68 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(7431.2,0)"><path data-c="1D45A" d="M21 287Q22 293 24 303T36 341T56 388T88 425T132 442T175 435T205 417T221 395T229 376L231 369Q231 367 232 367L243 378Q303 442 384 442Q401 442 415 440T441 433T460 423T475 411T485 398T493 385T497 373T500 364T502 357L510 367Q573 442 659 442Q713 442 746 415T780 336Q780 285 742 178T704 50Q705 36 709 31T724 26Q752 26 776 56T815 138Q818 149 821 151T837 153Q857 153 857 145Q857 144 853 130Q845 101 831 73T785 17T716 -10Q669 -10 648 17T627 73Q627 92 663 193T700 345Q700 404 656 404H651Q565 404 506 303L499 291L466 157Q433 26 428 16Q415 -11 385 -11Q372 -11 364 -4T353 8T350 18Q350 29 384 161L420 307Q423 322 423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 181Q151 335 151 342Q154 357 154 369Q154 405 129 405Q107 405 92 377T69 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mo" transform="translate(8309.2,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mo" transform="translate(8698.2,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g></g></svg></mjx-container></p>
+<p>类型检查采用双向思想：一部分表达式合成类型，另一部分表达式在给定期望类型的条件下进行检查。case 表达式的类型规则会计算每个 pattern/guard 能够处理的输入区域，并用这些区域生成分支环境。</p>
+<p>论文把 guard 的类型分析拆成多个子环境，以处理 <code>or</code> 分支以及前置 guard 失败后的求值路径。类型系统还区分能够保证穷尽性的规则和只能给出 warning 的近似规则：如果只能使用 potentially accepted type 判断覆盖范围，系统会提示 case 可能在运行时没有匹配分支。[1]</p>
+<h2 id="十二、编译器集成原则"><a class="header-anchor" href="#十二、编译器集成原则">¶</a>十二、编译器集成原则</h2>
+<p>论文提出了几项明确的集成要求。</p>
+<h3 id="12-1-不改变-Elixir-表达式语法"><a class="header-anchor" href="#12-1-不改变-Elixir-表达式语法">¶</a>12.1 不改变 Elixir 表达式语法</h3>
+<p>类型系统不能要求每个函数参数都增加新语法。Elixir 已经把大量语言结构写在自身宏系统中，因此类型语法也必须遵守现有语言的表达习惯。</p>
+<p>论文选择：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">or</span></span><br><span class="line"><span class="keyword">and</span></span><br><span class="line"><span class="keyword">not</span></span><br></pre></td></tr></table></figure>
+<p>表达集合论中的并集、交集和否定。作者认为，Elixir 开发者更容易理解：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">JSON</span>.<span class="title class_">Encoder</span>.t() <span class="keyword">and</span> <span class="title class_">XML</span>.<span class="title class_">Encoder</span>.t()</span><br></pre></td></tr></table></figure>
+<p>而不是另外引入一套完全不同的符号。</p>
+<h3 id="12-2-先从隐式类型信息开始"><a class="header-anchor" href="#12-2-先从隐式类型信息开始">¶</a>12.2 先从隐式类型信息开始</h3>
+<p>作者规划了三个里程碑。</p>
+<p>第一步，类型只在编译器内部使用。开发者暂时不能书写完整类型注解，系统先从 pattern 和 guard 中提取类型信息，用于发现字段名错误和基本类型不匹配。</p>
+<p>第二步，为 struct 引入类型注解。struct 是命名且静态定义的 record，能够提供比普通 map 更稳定的字段信息。</p>
+<p>第三步，引入函数类型注解。没有显式类型的参数默认使用 <code>dynamic()</code>，从而保持旧代码可编译。</p>
+<h3 id="12-3-类型检查优先于完整类型重建"><a class="header-anchor" href="#12-3-类型检查优先于完整类型重建">¶</a>12.3 类型检查优先于完整类型重建</h3>
+<p>论文认为，优先支持大多数 Elixir 习惯用法，比立即实现高成本的完整类型重建更实际。类型重建会带来复杂的约束求解和多轮代码分析，因此应当在语言常用结构得到支持后再推进。</p>
+<h2 id="十三、尚未完成的部分"><a class="header-anchor" href="#十三、尚未完成的部分">¶</a>十三、尚未完成的部分</h2>
+<p>论文没有把类型系统包装成已经完成的工程产品。作者列出了一系列尚未完成的研究方向。</p>
+<h3 id="13-1-类型重建与-occurrence-typing"><a class="header-anchor" href="#13-1-类型重建与-occurrence-typing">¶</a>13.1 类型重建与 occurrence typing</h3>
+<p>当前系统可以检查某些精确类型，但未必能够自动重建这些类型。例如 <code>filter/2</code> 的精确结果类型需要分析谓词函数对元素的判断，并把判断结果传递回元素变量。这需要更强的 occurrence typing 技术。</p>
+<h3 id="13-2-Row-polymorphism"><a class="header-anchor" href="#13-2-Row-polymorphism">¶</a>13.2 Row polymorphism</h3>
+<p>map 删除和更新操作需要 row polymorphism，才能表达“保留所有未知字段，同时删除或更新某一个字段”。集合论类型与 row polymorphism 的结合仍是开放问题。</p>
+<h3 id="13-3-消息传递"><a class="header-anchor" href="#13-3-消息传递">¶</a>13.3 消息传递</h3>
+<p><code>receive</code> 已经可以利用 pattern、guard 和 narrowing，但 Elixir 进程之间的消息协议还没有被完整类型化。未来可以引入 mailbox types 或 behavioural types，描述进程接收和发送的消息集合。</p>
+<h3 id="13-4-Behaviours"><a class="header-anchor" href="#13-4-Behaviours">¶</a>13.4 Behaviours</h3>
+<p>论文最后用 <code>GenServer</code> 说明 behaviour 类型化的难点。理想的 <code>GenServer(request, reply)</code> 类型需要同时描述：</p>
+<ul>
+<li>对外透明的 option 和 result 类型；</li>
+<li>每个实现内部不透明的 state 类型；</li>
+<li>由具体实现决定的 request 和 reply 类型；</li>
+<li>必须实现或可以省略的 callback；</li>
+<li><code>start/3</code> 的第一个参数必须是兼容的 behaviour 模块。</li>
+</ul>
+<p>这要求类型系统处理模块类型、抽象类型、参数化 behaviour 以及更复杂的存在类型关系。</p>
+<h2 id="十四、与-Dialyzer、eqWAlizer-和-Gleam-的关系"><a class="header-anchor" href="#十四、与-Dialyzer、eqWAlizer-和-Gleam-的关系">¶</a>十四、与 Dialyzer、eqWAlizer 和 Gleam 的关系</h2>
+<h3 id="Dialyzer"><a class="header-anchor" href="#Dialyzer">¶</a>Dialyzer</h3>
+<p>Dialyzer 采用 success typing，优先减少误报。论文方案追求更强的 soundness，因此可能报告更多问题。二者代表不同的工程取舍：前者适合在大型动态代码库中保守分析，后者试图提供更强的编译期契约保证。[1]</p>
+<h3 id="eqWAlizer"><a class="header-anchor" href="#eqWAlizer">¶</a>eqWAlizer</h3>
+<p>eqWAlizer 支持泛型、局部类型推断、类型收窄和渐进式类型，但论文方案进一步使用集合论类型、否定类型和 strong arrows，并把 map record 与 dictionary 放在统一类型体系中。[1]</p>
+<h3 id="Gleam"><a class="header-anchor" href="#Gleam">¶</a>Gleam</h3>
+<p>Gleam 选择一套从 ML 家族继承而来的静态类型路线，拥有 Hindley–Milner 类型推断和有限的 row polymorphism。它从语言设计之初就选择静态类型；本文方案则直接面对现有 Elixir 代码库，优先解决逐步迁移与语义兼容问题。[1]</p>
+<h2 id="十五、如何评价这套设计"><a class="header-anchor" href="#十五、如何评价这套设计">¶</a>十五、如何评价这套设计</h2>
+<p>这套方案的理论优势很明确。交集箭头可以表达多子句函数的输入输出对应关系；guard 分析可以把 Elixir 的控制流信息转化为类型信息；开放 map 类型可以同时处理 record 和 dictionary；strong arrow 则利用已有运行时检查，避免类型系统为了保证安全而自动改变代码执行方式。</p>
+<p>工程风险同样明确。类型表达式可能非常复杂，子类型判断可能增加编译成本，更强的 soundness 可能带来更多 warning，而宏、消息传递和 behaviour 仍需要继续研究。论文没有提供大型真实项目上的编译耗时、警告精度和迁移成本数据，因此它应当被看作一套有形式化基础的设计提案和原型路线，而不是已经完成的生产级类型检查器。</p>
+<p>这篇论文最重要的贡献，是把问题重新表述为：如何让静态类型适应 Elixir 的运行时和编程风格。它没有要求 Elixir 放弃动态性，也没有把 Elixir 改造成另一门静态函数式语言，而是试图从 pattern、guard、map、BEAM 检查和已有函数契约中逐步提取可靠的类型信息。</p>
+<h2 id="参考资料"><a class="header-anchor" href="#参考资料">¶</a>参考资料</h2>
+<ol>
+<li>Giuseppe Castagna, Guillaume Duboc, José Valim, “The Design Principles of the Elixir Type System”, arXiv:2306.06391v3, 2024。 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2306.06391">论文摘要页</a>；<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2306.06391">PDF</a>。</li>
+<li>Giuseppe Castagna, Guillaume Duboc, José Valim, “The Design Principles of the Elixir Type System”, <em>The Art, Science, and Engineering of Programming</em>, 8(2), 2024, Article 4。 <a target="_blank" rel="noopener" href="https://doi.org/10.22152/programming-journal.org/2024/8/4">DOI</a>。</li>
+<li>论文中提到的 Typex 原型：<a target="_blank" rel="noopener" href="https://typex.fly.dev/">typex.fly.dev</a>。</li>
+<li>CDuce 项目：<a target="_blank" rel="noopener" href="https://www.cduce.org/">cduce.org</a>。</li>
+<li>WhatsApp eqWAlizer：<a target="_blank" rel="noopener" href="https://github.com/WhatsApp/eqwalizer">github.com/WhatsApp/eqwalizer</a>。</li>
+<li>Erlang Typespec 文档：<a target="_blank" rel="noopener" href="https://www.erlang.org/doc/reference_manual/typespec.html">erlang.org/doc/reference_manual/typespec.html</a>。</li>
+<li>Gleam：<a target="_blank" rel="noopener" href="https://gleam.run/">gleam.run</a>。</li>
+</ol>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+                <div class="icon arrow-left"></div>
+                <div class="post-link">
+                    <a href="/2026/08/20/%E6%88%BF%E9%A2%A4%E5%BF%83%E7%94%B5%E5%9B%BE%E8%A7%A3%E6%9E%90/">Prev</a>
+                </div>
+            
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2026/08/18/%E6%88%BF%E9%A2%A4%E4%B8%8E%E8%A1%80%E6%A0%93%E6%A0%93%E5%A1%9E%EF%BC%9A%E4%BB%8E%E5%B7%A6%E5%BF%83%E8%80%B3%E8%A1%80%E6%B5%81%E6%B7%A4%E6%BB%9E%E5%88%B0%E7%BC%BA%E8%A1%80%E6%80%A7%E5%8D%92%E4%B8%AD/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+                        
+                            韩暮秋 |
+                                
+                                    
+                                        希望路过的人可以添点柴火让这里暖和点
+                                        
+        </div>
+    </div>
+</div>
+
+
+    </div>
+    
+    <script src="/js/mermaid-zoom.js"></script>
+
+  </body>
+</html>
