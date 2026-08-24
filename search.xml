@@ -2225,6 +2225,28 @@ A relation table (also sometimes called a <em>JOIN</em>, <em>link</em> or <em>pi
       </tags>
   </entry>
   <entry>
+    <title>Rust NewType 模式</title>
+    <url>/2023/05/03/Rust-NewType-%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<p>New Type模式是一种软件设计模式，用于在已有类型的基础上创建一个新的类型。在Rust中，这通常是通过定义一个结构体，其中只包含一个单一成员。这个结构体（New Type）对外提供了一个新的、独立的类型，用于对原始类型增加额外的语义或限制。</p>
+<h2 id="加强类型安全"><a class="header-anchor" href="#加强类型安全">¶</a>加强类型安全</h2>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Meters</span>(<span class="type">f64</span>);</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Feet</span>(<span class="type">f64</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">length_in_meters</span> = <span class="title function_ invoke__">Meters</span>(<span class="number">100.0</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">length_in_feet</span> = <span class="title function_ invoke__">Feet</span>(<span class="number">328.084</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 编译器会防止以下代码执行，因为类型不匹配</span></span><br><span class="line"><span class="comment">// let wrong_length = Meters(length_in_feet); // 编译错误</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 正确的构造</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">add_lengths</span>(length1: Meters, length2: Meters) <span class="punctuation">-&gt;</span> Meters &#123;</span><br><span class="line">    <span class="title function_ invoke__">Meters</span>(length1.<span class="number">0</span> + length2.<span class="number">0</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个例子使用 newtype 模式避免将原始类型f64用于不同的量度，从而增强了类型的安全性。</p>
+<h2 id="实现特定-trait"><a class="header-anchor" href="#实现特定-trait">¶</a>实现特定 trait</h2>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Kilometers</span>(<span class="type">f64</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> <span class="title class_">Kilometers</span> &#123;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">to_miles</span>(&amp;<span class="keyword">self</span>) <span class="punctuation">-&gt;</span> <span class="type">f64</span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.<span class="number">0</span> * <span class="number">0.621371</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">distance</span> = <span class="title function_ invoke__">Kilometers</span>(<span class="number">10.0</span>);</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;The distance in miles is &#123;&#125;&quot;</span>, distance.<span class="title function_ invoke__">to_miles</span>());</span><br></pre></td></tr></table></figure>
+<p>这里，Kilometers有一个方法to_miles，该方法是不会影响其他f64数据的。如果我们有另一个表示温度的f64类型，就不会意外调用到与距离相关的方法。</p>
+<p>New Type模式同样适用于对<code>Box&lt;dyn SomeTrait&gt;</code>类型的包装，这可以在需要动态分派（动态调用实现了某个接口的不同类型的对象的方法）的时候提供便利。通过创建一个New Type来包装这样的<code>Box&lt;dyn SomeTrait&gt;</code>类型，可以提供自定义的方法或实现更多的trait，同时也可以让API更加清晰和易于使用。</p>
+<h2 id="零成本抽象"><a class="header-anchor" href="#零成本抽象">¶</a>零成本抽象</h2>
+<p>在Rust中，New Type模式不仅是类型安全的，还是一种零成本抽象。这是因为Rust编译器在编译时期会进行足够的优化，以确保New Type的使用没有运行时开销。 Rust的零成本抽象原则确保了抽象不会引入额外的运行时成本。例如，当你使用Meters这样的New Type时，Rust确保：</p>
+<ol>
+<li>无额外内存开销：Meters只包含一个f64，在内存中的表现和单独的f64是一样的。</li>
+<li>无额外运行时开销：使用Meters时，性能和直接使用f64完全相同。编译器会移除任何关于New Type的包装和解包的代码。</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Rust Partial 语义</title>
     <url>/2023/05/02/Rust-Partial-%E8%AF%AD%E4%B9%89/</url>
     <content><![CDATA[<blockquote>
@@ -2292,28 +2314,6 @@ A relation table (also sometimes called a <em>JOIN</em>, <em>link</em> or <em>pi
 <h3 id="REFERENCE"><a class="header-anchor" href="#REFERENCE">¶</a>REFERENCE</h3>
 <ol>
 <li>Vtable format to support dyn upcasting coercion <a href="https://rust-lang.github.io/dyn-upcasting-coercion-initiative/design-discussions/vtable-layout.*html">https://rust-lang.github.io/dyn-upcasting-coercion-initiative/design-discussions/vtable-layout.*html</a>*</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Rust NewType 模式</title>
-    <url>/2023/05/03/Rust-NewType-%E6%A8%A1%E5%BC%8F/</url>
-    <content><![CDATA[<p>New Type模式是一种软件设计模式，用于在已有类型的基础上创建一个新的类型。在Rust中，这通常是通过定义一个结构体，其中只包含一个单一成员。这个结构体（New Type）对外提供了一个新的、独立的类型，用于对原始类型增加额外的语义或限制。</p>
-<h2 id="加强类型安全"><a class="header-anchor" href="#加强类型安全">¶</a>加强类型安全</h2>
-<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Meters</span>(<span class="type">f64</span>);</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Feet</span>(<span class="type">f64</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">length_in_meters</span> = <span class="title function_ invoke__">Meters</span>(<span class="number">100.0</span>);</span><br><span class="line"><span class="keyword">let</span> <span class="variable">length_in_feet</span> = <span class="title function_ invoke__">Feet</span>(<span class="number">328.084</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 编译器会防止以下代码执行，因为类型不匹配</span></span><br><span class="line"><span class="comment">// let wrong_length = Meters(length_in_feet); // 编译错误</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 正确的构造</span></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">add_lengths</span>(length1: Meters, length2: Meters) <span class="punctuation">-&gt;</span> Meters &#123;</span><br><span class="line">    <span class="title function_ invoke__">Meters</span>(length1.<span class="number">0</span> + length2.<span class="number">0</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这个例子使用 newtype 模式避免将原始类型f64用于不同的量度，从而增强了类型的安全性。</p>
-<h2 id="实现特定-trait"><a class="header-anchor" href="#实现特定-trait">¶</a>实现特定 trait</h2>
-<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Kilometers</span>(<span class="type">f64</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> <span class="title class_">Kilometers</span> &#123;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">to_miles</span>(&amp;<span class="keyword">self</span>) <span class="punctuation">-&gt;</span> <span class="type">f64</span> &#123;</span><br><span class="line">        <span class="keyword">self</span>.<span class="number">0</span> * <span class="number">0.621371</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="variable">distance</span> = <span class="title function_ invoke__">Kilometers</span>(<span class="number">10.0</span>);</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;The distance in miles is &#123;&#125;&quot;</span>, distance.<span class="title function_ invoke__">to_miles</span>());</span><br></pre></td></tr></table></figure>
-<p>这里，Kilometers有一个方法to_miles，该方法是不会影响其他f64数据的。如果我们有另一个表示温度的f64类型，就不会意外调用到与距离相关的方法。</p>
-<p>New Type模式同样适用于对<code>Box&lt;dyn SomeTrait&gt;</code>类型的包装，这可以在需要动态分派（动态调用实现了某个接口的不同类型的对象的方法）的时候提供便利。通过创建一个New Type来包装这样的<code>Box&lt;dyn SomeTrait&gt;</code>类型，可以提供自定义的方法或实现更多的trait，同时也可以让API更加清晰和易于使用。</p>
-<h2 id="零成本抽象"><a class="header-anchor" href="#零成本抽象">¶</a>零成本抽象</h2>
-<p>在Rust中，New Type模式不仅是类型安全的，还是一种零成本抽象。这是因为Rust编译器在编译时期会进行足够的优化，以确保New Type的使用没有运行时开销。 Rust的零成本抽象原则确保了抽象不会引入额外的运行时成本。例如，当你使用Meters这样的New Type时，Rust确保：</p>
-<ol>
-<li>无额外内存开销：Meters只包含一个f64，在内存中的表现和单独的f64是一样的。</li>
-<li>无额外运行时开销：使用Meters时，性能和直接使用f64完全相同。编译器会移除任何关于New Type的包装和解包的代码。</li>
 </ol>
 ]]></content>
       <tags>
@@ -2962,25 +2962,6 @@ A relation table (also sometimes called a <em>JOIN</em>, <em>link</em> or <em>pi
       </tags>
   </entry>
   <entry>
-    <title>DADGAD 定弦</title>
-    <url>/2025/07/08/dadgad/</url>
-    <content><![CDATA[<p>模态定弦的空弦音不直接构成传统意义上的大调或小调和弦，而是形成一种听感上更为空灵、悬浮的“挂留和弦”（Suspended Chord）效果。</p>
-<p><strong>DADGAD (发音为 “dad-gad”):</strong> 这是凯尔特音乐（Celtic Music）中最具代表性的定弦。它的空弦音给人一种既非大调也非小调的模糊感，充满了神秘和悠远的色彩，非常适合营造氛围音乐和复杂的指弹旋律。</p>
-<p>挂留和弦（Suspended Chord），通常简写为 <strong>“sus”</strong>，是一种在传统和弦结构上进行了巧妙“修改”的和弦。它的核心特点是：<strong>用一个非三度的音，去“替代”或“悬挂”了原本决定和弦大/小调色彩的三度音</strong>，从而创造出一种独特的声音效果。</p>
-<p>想象一个标准的大三和弦或小三和弦，它由<strong>根音、三度音和五度音</strong>构成。其中，<strong>三度音</strong>是决定这个和弦听起来是明亮、开心的“大调”，还是忧郁、伤感的“小调”的关键。</p>
-<p>而挂留和弦，就是把这个关键的“三度音”暂时拿掉，换上别的音。最常见的替代者有两个：<br>
-一是 <strong>纯四度音 (Perfect 4th)</strong> ，二是 <strong>大二度音 (Major 2nd)</strong> 。</p>
-<p><strong>sus4 和弦 (挂四和弦)</strong> 由 <strong>根音 (1) + 纯四度音 (4) + 纯五度音 (5)</strong> 构成，即用<strong>四度音</strong>替代了原本的三度音。听感上，这是最常见的挂留和弦。它创造出一种<strong>强烈而悬浮的张力感</strong>，声音既不属于大调也不属于小调，听起来非常“开阔”。例如，一个 <strong>Csus4</strong> 和弦，就是由 C、F、G 三个音构成，取代了标准C大调和弦（C-E-G）中的 E 音。</p>
-<p><strong>sus2 和弦 (挂二和弦)</strong> 由 <strong>根音 (1) + 大二度音 (2) + 纯五度音 (5)</strong> 构成，特点是用二度音替代了原本的三度音。听感上，sus2和弦的声音比sus4更柔和、更明亮一些。它同样具有开放、模糊的色彩，但张力感稍弱，听起来更像是一种平静、梦幻的色彩和弦。例如，一个 <strong>Csus2</strong> 和弦，就是由 C、D、G 三个音构成，取代了标准C大调和弦（C-E-G）中的 E 音。</p>
-<p>而 DADGAD 定弦方式的空弦音，其核心就是一个挂留和弦，具体来说是一个 Dsus4 和弦。当你弹响 DADGAD 的所有空弦时，你实际上听到的就是 <strong>D、G、A</strong> 这三个音在不同八度上的叠加和共鸣。这三个音不多不少，正好构成了 <strong>Dsus4</strong> 和弦。</p>
-<p>DADGAD 定弦的精髓，就在于它将整个吉他的开放状态变成了一个巨大的、共鸣丰富的 <strong>Dsus4</strong> 挂留和弦。</p>
-<p>这正是为什么它能产生那种“既非大调也非小调的模糊感”和“空灵、悬浮”的听感。因为三度音（F# 或 F）的缺失，和弦的“身份”被悬挂了起来，没有明确地告诉你它是快乐的（大调）还是悲伤的（小调），而是创造出一种充满想象空间、广阔而悠远的音景。</p>
-]]></content>
-      <tags>
-        <tag>Life</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>caml_release_runtime_system导致的死锁问题</title>
     <url>/2023/06/28/caml-release-runtime-system%E5%AF%BC%E8%87%B4%E7%9A%84%E6%AD%BB%E9%94%81%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<p>给出一个<code>test.ml</code>:</p>
@@ -3000,6 +2981,25 @@ A relation table (also sometimes called a <em>JOIN</em>, <em>link</em> or <em>pi
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">starting up ...</span><br><span class="line">hello from OCaml</span><br><span class="line">acquiring ...</span><br><span class="line">acquired</span><br></pre></td></tr></table></figure>]]></content>
       <tags>
         <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>DADGAD 定弦</title>
+    <url>/2025/07/08/dadgad/</url>
+    <content><![CDATA[<p>模态定弦的空弦音不直接构成传统意义上的大调或小调和弦，而是形成一种听感上更为空灵、悬浮的“挂留和弦”（Suspended Chord）效果。</p>
+<p><strong>DADGAD (发音为 “dad-gad”):</strong> 这是凯尔特音乐（Celtic Music）中最具代表性的定弦。它的空弦音给人一种既非大调也非小调的模糊感，充满了神秘和悠远的色彩，非常适合营造氛围音乐和复杂的指弹旋律。</p>
+<p>挂留和弦（Suspended Chord），通常简写为 <strong>“sus”</strong>，是一种在传统和弦结构上进行了巧妙“修改”的和弦。它的核心特点是：<strong>用一个非三度的音，去“替代”或“悬挂”了原本决定和弦大/小调色彩的三度音</strong>，从而创造出一种独特的声音效果。</p>
+<p>想象一个标准的大三和弦或小三和弦，它由<strong>根音、三度音和五度音</strong>构成。其中，<strong>三度音</strong>是决定这个和弦听起来是明亮、开心的“大调”，还是忧郁、伤感的“小调”的关键。</p>
+<p>而挂留和弦，就是把这个关键的“三度音”暂时拿掉，换上别的音。最常见的替代者有两个：<br>
+一是 <strong>纯四度音 (Perfect 4th)</strong> ，二是 <strong>大二度音 (Major 2nd)</strong> 。</p>
+<p><strong>sus4 和弦 (挂四和弦)</strong> 由 <strong>根音 (1) + 纯四度音 (4) + 纯五度音 (5)</strong> 构成，即用<strong>四度音</strong>替代了原本的三度音。听感上，这是最常见的挂留和弦。它创造出一种<strong>强烈而悬浮的张力感</strong>，声音既不属于大调也不属于小调，听起来非常“开阔”。例如，一个 <strong>Csus4</strong> 和弦，就是由 C、F、G 三个音构成，取代了标准C大调和弦（C-E-G）中的 E 音。</p>
+<p><strong>sus2 和弦 (挂二和弦)</strong> 由 <strong>根音 (1) + 大二度音 (2) + 纯五度音 (5)</strong> 构成，特点是用二度音替代了原本的三度音。听感上，sus2和弦的声音比sus4更柔和、更明亮一些。它同样具有开放、模糊的色彩，但张力感稍弱，听起来更像是一种平静、梦幻的色彩和弦。例如，一个 <strong>Csus2</strong> 和弦，就是由 C、D、G 三个音构成，取代了标准C大调和弦（C-E-G）中的 E 音。</p>
+<p>而 DADGAD 定弦方式的空弦音，其核心就是一个挂留和弦，具体来说是一个 Dsus4 和弦。当你弹响 DADGAD 的所有空弦时，你实际上听到的就是 <strong>D、G、A</strong> 这三个音在不同八度上的叠加和共鸣。这三个音不多不少，正好构成了 <strong>Dsus4</strong> 和弦。</p>
+<p>DADGAD 定弦的精髓，就在于它将整个吉他的开放状态变成了一个巨大的、共鸣丰富的 <strong>Dsus4</strong> 挂留和弦。</p>
+<p>这正是为什么它能产生那种“既非大调也非小调的模糊感”和“空灵、悬浮”的听感。因为三度音（F# 或 F）的缺失，和弦的“身份”被悬挂了起来，没有明确地告诉你它是快乐的（大调）还是悲伤的（小调），而是创造出一种充满想象空间、广阔而悠远的音景。</p>
+]]></content>
+      <tags>
+        <tag>Life</tag>
       </tags>
   </entry>
   <entry>
@@ -3375,20 +3375,6 @@ A relation table (also sometimes called a <em>JOIN</em>, <em>link</em> or <em>pi
       </tags>
   </entry>
   <entry>
-    <title>使用 [@poll error] 实现线程安全的数据结构</title>
-    <url>/2023/08/15/poll-error-attribute-in-OCaml/</url>
-    <content><![CDATA[<p>OCaml的标准库提供了许多mutable的数据结构，比如Hashtbl, Queue, Stack之类的，但是这些数据结构都不是线程安全的。在 OCaml 4 和 OCaml 5 中，单个Domain中一次只能运行一个线程。换句话说，单个Domain中的线程仍然不会并行运行，除非在不同所的Domain中。</p>
-<p>而在单个Domain中 OCaml 的 runtime 是通过在safe point期间半抢占式的切换线程。也就是说，线程切换只会发生在safe point期间。例如内存分配就是是safe point。这意味着在没有safe point的代码块内，可以在Domain内原子性地进行多次读写或访问操作，因为线程没被切换。</p>
-<p>OCaml 编译器提供了一个名为 <a href="https://github.com/ocaml/ocaml/pull/10462"><code>[@poll error]</code></a> 的annotation，可以在函数中使用它来确保该函数不包含safe point。</p>
-<p>所以通过使用 <code>[@poll error]</code> 就可以创建在Domain内原子性执行的函数，也就是说，基于此特性可以实现单个Domain内线程安全的数据结构，例如 thread-table 便是使用这个特性实现的 Hash Table。可以看看它的 add 函数的实现:</p>
-<figure class="highlight ocaml"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span>[@poll error] add_atomically t buckets n i before after =</span><br><span class="line">  t.rehash = <span class="number">0</span> &amp;&amp; buckets == t.buckets</span><br><span class="line">  &amp;&amp; before == <span class="type">Array</span>.unsafe_get buckets i</span><br><span class="line">  &amp;&amp; <span class="keyword">begin</span></span><br><span class="line">       <span class="type">Array</span>.unsafe_set buckets i after;</span><br><span class="line">       <span class="keyword">let</span> length = t.length + <span class="number">1</span> <span class="keyword">in</span></span><br><span class="line">       t.length &lt;- length;</span><br><span class="line">       <span class="keyword">if</span> n &lt; length &amp;&amp; n &lt; max_buckets_div_2 <span class="keyword">then</span> t.rehash &lt;- n * <span class="number">2</span>;</span><br><span class="line">       <span class="literal">true</span></span><br><span class="line">     <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">rec</span> add t k&#x27; v&#x27; =</span><br><span class="line">  <span class="keyword">let</span> h = <span class="type">Mix</span>.<span class="built_in">int</span> k&#x27; <span class="keyword">in</span></span><br><span class="line">  maybe_rehash t;</span><br><span class="line">  <span class="keyword">let</span> buckets = t.buckets <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> n = <span class="type">Array</span>.length buckets <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> i = h <span class="keyword">land</span> (n - <span class="number">1</span>) <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> before = <span class="type">Array</span>.unsafe_get buckets i <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> after = <span class="type">Cons</span> (k&#x27;, v&#x27;, before) <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">if</span> not (add_atomically t buckets n i before after) <span class="keyword">then</span> add t k&#x27; v&#x27;</span><br></pre></td></tr></table></figure>
-<p>相比使用 Stdlib.Mutex，这种无锁实现会有更好的性能（特别是对于只读操作），并且还允许例如信号处理之类的上下文操作。</p>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>NestJS 嵌套查询参数解析错误分析与解决方案</title>
     <url>/2025/07/29/nestjs-nested-object-dto/</url>
     <content><![CDATA[<p>在开发 NestJS 应用程序时，一个常见的场景是根据复杂的条件筛选资源。当使用嵌套查询参数来表达这些条件时，例如通过 URL <code>http://localhost:3000/products/filter?filters[price][min]=100</code>，可能会意外地遇到 <code>property filters[price][min] should not exist</code> 错误。本文将深入剖析此问题背后的原因，并提供针对 Express 和 Fastify 两种底层框架的解决方案。</p>
@@ -3439,6 +3425,20 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
 <li><a href="https://stackoverflow.com/questions/29960764/what-does-extended-mean-in-express-4-0">What does ‘extended’ mean in express 4.0? - Stack Overflow</a></li>
 <li><a href="https://expressjs.com/en/5x/api.html#app.set">Express 5.0 - API Reference (<code>app.set</code>)</a></li>
 </ul>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用 [@poll error] 实现线程安全的数据结构</title>
+    <url>/2023/08/15/poll-error-attribute-in-OCaml/</url>
+    <content><![CDATA[<p>OCaml的标准库提供了许多mutable的数据结构，比如Hashtbl, Queue, Stack之类的，但是这些数据结构都不是线程安全的。在 OCaml 4 和 OCaml 5 中，单个Domain中一次只能运行一个线程。换句话说，单个Domain中的线程仍然不会并行运行，除非在不同所的Domain中。</p>
+<p>而在单个Domain中 OCaml 的 runtime 是通过在safe point期间半抢占式的切换线程。也就是说，线程切换只会发生在safe point期间。例如内存分配就是是safe point。这意味着在没有safe point的代码块内，可以在Domain内原子性地进行多次读写或访问操作，因为线程没被切换。</p>
+<p>OCaml 编译器提供了一个名为 <a href="https://github.com/ocaml/ocaml/pull/10462"><code>[@poll error]</code></a> 的annotation，可以在函数中使用它来确保该函数不包含safe point。</p>
+<p>所以通过使用 <code>[@poll error]</code> 就可以创建在Domain内原子性执行的函数，也就是说，基于此特性可以实现单个Domain内线程安全的数据结构，例如 thread-table 便是使用这个特性实现的 Hash Table。可以看看它的 add 函数的实现:</p>
+<figure class="highlight ocaml"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span>[@poll error] add_atomically t buckets n i before after =</span><br><span class="line">  t.rehash = <span class="number">0</span> &amp;&amp; buckets == t.buckets</span><br><span class="line">  &amp;&amp; before == <span class="type">Array</span>.unsafe_get buckets i</span><br><span class="line">  &amp;&amp; <span class="keyword">begin</span></span><br><span class="line">       <span class="type">Array</span>.unsafe_set buckets i after;</span><br><span class="line">       <span class="keyword">let</span> length = t.length + <span class="number">1</span> <span class="keyword">in</span></span><br><span class="line">       t.length &lt;- length;</span><br><span class="line">       <span class="keyword">if</span> n &lt; length &amp;&amp; n &lt; max_buckets_div_2 <span class="keyword">then</span> t.rehash &lt;- n * <span class="number">2</span>;</span><br><span class="line">       <span class="literal">true</span></span><br><span class="line">     <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">rec</span> add t k&#x27; v&#x27; =</span><br><span class="line">  <span class="keyword">let</span> h = <span class="type">Mix</span>.<span class="built_in">int</span> k&#x27; <span class="keyword">in</span></span><br><span class="line">  maybe_rehash t;</span><br><span class="line">  <span class="keyword">let</span> buckets = t.buckets <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> n = <span class="type">Array</span>.length buckets <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> i = h <span class="keyword">land</span> (n - <span class="number">1</span>) <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> before = <span class="type">Array</span>.unsafe_get buckets i <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">let</span> after = <span class="type">Cons</span> (k&#x27;, v&#x27;, before) <span class="keyword">in</span></span><br><span class="line">  <span class="keyword">if</span> not (add_atomically t buckets n i before after) <span class="keyword">then</span> add t k&#x27; v&#x27;</span><br></pre></td></tr></table></figure>
+<p>相比使用 Stdlib.Mutex，这种无锁实现会有更好的性能（特别是对于只读操作），并且还允许例如信号处理之类的上下文操作。</p>
 ]]></content>
       <tags>
         <tag>Technique</tag>
@@ -3658,20 +3658,6 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </tags>
   </entry>
   <entry>
-    <title>中老年人沉迷手机的问题</title>
-    <url>/2024/09/08/%E4%B8%AD%E8%80%81%E5%B9%B4%E4%BA%BA%E6%B2%89%E8%BF%B7%E6%89%8B%E6%9C%BA%E7%9A%84%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>沉迷于手机的老年人，其实很多都是因为儿女不在身边，他们只能把这份孤独转嫁到手机上。</p>
-<p>如果减少了这份孤独感和寂寞感，才能真正让他们从手机里解放出来。</p>
-<p>其实不是不让他们看手机，而是一定要控制好量和度。</p>
-<p>一味的打击，反对，也许只会将两代人之间的关系越推越远。</p>
-<p>唯一的办法，是看见。</p>
-<p>看见他们的孤独，看见他们对生命流逝的恐惧，看见他们在尊重和陪伴之中折射出来的爱。</p>
-]]></content>
-      <tags>
-        <tag>Life</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Vertical slicing 在开发中的实践探索</title>
     <url>/2025/05/27/vertical-slicing-practice/</url>
     <content><![CDATA[<p>垂直切片 (Vertical Slicing) 是一种在敏捷软件开发中将产品需求（通常是用户故事）拆分为可独立交付的、具有端到端功能的小块的方法。这意味着每个“切片”都包含了从用户界面 (UI) 到底层数据库，以及中间所有业务逻辑层所需的工作。</p>
@@ -3715,6 +3701,20 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
 ]]></content>
       <tags>
         <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>中老年人沉迷手机的问题</title>
+    <url>/2024/09/08/%E4%B8%AD%E8%80%81%E5%B9%B4%E4%BA%BA%E6%B2%89%E8%BF%B7%E6%89%8B%E6%9C%BA%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>沉迷于手机的老年人，其实很多都是因为儿女不在身边，他们只能把这份孤独转嫁到手机上。</p>
+<p>如果减少了这份孤独感和寂寞感，才能真正让他们从手机里解放出来。</p>
+<p>其实不是不让他们看手机，而是一定要控制好量和度。</p>
+<p>一味的打击，反对，也许只会将两代人之间的关系越推越远。</p>
+<p>唯一的办法，是看见。</p>
+<p>看见他们的孤独，看见他们对生命流逝的恐惧，看见他们在尊重和陪伴之中折射出来的爱。</p>
+]]></content>
+      <tags>
+        <tag>Life</tag>
       </tags>
   </entry>
   <entry>
@@ -3808,6 +3808,25 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </categories>
   </entry>
   <entry>
+    <title>二〇二三年十二月一日</title>
+    <url>/2023/12/01/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%B8%89%E5%B9%B4%E5%8D%81%E4%BA%8C%E6%9C%88%E4%B8%80%E6%97%A5/</url>
+    <content><![CDATA[<p>我和毛毛说还记得外面的世界，记得那些披星戴月的日子。</p>
+<p>还说，你知不知道灰灰，它比你聪明，没你好看，你也就剩好看了。</p>
+<p>修长的身影顶着斗笠在山里中飞奔，一刀刀砍断荆棘，踩空时摔在松软的泥土上、失神时跌进干燥的枯枝中，但仍然记得曾经骑车过天桥马路的感觉。</p>
+<p>在山顶时，自由给了我一切。</p>
+<p>身处在青春里，就做感受它的事。爱恨、稚嫩、稳重与勇气，推动每个人脚下的每一步，影响一生的轨迹。</p>
+<p>我把曾经的全家福裱起来放在家里的储物架上。</p>
+<p>上边除了它，还有我在外面的世界时留下的一些纪念品，比如建模比赛的奖杯，玉龙雪山上的树枝，还有那腾格里沙漠中沙粒做成的沙漏。</p>
+<p>长段长段的近况记录被放在最显眼的位置，它并不是一次写成的，而是日复一日的点滴记录汇聚而成。</p>
+<p>山上的房子挺小的，坐北朝南，但有一处简陋的书房，依着阳光而建，里边儿有我拿来放吉他的架子。</p>
+<p>那把锈迹斑斑的横刀，被放在了地下室，我还专门上了油保养。</p>
+<p>我时不时也拿出来看看，毛毛总会蹭到上面的油。</p>
+]]></content>
+      <categories>
+        <category>gallery</category>
+      </categories>
+  </entry>
+  <entry>
     <title>二〇二三年十二月二日</title>
     <url>/2023/12/02/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%B8%89%E5%B9%B4%E5%8D%81%E4%BA%8C%E6%9C%88%E4%BA%8C%E6%97%A5/</url>
     <content><![CDATA[<p>夏日凌晨的海风，裹挟着季风带的温热的潮气不远万里奔赴而来，搅碎了一汪流动的星星。</p>
@@ -3823,25 +3842,6 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
 <p>狗狗叼起一根树枝，歪头不解地看着我。</p>
 <p>我爱这个因为有我而变得温柔的世界。</p>
 <p>这将是我与周遭的一切，热爱一生，共度一生的地方。</p>
-]]></content>
-      <categories>
-        <category>gallery</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>二〇二三年十二月一日</title>
-    <url>/2023/12/01/%E4%BA%8C%E3%80%87%E4%BA%8C%E4%B8%89%E5%B9%B4%E5%8D%81%E4%BA%8C%E6%9C%88%E4%B8%80%E6%97%A5/</url>
-    <content><![CDATA[<p>我和毛毛说还记得外面的世界，记得那些披星戴月的日子。</p>
-<p>还说，你知不知道灰灰，它比你聪明，没你好看，你也就剩好看了。</p>
-<p>修长的身影顶着斗笠在山里中飞奔，一刀刀砍断荆棘，踩空时摔在松软的泥土上、失神时跌进干燥的枯枝中，但仍然记得曾经骑车过天桥马路的感觉。</p>
-<p>在山顶时，自由给了我一切。</p>
-<p>身处在青春里，就做感受它的事。爱恨、稚嫩、稳重与勇气，推动每个人脚下的每一步，影响一生的轨迹。</p>
-<p>我把曾经的全家福裱起来放在家里的储物架上。</p>
-<p>上边除了它，还有我在外面的世界时留下的一些纪念品，比如建模比赛的奖杯，玉龙雪山上的树枝，还有那腾格里沙漠中沙粒做成的沙漏。</p>
-<p>长段长段的近况记录被放在最显眼的位置，它并不是一次写成的，而是日复一日的点滴记录汇聚而成。</p>
-<p>山上的房子挺小的，坐北朝南，但有一处简陋的书房，依着阳光而建，里边儿有我拿来放吉他的架子。</p>
-<p>那把锈迹斑斑的横刀，被放在了地下室，我还专门上了油保养。</p>
-<p>我时不时也拿出来看看，毛毛总会蹭到上面的油。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
@@ -4252,15 +4252,6 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </categories>
   </entry>
   <entry>
-    <title>二〇二四年九月一日</title>
-    <url>/2024/09/01/%E4%BA%8C%E3%80%87%E4%BA%8C%E5%9B%9B%E5%B9%B4%E4%B9%9D%E6%9C%88%E4%B8%80%E6%97%A5/</url>
-    <content><![CDATA[<p>通过忠实地映射宇宙来隐藏自我，是融入永恒的唯一途径。</p>
-]]></content>
-      <categories>
-        <category>gallery</category>
-      </categories>
-  </entry>
-  <entry>
     <title>二〇二四年三月二十二日</title>
     <url>/2024/03/22/%E4%BA%8C%E3%80%87%E4%BA%8C%E5%9B%9B%E5%B9%B4%E4%B8%89%E6%9C%88%E4%BA%8C%E5%8D%81%E4%BA%8C%E6%97%A5/</url>
     <content><![CDATA[<p>毛毛在人群中牵着我，却很难融入人群，我在林中面对着毛毛，树木的思想却千姿百态地向我涌来。<br>
@@ -4274,6 +4265,15 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
 毛毛下雨要回家，<br>
 小狗小狗画梅花，<br>
 直走就是我们家。</p>
+]]></content>
+      <categories>
+        <category>gallery</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>二〇二四年九月一日</title>
+    <url>/2024/09/01/%E4%BA%8C%E3%80%87%E4%BA%8C%E5%9B%9B%E5%B9%B4%E4%B9%9D%E6%9C%88%E4%B8%80%E6%97%A5/</url>
+    <content><![CDATA[<p>通过忠实地映射宇宙来隐藏自我，是融入永恒的唯一途径。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
@@ -4441,18 +4441,18 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </categories>
   </entry>
   <entry>
-    <title>二零二一年二月十四日</title>
-    <url>/2021/02/14/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%80%E5%B9%B4%E4%BA%8C%E6%9C%88%E5%8D%81%E5%9B%9B%E6%97%A5/</url>
-    <content><![CDATA[<p>酸甜苦辣</p>
+    <title>二零二一年二月十六日</title>
+    <url>/2021/02/16/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%80%E5%B9%B4%E4%BA%8C%E6%9C%88%E5%8D%81%E5%85%AD%E6%97%A5/</url>
+    <content><![CDATA[<p>结果的好坏，普通人矗立其中。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
       </categories>
   </entry>
   <entry>
-    <title>二零二一年二月十六日</title>
-    <url>/2021/02/16/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%80%E5%B9%B4%E4%BA%8C%E6%9C%88%E5%8D%81%E5%85%AD%E6%97%A5/</url>
-    <content><![CDATA[<p>结果的好坏，普通人矗立其中。</p>
+    <title>二零二一年二月十四日</title>
+    <url>/2021/02/14/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%80%E5%B9%B4%E4%BA%8C%E6%9C%88%E5%8D%81%E5%9B%9B%E6%97%A5/</url>
+    <content><![CDATA[<p>酸甜苦辣</p>
 ]]></content>
       <categories>
         <category>gallery</category>
@@ -4512,18 +4512,18 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </categories>
   </entry>
   <entry>
-    <title>二零二三年二月二十六日</title>
-    <url>/2023/02/26/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E4%BA%8C%E6%9C%88%E4%BA%8C%E5%8D%81%E5%85%AD%E6%97%A5/</url>
-    <content><![CDATA[<p>翻滚的热汤接过焰火的能量把周围的蒸汽撕开一道裂缝，透过缝隙我见到一对爱人的时空交织在未来，他们幸运的错开孤独，人们举起手中的酒杯，祝因果与命运缠绵之人幸福</p>
+    <title>二零二三年二月二十五日</title>
+    <url>/2023/02/25/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E4%BA%8C%E6%9C%88%E4%BA%8C%E5%8D%81%E4%BA%94%E6%97%A5/</url>
+    <content><![CDATA[<p>睁眼闭眼就是过去和未来。</p>
 ]]></content>
       <categories>
         <category>gallery</category>
       </categories>
   </entry>
   <entry>
-    <title>二零二三年二月二十五日</title>
-    <url>/2023/02/25/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E4%BA%8C%E6%9C%88%E4%BA%8C%E5%8D%81%E4%BA%94%E6%97%A5/</url>
-    <content><![CDATA[<p>睁眼闭眼就是过去和未来。</p>
+    <title>二零二三年二月二十六日</title>
+    <url>/2023/02/26/%E4%BA%8C%E9%9B%B6%E4%BA%8C%E4%B8%89%E5%B9%B4%E4%BA%8C%E6%9C%88%E4%BA%8C%E5%8D%81%E5%85%AD%E6%97%A5/</url>
+    <content><![CDATA[<p>翻滚的热汤接过焰火的能量把周围的蒸汽撕开一道裂缝，透过缝隙我见到一对爱人的时空交织在未来，他们幸运的错开孤独，人们举起手中的酒杯，祝因果与命运缠绵之人幸福</p>
 ]]></content>
       <categories>
         <category>gallery</category>
@@ -4698,6 +4698,45 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </categories>
   </entry>
   <entry>
+    <title>从事件风暴看领域驱动设计</title>
+    <url>/2025/02/11/%E4%BB%8E%E4%BA%8B%E4%BB%B6%E9%A3%8E%E6%9A%B4%E7%9C%8B%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1/</url>
+    <content><![CDATA[<p>事件风暴（Event Storming）是一种领域驱动设计（DDD）的实践方法，由 Alberto Brandolini 提出，旨在通过团队协作的方式快速理解和建模业务领域。</p>
+<p>以下是事件风暴及相关领域驱动设计中的一些核心概念和知识点：</p>
+<p>1. 领域（Domain）：指的是业务相关知识的集合，可以进一步划分为子域。<br>
+2. 子域（Subdomain）：是领域的一部分，可以是核心域、支撑域或通用域。<br>
+3. 核心域（Core Domain）：指领域中最核心的部分，通常对应企业的核心业务。<br>
+4. 通用语言（Ubiquitous Language）：团队所有成员使用的一种语言，用于确保业务和软件之间的沟通一致性。<br>
+5. 限界上下文（Bounded Context）：定义了一组规则和协议，用于明确领域模型的适用范围。<br>
+6. 实体（Entity）：具有唯一标识和生命周期的领域对象。<br>
+7. 值对象（Value Object）：描述了某种特性或属性的对象，没有概念标识。<br>
+8. 聚合（Aggregate）：一组相关对象的集合，由一个聚合根（Aggregate Root）统一管理。<br>
+9. 领域事件（Domain Event）：领域中发生的重要事件，可以用于通知其他领域对象或跨限界上下文进行解耦和协作。<br>
+10. 命令（Command）：表示要执行的操作，通常与事件一一对应。<br>
+11. 读模型（Read Model）：为了优化读取操作而设计的模型，可能与写模型不同。<br>
+12. 决策命令（Decision Command）：在事件风暴中，直接导致事件发生的命令。<br>
+13. 战略设计（Strategic Design）：高层次的抽象和归类，包括理清上下文和子域的划分。<br>
+14. 战术设计（Tactical Design）：对特定上下文下的模型进行详细设计，包括聚合、实体和值对象。<br>
+15. 贫血模型（Anemic Domain Model）：领域对象只有属性及其getter/setter方法的纯数据类，业务逻辑通过服务实现。<br>
+16. 充血模型（Rich Domain Model）：领域对象包含业务逻辑，每个对象都是活跃的。<br>
+17. 资源库（Repository）：用于检索和持久化领域对象的机制。<br>
+18. 服务（Service）：在模型中独立的操作，可以是领域服务或应用服务。<br>
+19. 固定规则（Invariant）：为设计元素做出的断言，必须一直保持为真。</p>
+<p>事件风暴通常包括以下步骤：</p>
+<ul>
+<li>识别领域事件</li>
+<li>确定事件顺序</li>
+<li>识别命令和触发器</li>
+<li>识别聚合和实体</li>
+<li>划分限界上下文</li>
+<li>识别领域服务和资源库</li>
+<li>通过这些步骤，团队可以共同创建出反映业务领域的领域模型，为软件设计和开发提供指导。</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>体质指数与血脂异常的年龄依赖性关联：患病率轨迹与因果效应修饰</title>
     <url>/2026/08/15/%E4%BD%93%E8%B4%A8%E6%8C%87%E6%95%B0%E4%B8%8E%E8%A1%80%E8%84%82%E5%BC%82%E5%B8%B8%E7%9A%84%E5%B9%B4%E9%BE%84%E4%BE%9D%E8%B5%96%E6%80%A7%E5%85%B3%E8%81%94/</url>
     <content><![CDATA[<p>"胖的人血脂容易高"大概是体检报告时代最深入人心的常识之一。这句话在人群层面确实成立：BMI 与血脂异常之间存在明确的剂量-反应关系，因果性也获得了孟德尔随机化研究的支持<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>。但常识加上"年龄"这个维度后就变得复杂——同样的 BMI，在不同年龄段对血脂的影响并不相同，甚至可能反转。</p>
@@ -4810,45 +4849,6 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
 ]]></content>
       <tags>
         <tag>Medicine</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>从事件风暴看领域驱动设计</title>
-    <url>/2025/02/11/%E4%BB%8E%E4%BA%8B%E4%BB%B6%E9%A3%8E%E6%9A%B4%E7%9C%8B%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1/</url>
-    <content><![CDATA[<p>事件风暴（Event Storming）是一种领域驱动设计（DDD）的实践方法，由 Alberto Brandolini 提出，旨在通过团队协作的方式快速理解和建模业务领域。</p>
-<p>以下是事件风暴及相关领域驱动设计中的一些核心概念和知识点：</p>
-<p>1. 领域（Domain）：指的是业务相关知识的集合，可以进一步划分为子域。<br>
-2. 子域（Subdomain）：是领域的一部分，可以是核心域、支撑域或通用域。<br>
-3. 核心域（Core Domain）：指领域中最核心的部分，通常对应企业的核心业务。<br>
-4. 通用语言（Ubiquitous Language）：团队所有成员使用的一种语言，用于确保业务和软件之间的沟通一致性。<br>
-5. 限界上下文（Bounded Context）：定义了一组规则和协议，用于明确领域模型的适用范围。<br>
-6. 实体（Entity）：具有唯一标识和生命周期的领域对象。<br>
-7. 值对象（Value Object）：描述了某种特性或属性的对象，没有概念标识。<br>
-8. 聚合（Aggregate）：一组相关对象的集合，由一个聚合根（Aggregate Root）统一管理。<br>
-9. 领域事件（Domain Event）：领域中发生的重要事件，可以用于通知其他领域对象或跨限界上下文进行解耦和协作。<br>
-10. 命令（Command）：表示要执行的操作，通常与事件一一对应。<br>
-11. 读模型（Read Model）：为了优化读取操作而设计的模型，可能与写模型不同。<br>
-12. 决策命令（Decision Command）：在事件风暴中，直接导致事件发生的命令。<br>
-13. 战略设计（Strategic Design）：高层次的抽象和归类，包括理清上下文和子域的划分。<br>
-14. 战术设计（Tactical Design）：对特定上下文下的模型进行详细设计，包括聚合、实体和值对象。<br>
-15. 贫血模型（Anemic Domain Model）：领域对象只有属性及其getter/setter方法的纯数据类，业务逻辑通过服务实现。<br>
-16. 充血模型（Rich Domain Model）：领域对象包含业务逻辑，每个对象都是活跃的。<br>
-17. 资源库（Repository）：用于检索和持久化领域对象的机制。<br>
-18. 服务（Service）：在模型中独立的操作，可以是领域服务或应用服务。<br>
-19. 固定规则（Invariant）：为设计元素做出的断言，必须一直保持为真。</p>
-<p>事件风暴通常包括以下步骤：</p>
-<ul>
-<li>识别领域事件</li>
-<li>确定事件顺序</li>
-<li>识别命令和触发器</li>
-<li>识别聚合和实体</li>
-<li>划分限界上下文</li>
-<li>识别领域服务和资源库</li>
-<li>通过这些步骤，团队可以共同创建出反映业务领域的领域模型，为软件设计和开发提供指导。</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>Technique</tag>
       </tags>
   </entry>
   <entry>
@@ -6271,37 +6271,6 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </tags>
   </entry>
   <entry>
-    <title>极简主义生活的本质</title>
-    <url>/2025/10/19/%E6%9E%81%E7%AE%80%E4%B8%BB%E4%B9%89%E7%94%9F%E6%B4%BB%E7%9A%84%E6%9C%AC%E8%B4%A8/</url>
-    <content><![CDATA[<p>世界的本质是熵增的。</p>
-<p>所有的一切，不论是建筑、文明，还是人的身体与精神，只要没人去维护，就会不可避免地朝着混乱、衰败的方向走去。</p>
-<p>我们看到一座老厂房荒废几年就杂草丛生、窗户破碎，一座古城墙经历几百年风雨就成了残垣断壁，这些都是自然法则在起作用。</p>
-<p>人类在对抗熵增，所有文明的存在，本身就是在和混乱做斗争。</p>
-<p>这种规律，不仅存在于物理世界，也存在在人生中。</p>
-<p>一个人若不打理生活，家里会越来越乱；若不管理身体，健康会越来越差；若不梳理思绪，精神就会陷入焦虑与疲惫。</p>
-<p>人如果想让生活保持秩序与清明，就必须投入能量去维护它。而能量是有限的，当你把能量分散在太多琐事和物品上，最终什么也维持不好。</p>
-<p>这就是极简主义的底层逻辑。</p>
-<p>极简是一种顺应规律的生活方式。我们每个人都只有有限的时间、精力和注意力，而现代社会却不断往我们身上堆砌各种“必须拥有”的东西。</p>
-<p>表面看，这些东西让生活更方便，实际上却在慢慢榨干我们的能量。因为每一样东西，都需要被管理、被维护。</p>
-<p>真正的自由，不是“想买什么就买什么”，而是“不需要买什么也能过得很好”。</p>
-<p>一个人若能不再被物质牵绊，他的生活简单到可以随时离开、随时出发，没有太多必须要维持的物件，也就释放出了大量的能量去维持内在秩序。</p>
-<p>你不必花时间打扫塞满杂物的房间，不必焦虑哪件衣服还没穿，不必担心旧东西丢了会可惜。生活变得轻盈，心也自然平静。</p>
-<p>极简主义是一种“主动熵减”的生活方式。世界的自然趋势是熵增，而极简主义者在用有限的能量对抗这股趋势。</p>
-<p>打扫房间、整理衣柜、清理文件，看似小事，本质上都是在恢复秩序。</p>
-<p>生活中的秩序越多，人心就越清晰。家整洁了，人也更容易集中注意力，思考变得通畅。那些东西堆满的家，其实是一个人内在混乱的外在映照。</p>
-<p>极简主义不只是少买东西，而是一种能量管理的哲学。你拥有的越多，分散的能量就越多；你放下的越多，能量就越集中。</p>
-<p>人的时间和注意力就像光，散开时只能照亮一小片模糊的区域，集中时才能穿透一切。</p>
-<p>极简主义让人集中能量，把有限的生命力用在真正重要的地方——比如学习、思考、创造、体验。</p>
-<p>有人说，极简是贫穷者的浪漫，其实恰恰相反，极简是内心丰盈者的选择。</p>
-<p>因为只有不再依赖外物，你才能真正自由。什么都有的人，却都被自己的东西困住。</p>
-<p>而极简的人，不被物质定义，自然也不被物质消耗。</p>
-<p>归根到底，极简主义是一种逆熵的生活策略。在这个无序不断扩张的世界里，保持生活的清澈与节制，本身就是一种胜利。</p>
-]]></content>
-      <tags>
-        <tag>Life</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>替米沙坦</title>
     <url>/2023/03/13/%E6%9B%BF%E7%B1%B3%E6%B2%99%E5%9D%A6/</url>
     <content><![CDATA[<h2 id="名称"><a class="header-anchor" href="#名称">¶</a>名称</h2>
@@ -6343,6 +6312,37 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
 ]]></content>
       <tags>
         <tag>Medicine</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>极简主义生活的本质</title>
+    <url>/2025/10/19/%E6%9E%81%E7%AE%80%E4%B8%BB%E4%B9%89%E7%94%9F%E6%B4%BB%E7%9A%84%E6%9C%AC%E8%B4%A8/</url>
+    <content><![CDATA[<p>世界的本质是熵增的。</p>
+<p>所有的一切，不论是建筑、文明，还是人的身体与精神，只要没人去维护，就会不可避免地朝着混乱、衰败的方向走去。</p>
+<p>我们看到一座老厂房荒废几年就杂草丛生、窗户破碎，一座古城墙经历几百年风雨就成了残垣断壁，这些都是自然法则在起作用。</p>
+<p>人类在对抗熵增，所有文明的存在，本身就是在和混乱做斗争。</p>
+<p>这种规律，不仅存在于物理世界，也存在在人生中。</p>
+<p>一个人若不打理生活，家里会越来越乱；若不管理身体，健康会越来越差；若不梳理思绪，精神就会陷入焦虑与疲惫。</p>
+<p>人如果想让生活保持秩序与清明，就必须投入能量去维护它。而能量是有限的，当你把能量分散在太多琐事和物品上，最终什么也维持不好。</p>
+<p>这就是极简主义的底层逻辑。</p>
+<p>极简是一种顺应规律的生活方式。我们每个人都只有有限的时间、精力和注意力，而现代社会却不断往我们身上堆砌各种“必须拥有”的东西。</p>
+<p>表面看，这些东西让生活更方便，实际上却在慢慢榨干我们的能量。因为每一样东西，都需要被管理、被维护。</p>
+<p>真正的自由，不是“想买什么就买什么”，而是“不需要买什么也能过得很好”。</p>
+<p>一个人若能不再被物质牵绊，他的生活简单到可以随时离开、随时出发，没有太多必须要维持的物件，也就释放出了大量的能量去维持内在秩序。</p>
+<p>你不必花时间打扫塞满杂物的房间，不必焦虑哪件衣服还没穿，不必担心旧东西丢了会可惜。生活变得轻盈，心也自然平静。</p>
+<p>极简主义是一种“主动熵减”的生活方式。世界的自然趋势是熵增，而极简主义者在用有限的能量对抗这股趋势。</p>
+<p>打扫房间、整理衣柜、清理文件，看似小事，本质上都是在恢复秩序。</p>
+<p>生活中的秩序越多，人心就越清晰。家整洁了，人也更容易集中注意力，思考变得通畅。那些东西堆满的家，其实是一个人内在混乱的外在映照。</p>
+<p>极简主义不只是少买东西，而是一种能量管理的哲学。你拥有的越多，分散的能量就越多；你放下的越多，能量就越集中。</p>
+<p>人的时间和注意力就像光，散开时只能照亮一小片模糊的区域，集中时才能穿透一切。</p>
+<p>极简主义让人集中能量，把有限的生命力用在真正重要的地方——比如学习、思考、创造、体验。</p>
+<p>有人说，极简是贫穷者的浪漫，其实恰恰相反，极简是内心丰盈者的选择。</p>
+<p>因为只有不再依赖外物，你才能真正自由。什么都有的人，却都被自己的东西困住。</p>
+<p>而极简的人，不被物质定义，自然也不被物质消耗。</p>
+<p>归根到底，极简主义是一种逆熵的生活策略。在这个无序不断扩张的世界里，保持生活的清澈与节制，本身就是一种胜利。</p>
+]]></content>
+      <tags>
+        <tag>Life</tag>
       </tags>
   </entry>
   <entry>
@@ -6811,37 +6811,6 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
       </tags>
   </entry>
   <entry>
-    <title>肩周炎和肩袖损伤的区别</title>
-    <url>/2024/09/15/%E8%82%A9%E5%91%A8%E7%82%8E%E5%92%8C%E8%82%A9%E8%A2%96%E6%8D%9F%E4%BC%A4%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
-    <content><![CDATA[<p>在肩痛患者中，只有2%～5%是肩周炎，肩袖损伤更为常见，占30%～40%。</p>
-<p>肩周炎和肩袖损伤都是临床上常见的疾病。很多肩痛患者认为自己患有肩周炎，坚持做肩关节活动训练，但一直没有缓解，且逐渐加重，甚至影响了睡眠和生活，遂至医院就诊，经过影像学检查确诊为肩袖损伤。这是因为肩周炎和肩袖损伤均可引起肩痛，严重时均可出现夜间疼痛，甚至影响睡眠，症状相似，故极易混淆。</p>
-<p>肩周炎是肩关节冻结、活动受限，遇风、寒冷加重，是肩周软组织（包括肩周肌、肌腱、滑囊和关节囊等）病变引起的以肩关节疼痛和功能障碍为特征的疾病。</p>
-<p>肩袖损伤是由退行性病变或外力等导致肩袖的4块肌肉、肌腱发生病变，进而导致肩关节局部疼痛、活动受限的疾病。</p>
-<p>许多肩袖损伤患者无明确的外伤史，而是由长期做过顶运动、提重物或上肢长期固定于一个姿势引起的。</p>
-<ul>
-<li>
-<p>肩周炎的疼痛范围广，涉及整个肩关节，肩袖损伤引起的疼痛多出现在肩前方、外上方</p>
-</li>
-<li>
-<p>肩周炎的压痛点多而广，肩袖损的伤压痛点多出现在肩前方、上方及肩胛骨外侧缘。</p>
-</li>
-<li>
-<p>肩周炎患者对气候变化较为敏感，肩袖损伤患者对气候变化不敏感，对劳累、提重物及做过顶运动较为敏感。</p>
-</li>
-<li>
-<p>肩周炎患者活动受限范围广，肩袖损伤患者多以肩关节外展活动受限为主，同时伴有外展无力。</p>
-</li>
-<li>
-<p>肩周炎患者进行上举过顶运动训练后活动范围会好转，症状会减轻；而肩袖损伤患者进行上举过顶运动训练后疼痛加重。</p>
-</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>Medicine</tag>
-        <tag>Life</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>肝功能检查化验单阅读指南</title>
     <url>/2023/10/13/%E8%82%9D%E5%8A%9F%E8%83%BD%E6%A3%80%E6%9F%A5%E5%8C%96%E9%AA%8C%E5%8D%95/</url>
     <content><![CDATA[<p><img src="/img/%E5%8C%BB%E5%AD%A6/%E8%82%9D%E5%8A%9F%E8%83%BD%E6%A3%80%E6%9F%A5%E5%8C%96%E9%AA%8C%E5%8D%95Demo.jpeg" alt=""></p>
@@ -6883,6 +6852,37 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
 </ul>
 </li>
 </ul>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Medicine</tag>
+        <tag>Life</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>肩周炎和肩袖损伤的区别</title>
+    <url>/2024/09/15/%E8%82%A9%E5%91%A8%E7%82%8E%E5%92%8C%E8%82%A9%E8%A2%96%E6%8D%9F%E4%BC%A4%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<p>在肩痛患者中，只有2%～5%是肩周炎，肩袖损伤更为常见，占30%～40%。</p>
+<p>肩周炎和肩袖损伤都是临床上常见的疾病。很多肩痛患者认为自己患有肩周炎，坚持做肩关节活动训练，但一直没有缓解，且逐渐加重，甚至影响了睡眠和生活，遂至医院就诊，经过影像学检查确诊为肩袖损伤。这是因为肩周炎和肩袖损伤均可引起肩痛，严重时均可出现夜间疼痛，甚至影响睡眠，症状相似，故极易混淆。</p>
+<p>肩周炎是肩关节冻结、活动受限，遇风、寒冷加重，是肩周软组织（包括肩周肌、肌腱、滑囊和关节囊等）病变引起的以肩关节疼痛和功能障碍为特征的疾病。</p>
+<p>肩袖损伤是由退行性病变或外力等导致肩袖的4块肌肉、肌腱发生病变，进而导致肩关节局部疼痛、活动受限的疾病。</p>
+<p>许多肩袖损伤患者无明确的外伤史，而是由长期做过顶运动、提重物或上肢长期固定于一个姿势引起的。</p>
+<ul>
+<li>
+<p>肩周炎的疼痛范围广，涉及整个肩关节，肩袖损伤引起的疼痛多出现在肩前方、外上方</p>
+</li>
+<li>
+<p>肩周炎的压痛点多而广，肩袖损的伤压痛点多出现在肩前方、上方及肩胛骨外侧缘。</p>
+</li>
+<li>
+<p>肩周炎患者对气候变化较为敏感，肩袖损伤患者对气候变化不敏感，对劳累、提重物及做过顶运动较为敏感。</p>
+</li>
+<li>
+<p>肩周炎患者活动受限范围广，肩袖损伤患者多以肩关节外展活动受限为主，同时伴有外展无力。</p>
+</li>
+<li>
+<p>肩周炎患者进行上举过顶运动训练后活动范围会好转，症状会减轻；而肩袖损伤患者进行上举过顶运动训练后疼痛加重。</p>
 </li>
 </ul>
 ]]></content>
@@ -9056,6 +9056,131 @@ NestJS 依赖其底层 HTTP 适配器（默认为 Express）来解析传入的�
 ]]></content>
       <tags>
         <tag>Technique</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>非小细胞肺癌鳞状分化的免疫组化判读及其治疗边界</title>
+    <url>/2026/08/25/%E9%9D%9E%E5%B0%8F%E7%BB%86%E8%83%9E%E8%82%BA%E7%99%8C%E9%B3%9E%E7%8A%B6%E5%88%86%E5%8C%96%E7%9A%84%E5%85%8D%E7%96%AB%E7%BB%84%E5%8C%96%E5%88%A4%E8%AF%BB%E5%8F%8A%E5%85%B6%E6%B2%BB%E7%96%97%E8%BE%B9%E7%95%8C/</url>
+    <content><![CDATA[<p>一份常见的病理附文会把 P40 阳性、CK5/6 阳性、CK7 阴性和 P53 弥漫强阳、HER2 评 0 写成闭环：定型为纯肺鳞癌，排除腺癌与腺鳞癌，证明吸烟致癌，并宣布不必等待驱动基因、直接进入免疫联合化疗。P40 对鳞状分化的证据成立。后半段把互不矛盾当成互为证明，治疗推断超出了这四张片子能回答的问题。</p>
+<p>低分化非小细胞肺癌需要免疫组化分型，首选组合是 TTF-1 加 P40。鳞癌不用培美曲塞，也不用贝伐珠单抗。IHC 验证的纯鳞癌在长期重度吸烟者中 EGFR、ALK 极罕见。这些是共识。闭环叙事多走了三步：用 CK7 排除腺鳞癌，用 P53 挑选免疫治疗人群，用 HER2 IHC 0 关闭德曲妥珠单抗。</p>
+<h2 id="P40-回答的是当前切片有没有鳞状分化"><a class="header-anchor" href="#P40-回答的是当前切片有没有鳞状分化">¶</a>P40 回答的是当前切片有没有鳞状分化</h2>
+<p>P40 识别 p63 的 ΔNp63 异构体。ΔNp63 在复层上皮基底细胞维持增殖潜能，不携带 TAp63 那种更广谱的交叉反应。Bishop 等在 81 例肺鳞癌、237 例腺癌和 152 例大细胞淋巴瘤中比较 4A4（同时识别 TA 与 ΔN）与 P40：两者在鳞癌均阳性，平均阳性细胞比例 97% 对 96%；P63 标出 31% 腺癌和 54% 大细胞淋巴瘤，特异度 60%；P40 只标出 3% 腺癌，且阳性细胞不超过 5%，淋巴瘤全阴，特异度 98%。<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> Nonaka 在 150 例腺癌中 P40 全阴，50 例鳞癌两者均弥漫阳性。<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> Kriegsmann 等 1244 例里，CK5/6、P40、P63 对鳞癌的敏感度是 93%、94%、94%，特异度是 98%、97%、84%。<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup></p>
+<p>“特异度接近 100%、敏感度约 95%”方向对，数字被圆滑了。Affandi 等小样本中 P40 在原发肺鳞癌的敏感度只有 77.1%。<sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup> IASLC 病理委员会 2019 年最佳实践把 TTF-1 加 P40 定为日常标准组合，并建议 P40 以超过 50% 肿瘤细胞核阳性为切点；局灶 TTF-1 在合适临床背景下仍支持腺癌。<sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup> CK5/6 是高分子量角蛋白，标的是细胞骨架。Rekhtman 等 315 例全切片显示，鳞癌表型高度一致，腺癌却有 32% P63、18% CK5/6 阳性。一线够用的是 TTF-1 与鳞状核标志，CK5/6 只处理少数不定病例。<sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup></p>
+<p>P40 与 CK5/6 同步强阳不能写成 100% 纯鳞谱系，也不能排除低分化腺癌、大细胞癌和大细胞神经内分泌癌。Kadota 等把 480 例原诊鳞癌的切除标本用 P40 和 TTF-1 重读，4.2% 改判腺癌，其余还有腺鳞癌、大细胞癌、大细胞神经内分泌癌和小细胞癌。<sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup> 同一肿瘤细胞共表达 TTF-1 与 P40 的双表型癌已有报道。<sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup> 神经内分泌癌的排除依赖形态加 INSM1 或突触素，这两张片子完不成这项工作。</p>
+<h2 id="CK7-阴不能排除腺癌，更不能排除腺鳞癌"><a class="header-anchor" href="#CK7-阴不能排除腺癌，更不能排除腺鳞癌">¶</a>CK7 阴不能排除腺癌，更不能排除腺鳞癌</h2>
+<p>CK7 是低分子量角蛋白，广泛存在于腺上皮、导管和部分鳞状上皮。肺腺癌 CK7 阳性率很高，IASLC 仍明确写了：不要用 CK7 区分肺腺癌与鳞癌；单 CK7 阳、TTF-1 与 P40 都阴，仍应诊断为 NSCC NOS。<sup class="footnote-ref"><a href="#fn5" id="fnref5:1">[5:1]</a></sup> Zhao 等正因为 CK7 特异度低，把它移出活检推荐组合，留下 P40、CK5/6、TTF-1 和 Napsin A。<sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup></p>
+<p>腺鳞癌的定义是同一肿瘤里腺癌与鳞癌成分各自至少约 10%，原则上要看切除标本。活检只看到鳞癌区 P40 阳、CK5/6 阳、CK7 阴，证明不了未取样区没有腺癌。Shu 等报告肺腺鳞癌 EGFR 突变 11%、KRAS 突变 33%，微切割后突变在两种成分里收敛；胸苷酸合成酶表达更接近鳞癌。<sup class="footnote-ref"><a href="#fn10" id="fnref10">[10]</a></sup> Rekhtman 等复盘 16 例“鳞癌却有 EGFR 或 KRAS 突变”：63% 是腺鳞癌，31% 是形态学模仿鳞癌的低分化腺癌。<sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup></p>
+<p>CK7 阴性只说明当前切片这个区域符合鳞状表型。把它写成彻底排除腺癌以及腺鳞癌，是整条叙事里最大的方法学错误。</p>
+<h2 id="P53-弥漫强阳在肺鳞癌里是背景"><a class="header-anchor" href="#P53-弥漫强阳在肺鳞癌里是背景">¶</a>P53 弥漫强阳在肺鳞癌里是背景</h2>
+<p>野生型 p53 半衰期短，免疫组化呈斑驳核着色。错义突变常使蛋白稳定堆积，变成弥漫均一强核着色；截短或缺失突变则完全空白。Köbel 等在卵巢癌把过表达、完全缺失、胞质型和野生型与测序对上，过表达对应错义突变。<sup class="footnote-ref"><a href="#fn12" id="fnref12">[12]</a></sup> 这套判读来自妇科病理，不是肺鳞癌的注册级伴生诊断。90% 以上强阳支持突变型着色，不等于已经完成 TP53 测序。</p>
+<p>吸烟与 TP53 的关系要靠突变谱。Le Calvez 等：从不、既往、当前吸烟者的突变率分别是 47.5%、55.6%、77.4%，G 到 T 颠换与当前吸烟相关。<sup class="footnote-ref"><a href="#fn13" id="fnref13">[13]</a></sup> 苯并芘造成的 G 到 T 是测序指纹，免疫组化读不出来。TCGA 178 例肺鳞癌中 TP53 几乎见于全部标本，同时还高频累及 NFE2L2/KEAP1、PI3K 通路和 CDKN2A/RB1。<sup class="footnote-ref"><a href="#fn14" id="fnref14">[14]</a></sup> 在肺鳞癌里，P53 突变型着色的先验概率极高，不能把患者从普通鳞癌里挑出来。</p>
+<p>把几乎全员阳性的事件当成免疫治疗选择因子，逻辑不成立。转移性鳞癌一线获益来自 KEYNOTE-407：帕博利珠单抗联合卡铂加紫杉醇或白蛋白紫杉醇，中位总生存 15.9 对 11.3 个月，风险比 0.64，且不依赖 PD-L1 分层。<sup class="footnote-ref"><a href="#fn15" id="fnref15">[15]</a></sup> 可手术患者的证据是 CheckMate 816、AEGEAN 和 KEYNOTE-671。<sup class="footnote-ref"><a href="#fn16" id="fnref16">[16]</a></sup><sup class="footnote-ref"><a href="#fn17" id="fnref17">[17]</a></sup><sup class="footnote-ref"><a href="#fn18" id="fnref18">[18]</a></sup> 这些试验的入组轴是组织学加 PD-L1，不是 P53。</p>
+<h2 id="HER2-评-0-关掉的是过表达，不是突变"><a class="header-anchor" href="#HER2-评-0-关掉的是过表达，不是突变">¶</a>HER2 评 0 关掉的是过表达，不是突变</h2>
+<p>肺癌 HER2 改变分突变、扩增和过表达，三者不完全重叠。Mazières 等报告 HER2 突变约占非小细胞肺癌的 1% 到 2%，几乎都在腺癌，从不吸烟者更多见。<sup class="footnote-ref"><a href="#fn19" id="fnref19">[19]</a></sup> 肺癌里德曲妥珠单抗的注册路径是 HER2 突变。DESTINY-Lung01 突变队列客观缓解率 55%，检测不到 HER2 蛋白或没有扩增的患者也有缓解。<sup class="footnote-ref"><a href="#fn20" id="fnref20">[20]</a></sup> DESTINY-Lung02 在 5.4 mg/kg 剂量的确认缓解率是 49.0%。<sup class="footnote-ref"><a href="#fn21" id="fnref21">[21]</a></sup> 过表达队列（免疫组化 2+ 或 3+、无已知突变）缓解率只有 26.5% 到 34.1%，且入组是非鳞癌。<sup class="footnote-ref"><a href="#fn22" id="fnref22">[22]</a></sup> 吡咯替尼针对的也是突变或 20 外显子插入。</p>
+<p>HER2 评 0 的正确读法：当前切片没有膜过表达。它不能证明不适用德曲妥珠单抗，也不能用来印证典型吸烟相关纯鳞癌。</p>
+<div class="nsclc-ihc-map">
+<style>
+.nsclc-ihc-map{margin:1.4em 0 1.6em;max-width:100%;overflow-x:auto}
+.nsclc-ihc-map svg{display:block;width:100%;height:auto;max-width:720px;margin:0 auto}
+.nsclc-ihc-map .cap{font-size:0.85em;color:#555;margin:0.4em 0 0}
+</style>
+<svg viewBox="0 0 720 280" role="img" aria-label="四项免疫组化各自回答的问题">
+<rect x="0.5" y="0.5" width="719" height="279" fill="#f7f4ee" stroke="#c8c2b4"/>
+<text x="24" y="28" fill="#222" font-size="14" font-family="serif">教学示意：四项标记各自回答什么</text>
+<rect x="24" y="48" width="150" height="64" fill="#fff" stroke="#333"/>
+<text x="99" y="74" text-anchor="middle" font-size="13" fill="#111" font-family="serif">P40 ± TTF-1</text>
+<text x="99" y="94" text-anchor="middle" font-size="11" fill="#444" font-family="serif">当前切片的分化</text>
+<rect x="198" y="48" width="150" height="64" fill="#fff" stroke="#333"/>
+<text x="273" y="74" text-anchor="middle" font-size="13" fill="#111" font-family="serif">CK5/6</text>
+<text x="273" y="94" text-anchor="middle" font-size="11" fill="#444" font-family="serif">少数不定病例的仲裁</text>
+<rect x="372" y="48" width="150" height="64" fill="#fff" stroke="#333"/>
+<text x="447" y="74" text-anchor="middle" font-size="13" fill="#111" font-family="serif">CK7</text>
+<text x="447" y="94" text-anchor="middle" font-size="11" fill="#444" font-family="serif">角蛋白谱，不分型</text>
+<rect x="546" y="48" width="150" height="64" fill="#fff" stroke="#333"/>
+<text x="621" y="74" text-anchor="middle" font-size="13" fill="#111" font-family="serif">P53 / HER2 IHC</text>
+<text x="621" y="94" text-anchor="middle" font-size="11" fill="#444" font-family="serif">背景或过表达，不选药</text>
+<line x1="360" y1="128" x2="360" y2="152" stroke="#333"/>
+<rect x="150" y="152" width="420" height="96" fill="#fff" stroke="#333"/>
+<text x="360" y="178" text-anchor="middle" font-size="13" fill="#111" font-family="serif">鳞状分化成立之后</text>
+<text x="360" y="200" text-anchor="middle" font-size="12" fill="#333" font-family="serif">避开培美曲塞与贝伐珠单抗</text>
+<text x="360" y="220" text-anchor="middle" font-size="12" fill="#333" font-family="serif">仍做 PD-L1；按吸烟史、年龄、标本类型决定 NGS</text>
+<text x="360" y="238" text-anchor="middle" font-size="11" fill="#666" font-family="serif">示意图仅用于说明标记分工，不能替代个体病理诊断</text>
+</svg>
+<p class="cap">图 1 教学示意。P40 加 TTF-1 完成分型；其余三项不构成治疗闭环。</p>
+</div>
+<h2 id="四项齐了仍回答不了的治疗问题"><a class="header-anchor" href="#四项齐了仍回答不了的治疗问题">¶</a>四项齐了仍回答不了的治疗问题</h2>
+<p>培美曲塞在鳞癌疗效差是 III 期事实。Scagliotti 等 1725 例：腺癌中顺铂联合培美曲塞总生存 12.6 对 10.9 个月，鳞癌中吉西他滨更好，10.8 对 9.4 个月。<sup class="footnote-ref"><a href="#fn23" id="fnref23">[23]</a></sup> 机制侧写是鳞癌胸苷酸合成酶更高。Tanaka 等 2621 例：原发灶 TS/β-actin 均值腺癌 2.3、鳞癌 4.3。<sup class="footnote-ref"><a href="#fn24" id="fnref24">[24]</a></sup></p>
+<p>贝伐珠单抗的出血风险真实。Johnson 等 II 期把大咯血与鳞癌组织学、坏死空洞、邻近大血管联系起来，随后的 III 期因此排除鳞癌。<sup class="footnote-ref"><a href="#fn25" id="fnref25">[25]</a></sup> Sandler 等在非鳞癌中看到总生存 12.3 对 10.3 个月，有临床意义的出血 4.4% 对 0.7%。<sup class="footnote-ref"><a href="#fn26" id="fnref26">[26]</a></sup> “鳞癌不用贝伐珠单抗”作为规则成立。把它全部归因于肺门中央、容易空洞，是简化。</p>
+<p>“纯鳞癌不必优先查 EGFR、ALK”只在窄条件成立：切除标本、免疫组化验证的纯鳞癌、长期重度吸烟。Rekhtman 等 95 例 ΔNp63 阳、TTF-1 阴的鳞癌中 EGFR 与 KRAS 为 0，95% 置信区间 0 到 3.8%。<sup class="footnote-ref"><a href="#fn11" id="fnref11:1">[11:1]</a></sup> CAP、IASLC 与 AMP 2018 年指南更谨慎：非腺癌在年轻、少烟或从不吸烟、或标本可能漏掉腺癌成分时，仍可做分子检测。<sup class="footnote-ref"><a href="#fn27" id="fnref27">[27]</a></sup> 中国 NGS 共识同样：单纯肺鳞癌不常规查 EGFR；小标本诊断的鳞癌、混合腺癌成分、年轻或不吸烟者仍建议检测。<sup class="footnote-ref"><a href="#fn28" id="fnref28">[28]</a></sup></p>
+<p>把转移瘤一线和可手术围手术期揉在一起，再把吉西他滨写成与 KEYNOTE-407 同等的免疫联合伙伴，证据对不上。有 III 期数据的转移性鳞癌一线是帕博利珠单抗联合卡铂加紫杉醇或白蛋白紫杉醇。吉西他滨铂类是化疗时代的鳞癌方案。组织要留给分子检测和 PD-L1，而不是再加 CK7、P53、HER2 去闭合一条叙事。</p>
+<h2 id="读法"><a class="header-anchor" href="#读法">¶</a>读法</h2>
+<p>P40 阳、TTF-1 阴，CK5/6 可作支持：当前标本支持鳞状分化，化疗避开培美曲塞和贝伐珠单抗。下一步仍是分期、PD-L1，以及按吸烟史、年龄、标本类型决定要不要广谱 NGS。P53 弥漫强阳只是与鳞癌基因组背景相容。HER2 评 0 关掉过表达通路，不是突变通路。四项齐了，不等于诊断闭环，更不等于可以宣布不必等待靶向基因。</p>
+<hr>
+<h2 id="参考资料"><a class="header-anchor" href="#参考资料">¶</a>参考资料</h2>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>Bishop JA, et al. p40 (ΔNp63) is superior to p63 for the diagnosis of pulmonary squamous cell carcinoma. <em>Mod Pathol</em>. 2012. <a href="https://pubmed.ncbi.nlm.nih.gov/22056955/">PMID: 22056955</a> <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>Nonaka D. A study of ΔNp63 expression in lung non-small cell carcinomas. <em>Am J Surg Pathol</em>. 2012. <a href="https://pubmed.ncbi.nlm.nih.gov/22367298/">PMID: 22367298</a> <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p>Kriegsmann K, et al. Agreement of CK5/6, p40, and p63 immunoreactivity in non-small cell lung cancer. <em>Pathology</em>. 2019. <a href="https://pubmed.ncbi.nlm.nih.gov/30798982/">PMID: 30798982</a> <a href="#fnref3" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p>Affandi KA, et al. p40 Immunohistochemistry Is an Excellent Marker in Primary Lung Squamous Cell Carcinoma. <em>J Pathol Transl Med</em>. 2018. <a href="https://pubmed.ncbi.nlm.nih.gov/30235512/">PMID: 30235512</a> <a href="#fnref4" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn5" class="footnote-item"><p>Yatabe Y, et al. Best Practices Recommendations for Diagnostic Immunohistochemistry in Lung Cancer. <em>J Thorac Oncol</em>. 2019. <a href="https://pubmed.ncbi.nlm.nih.gov/30572031/">PMID: 30572031</a> <a href="#fnref5" class="footnote-backref">↩︎</a> <a href="#fnref5:1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn6" class="footnote-item"><p>Rekhtman N, et al. Immunohistochemical algorithm for differentiation of lung adenocarcinoma and squamous cell carcinoma. <em>Mod Pathol</em>. 2011. <a href="https://pubmed.ncbi.nlm.nih.gov/21623384/">PMID: 21623384</a> <a href="#fnref6" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn7" class="footnote-item"><p>Kadota K, et al. Reevaluation and reclassification of resected lung carcinomas originally diagnosed as squamous cell carcinoma. <em>Am J Surg Pathol</em>. 2015. <a href="https://pubmed.ncbi.nlm.nih.gov/25871623/">PMID: 25871623</a> <a href="#fnref7" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn8" class="footnote-item"><p>Pelosi G, et al. Challenging lung carcinoma with coexistent ΔNp63/p40 and TTF-1 labeling within the same individual tumor cells. <em>J Thorac Oncol</em>. 2015. <a href="https://pubmed.ncbi.nlm.nih.gov/26398824/">PMID: 26398824</a> <a href="#fnref8" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn9" class="footnote-item"><p>Zhao W, et al. ΔNp63, CK5/6, TTF-1 and napsin A, a reliable panel to subtype non-small cell lung cancer in biopsy specimens. <em>Int J Clin Exp Pathol</em>. 2014. <a href="https://pubmed.ncbi.nlm.nih.gov/25120805/">PMID: 25120805</a> <a href="#fnref9" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn10" class="footnote-item"><p>Shu C, et al. Thymidylate synthase expression and molecular alterations in adenosquamous carcinoma of the lung. <em>Mod Pathol</em>. 2013. <a href="https://pubmed.ncbi.nlm.nih.gov/22996376/">PMID: 22996376</a> <a href="#fnref10" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn11" class="footnote-item"><p>Rekhtman N, et al. Clarifying the spectrum of driver oncogene mutations in biomarker-verified squamous carcinoma of lung. <em>Clin Cancer Res</em>. 2012. <a href="https://pubmed.ncbi.nlm.nih.gov/22228640/">PMID: 22228640</a> <a href="#fnref11" class="footnote-backref">↩︎</a> <a href="#fnref11:1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn12" class="footnote-item"><p>Köbel M, et al. Optimized p53 immunohistochemistry is an accurate predictor of TP53 mutation in ovarian carcinoma. <em>J Pathol Clin Res</em>. 2016. <a href="https://pubmed.ncbi.nlm.nih.gov/27840695/">PMID: 27840695</a> <a href="#fnref12" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn13" class="footnote-item"><p>Le Calvez F, et al. TP53 and KRAS mutation load and types in lung cancers in relation to tobacco smoke. <em>Cancer Res</em>. 2005. <a href="https://pubmed.ncbi.nlm.nih.gov/15958551/">PMID: 15958551</a> <a href="#fnref13" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn14" class="footnote-item"><p>Cancer Genome Atlas Research Network. Comprehensive genomic characterization of squamous cell lung cancers. <em>Nature</em>. 2012. <a href="https://pubmed.ncbi.nlm.nih.gov/22960745/">PMID: 22960745</a> <a href="#fnref14" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn15" class="footnote-item"><p>Paz-Ares L, et al. Pembrolizumab plus Chemotherapy for Squamous Non-Small-Cell Lung Cancer. <em>N Engl J Med</em>. 2018. <a href="https://pubmed.ncbi.nlm.nih.gov/30280635/">PMID: 30280635</a> <a href="#fnref15" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn16" class="footnote-item"><p>Forde PM, et al. Neoadjuvant Nivolumab plus Chemotherapy in Resectable Lung Cancer. <em>N Engl J Med</em>. 2022. <a href="https://pubmed.ncbi.nlm.nih.gov/35403841/">PMID: 35403841</a> <a href="#fnref16" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn17" class="footnote-item"><p>Heymach JV, et al. Perioperative Durvalumab for Resectable Non-Small-Cell Lung Cancer. <em>N Engl J Med</em>. 2023. <a href="https://pubmed.ncbi.nlm.nih.gov/37870974/">PMID: 37870974</a> <a href="#fnref17" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn18" class="footnote-item"><p>Wakelee H, et al. Perioperative Pembrolizumab for Early-Stage Non-Small-Cell Lung Cancer. <em>N Engl J Med</em>. 2023. <a href="https://pubmed.ncbi.nlm.nih.gov/37272513/">PMID: 37272513</a> <a href="#fnref18" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn19" class="footnote-item"><p>Mazières J, et al. Lung cancer that harbors an HER2 mutation. <em>J Clin Oncol</em>. 2013. <a href="https://pubmed.ncbi.nlm.nih.gov/23610105/">PMID: 23610105</a> <a href="#fnref19" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn20" class="footnote-item"><p>Li BT, et al. Trastuzumab Deruxtecan in HER2-Mutant Non-Small-Cell Lung Cancer. <em>N Engl J Med</em>. 2022. <a href="https://pubmed.ncbi.nlm.nih.gov/34534430/">PMID: 34534430</a> <a href="#fnref20" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn21" class="footnote-item"><p>Goto K, et al. Trastuzumab Deruxtecan in Patients With HER2-Mutant Metastatic Non-Small-Cell Lung Cancer: DESTINY-Lung02. <em>J Clin Oncol</em>. 2023. <a href="https://pubmed.ncbi.nlm.nih.gov/37694347/">PMID: 37694347</a> <a href="#fnref21" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn22" class="footnote-item"><p>Smit EF, et al. Trastuzumab deruxtecan in patients with metastatic NSCLC: DESTINY-Lung01 HER2-overexpressing cohorts. <em>Lancet Oncol</em>. 2024. <a href="https://pubmed.ncbi.nlm.nih.gov/38547891/">PMID: 38547891</a> <a href="#fnref22" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn23" class="footnote-item"><p>Scagliotti GV, et al. Phase III study comparing cisplatin plus gemcitabine with cisplatin plus pemetrexed. <em>J Clin Oncol</em>. 2008. <a href="https://pubmed.ncbi.nlm.nih.gov/18506025/">PMID: 18506025</a> <a href="#fnref23" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn24" class="footnote-item"><p>Tanaka F, et al. Thymidylate synthase gene expression in primary lung cancer patients. <em>Ann Oncol</em>. 2011. <a href="https://pubmed.ncbi.nlm.nih.gov/21321092/">PMID: 21321092</a> <a href="#fnref24" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn25" class="footnote-item"><p>Johnson DH, et al. Randomized phase II trial of bevacizumab plus carboplatin and paclitaxel. <em>J Clin Oncol</em>. 2004. <a href="https://pubmed.ncbi.nlm.nih.gov/15169807/">PMID: 15169807</a> <a href="#fnref25" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn26" class="footnote-item"><p>Sandler A, et al. Paclitaxel-carboplatin alone or with bevacizumab for non-small-cell lung cancer. <em>N Engl J Med</em>. 2006. <a href="https://pubmed.ncbi.nlm.nih.gov/17167137/">PMID: 17167137</a> <a href="#fnref26" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn27" class="footnote-item"><p>Lindeman NI, et al. Updated Molecular Testing Guideline. <em>Arch Pathol Lab Med</em>. 2018. <a href="https://pubmed.ncbi.nlm.nih.gov/29355391/">PMID: 29355391</a> <a href="#fnref27" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn28" class="footnote-item"><p>二代测序技术在 NSCLC 中的临床应用中国专家共识（2020 版）. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7519957/">PMC7519957</a> <a href="#fnref28" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+]]></content>
+      <tags>
+        <tag>Medicine</tag>
       </tags>
   </entry>
   <entry>
